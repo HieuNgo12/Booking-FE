@@ -1,0 +1,45 @@
+.card {
+    height: 256px;
+    width: 865px;
+    border : 1px solid #D9D9D9;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.head-card-title{
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.location-title {
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Poppin;
+}
+
+.available {
+    color: #E5062E;
+}
+
+.sustainable-level { 
+    color: #4C9839;
+}
+
+.included {
+    color: #565656
+}
+
+.see-availability {
+    color: #07689F;
+    font-weight: 800;
+}
+
+.money {
+    color: #4C9839;
+    font-weight: 700;
+}
+
+.discount {
+    color: #E5062E;
+}
