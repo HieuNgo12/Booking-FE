@@ -1,0 +1,93 @@
+li {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.exclusive {
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+}
+
+.subscribe {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  margin-bottom: 20px;
+}
+
+.enter-your-email-container {
+  position: relative;
+  max-width: 100%;
+}
+
+.enter-your-email {
+  width: 200px;
+  border-radius: 4px;
+  border: 1.5px solid white;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 10px;
+  background-color: transparent;
+  color: white;
+}
+
+.copy-right {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #f9f9f9;
+}
+
+footer li {
+  cursor: pointer;
+}
+
+footer li:hover {
+  color: rgb(119, 119, 234);
+}
+
+.text {
+  text-align: left;
+}
+
+.copy-right img{
+  margin-right: 12px;
+}
+.social-media {
+  margin-left: 15%;
+}
+.social-media img{
+  margin-top:18px;
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+
+}
+
+.email-input{
+  width: 312px;
+  height: 48px;
+  border: 1px solid #A6A6A6;
+  border-radius: 4px;
+  padding: 8px;
+
+}
+
+.subscribe {
+  width: 94px;
+  height: 48px;
+  background-color: #07689F;
+  border-radius: 4px;
+  color: white;
+  padding: 8px;
+  font-size: 14px;
+  padding-right: 16px;
+  padding-left: 16px;
+
+}
