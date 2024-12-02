@@ -44,11 +44,11 @@ li {
   color: #f9f9f9;
 }
 
-li {
+footer li {
   cursor: pointer;
 }
 
-li:hover {
+footer li:hover {
   color: rgb(119, 119, 234);
 }
 

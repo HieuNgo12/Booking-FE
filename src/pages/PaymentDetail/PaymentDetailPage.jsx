@@ -1,17 +1,16 @@
-import React from 'react'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
-import PaymentPageBody from './components/PaymentPageBody'
+import React from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import PaymentPageBody from "./components/PaymentPageBody";
 
 function PaymentDetailPage() {
   return (
     <div>
-        <Navbar />
-        <PaymentPageBody />
-        <Footer />
-     
+      <Navbar />
+      <PaymentPageBody />
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default PaymentDetailPage
+export default PaymentDetailPage;

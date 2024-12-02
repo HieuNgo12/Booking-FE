@@ -1,0 +1,9 @@
+.ath-button {
+  width: 189px !important;
+  height: 40px !important;
+  color: #07689f;
+  padding: 8px;
+  border: 1px solid #07689f;
+  border-radius: 6px;
+  text-align: center;
+}

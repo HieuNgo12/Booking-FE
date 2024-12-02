@@ -230,7 +230,7 @@ function HotelSearchBody() {
                 className="search-input"
                 id="checkin"
                 name="checkin"
-                type="checkin"
+                type="date"
                 onChange={formik.handleChange}
                 value={formik.values.checkin}
               />
@@ -248,7 +248,8 @@ function HotelSearchBody() {
                 className="search-input"
                 id="checkout"
                 name="checkout"
-                type="checkout"
+                type="date"
+
                 onChange={formik.handleChange}
                 value={formik.values.checkout}
               />
