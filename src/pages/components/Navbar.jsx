@@ -1,13 +1,17 @@
 import React from "react";
-
+import "./Navbar.css"
 function Navbar() {
   return (
     <div>
       <nav className="flex w-full relative top-0 left-0">
-        <img src="./log.png" />
+        <img src="/log.png" />
         <input className="nav-search" />
-        <button className="sign-in-button">Sign In</button>
-        <button className="sign-in-button">Register</button>
+        <div className="ath-button ml-6" >
+          <a href="/login" >Sign In</a>
+        </div>
+        <div className="ath-button ml-6">
+          <a href="/signup" >Register</a>
+        </div>
       </nav>
       <div className="flex product-tags">
         <div>

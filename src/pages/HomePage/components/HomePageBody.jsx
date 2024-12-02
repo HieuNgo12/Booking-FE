@@ -101,7 +101,7 @@ function HomePageBody() {
           <img />
         </div>
       </div>
-      <img src="./special-offers.png" />
+      <img src="/special-offers.png" />
       {/* Explore stay */}
       <div>
         <div className="head-titles">
@@ -115,23 +115,9 @@ function HomePageBody() {
         </div>
       </div>
       <div>
-        <img src="./homepage/inspiration.png" />
+        <img src="/homepage/inspiration.png" />
       </div>
-      <div className="flex mb-12">
-        <div>
-          <div className="go-further">Go Further With The EasySet24 App</div>
-          <div className="enjoy-savings">
-            Enjoy savings on chosen hotels and flights when you book through the
-            EasySet24 website. Additionally, earn One Key Cash for every booking
-            made through the app.
-          </div>
-          <div className="secured">Secured By Europe GTP</div>
-        </div>
-        <div className="auto-layout pt-12">
-          <img src="./homepage/auto-layout.png" />
-        </div>
-      </div>
-      <hr />
+    
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "./Footer.css";
 function Footer() {
   return (
-    <div className=" ">
+    <div className="footer ">
         <div className="flex mb-12">
         <div>
           <div className="go-further">Go Further With The EasySet24 App</div>
@@ -14,7 +14,7 @@ function Footer() {
           <div className="secured">Secured By Europe GTP</div>
         </div>
         <div className="auto-layout pt-12">
-          <img src="./homepage/auto-layout.png" />
+          <img src="/homepage/auto-layout.png" />
         </div>
       </div>
       <hr />
@@ -75,17 +75,17 @@ function Footer() {
       </div>
       <div className="flex">
         <div className="copy-right  text-gray-400 flex mt-12 flex">
-          <img src="./homepage/visacard.png" />
-          <img src="./homepage/ameexpress.png" />
-          <img src="./homepage/mastercard.png" />
-          <img src="./homepage/Paypal.png" />
+          <img src="/homepage/visacard.png" />
+          <img src="/homepage/ameexpress.png" />
+          <img src="/homepage/mastercard.png" />
+          <img src="/homepage/Paypal.png" />
         </div>
         <div className="flex social-media">
-          <img src="./homepage/linkedin.png" />
-          <img src="./homepage/telegram.png" />
-          <img src="./homepage/twitter.png" />
-          <img src="./homepage/Facebook.png" />
-          <img src="./homepage/insta.png" />
+          <img src="/homepage/linkedin.png" />
+          <img src="/homepage/telegram.png" />
+          <img src="/homepage/twitter.png" />
+          <img src="/homepage/Facebook.png" />
+          <img src="/homepage/insta.png" />
         </div>
         <div>
           <div>Email</div>
@@ -95,11 +95,11 @@ function Footer() {
           </div>
         </div>
         <div>
-        <img src="./homepage/linkedin.png" />
-          <img src="./homepage/telegram.png" />
-          <img src="./homepage/twitter.png" />
-          <img src="./homepage/Facebook.png" />
-          <img src="./homepage/insta.png" />
+        <img src="/homepage/linkedin.png" />
+          <img src="/homepage/telegram.png" />
+          <img src="/homepage/twitter.png" />
+          <img src="/homepage/Facebook.png" />
+          <img src="/homepage/insta.png" />
         </div>
         
       </div>
