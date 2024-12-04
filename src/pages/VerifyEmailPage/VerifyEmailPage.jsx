@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import {
   Form,
   Input,
@@ -9,7 +10,6 @@ import {
   Col,
   Typography,
 } from "antd";
-import { useNavigate } from "react-router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,47 +20,33 @@ import imgEN from "./img/EN.png";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
-const LoginPage = () => {
+const VerifyEmailPage = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      const req1 = await fetch(`${import.meta.env.VITE_URL_API}/login`, {
-        method: "POST",
+      console.log(values);
+      const req1 = await fetch(`${import.meta.env.VITE_URL_API}/verify-email`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify({
-          email: values.email,
-          password: values.password,
+          otp: values.otp,
         }),
       });
       const res1 = await req1.json();
       if (req1.status === 400) {
-        if (res1.emailVerified === false) {
-          toast.warn(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            onClose: () => navigate("/verify-email"),
-          });
-        } else {
-          toast.warn(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
+        toast.warn(res1.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } else if (req1.status === 200) {
         toast.success(res1.message, {
           position: "top-center",
@@ -72,7 +58,7 @@ const LoginPage = () => {
           progress: undefined,
           theme: "light",
           onClose: () => {
-            navigate("/account");
+            navigate("/profile");
           },
         });
       }
@@ -145,12 +131,7 @@ const LoginPage = () => {
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <Col
-            xs={24}
-            md={12}
-            style={{ padding: "0" }}
-            className="w-full h-full object-cover hidden md:block"
-          >
+          <Col xs={24} md={12} style={{ padding: "0" }}>
             <img
               src={imgLogIn}
               alt="Login"
@@ -170,11 +151,11 @@ const LoginPage = () => {
           >
             <div className="w-full">
               <Title level={2} style={{ fontWeight: "bold" }}>
-                Login
+                Verify Email
               </Title>
-              <Text>Login to access your Easyset24 account</Text>
+              <Text>Fill in OTP to verify your Email.</Text>
               <Form
-                name="login"
+                name="verifyemail"
                 layout="vertical"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
@@ -182,34 +163,15 @@ const LoginPage = () => {
                 style={{ marginTop: "20px" }}
               >
                 <Form.Item
-                  label="Email"
-                  name="email"
+                  label="OTP"
+                  name="otp"
                   rules={[
-                    { required: true, message: "Please input your email!" },
+                    { required: true, message: "Please input your otp!" },
                   ]}
                 >
-                  <Input placeholder="Easyset24@gmail.com" />
-                </Form.Item>
-
-                <Form.Item
-                  label="Password"
-                  name="password"
-                  rules={[
-                    { required: true, message: "Please input your password!" },
-                  ]}
-                >
-                  <Input.Password placeholder="********" />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked">
-                  <div className="flex justify-between items-center">
-                    <Checkbox className="font-medium">Remember Me</Checkbox>
-                    <a
-                      className="text-[#07689f] font-bold"
-                      onClick={() => navigate("/forgot-passowrd")}
-                    >
-                      Forgot Password?
-                    </a>
+                  <div className="flex justify-center items-center">
+                    {" "}
+                    <Input.OTP placeholder="OTP" />
                   </div>
                 </Form.Item>
 
@@ -220,9 +182,25 @@ const LoginPage = () => {
                     block
                     className="bg-[#07689f]"
                   >
-                    LOG IN
+                    Sent OTP
                   </Button>
                 </Form.Item>
+
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Back to{" "}
+                  <Text
+                    className="text-[#07689f] cursor-pointer font-bold hover:text-blue-400"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Text>
+                </div>
 
                 <div
                   style={{
@@ -265,4 +243,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default VerifyEmailPage;

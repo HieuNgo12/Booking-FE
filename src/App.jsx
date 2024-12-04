@@ -9,8 +9,20 @@ import { ToastContainer } from "react-toastify";
 import HotelSearchPage from "./pages/HotelSearchPage/HotelSearchPage";
 import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
-import SignUpPage from "./pages/SignUp/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import AccountPage from "./pages/AccountPage/AccountPage";
+import ProfilePage from "./pages/AccountPage/ProfilePage";
+import PreferencesProfilePage from "./pages/AccountPage/PreferencesPage";
+import PaymentInfoPage from "./pages/AccountPage/PaymentInfoPage";
+import SupportPage from "./pages/AccountPage/SupportPage";
+import SettingPage from "./pages/AccountPage/SettingPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage/VerifyEmailPage";
+import EditInfoPage from "./pages/AccountPage/EditInfoPage";
+import EditContactPage from "./pages/AccountPage/EditContactPage";
+import PasswordPage from "./pages/AccountPage/PasswordPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -48,13 +60,75 @@ function App() {
       path: "/login",
       element: <LoginPage />,
       errorElement: <ErrorPage />,
-      children: [],
     },
     {
       path: "/signup",
       element: <SignUpPage />,
       errorElement: <ErrorPage />,
-      children: [],
+    },
+    {
+      path: "/forgot-passowrd",
+      element: <ForgotPasswordPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/reset-passowrd",
+      element: <ResetPasswordPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/verify-email",
+      element: <VerifyEmailPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/account",
+      element: <AccountPage />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "profile",
+          element: <ProfilePage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "edit-info",
+              element: <EditInfoPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "edit-contact",
+              element: <EditContactPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
+        },
+        {
+          path: "password",
+          element: <PasswordPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "preferences",
+          element: <PreferencesProfilePage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "payment",
+          element: <PaymentInfoPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "support",
+          element: <SupportPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "setting",
+          element: <SettingPage />,
+          errorElement: <ErrorPage />,
+        },
+      ],
     },
     {
       path: "/hotel-detail/:hotelId",

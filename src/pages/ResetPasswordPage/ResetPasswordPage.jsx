@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import {
   Form,
   Input,
@@ -9,7 +10,6 @@ import {
   Col,
   Typography,
 } from "antd";
-import { useNavigate } from "react-router";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ import imgEN from "./img/EN.png";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
-const LoginPage = () => {
+const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
@@ -37,30 +37,16 @@ const LoginPage = () => {
       });
       const res1 = await req1.json();
       if (req1.status === 400) {
-        if (res1.emailVerified === false) {
-          toast.warn(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            onClose: () => navigate("/verify-email"),
-          });
-        } else {
-          toast.warn(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
+        toast.warn(res1.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } else if (req1.status === 200) {
         toast.success(res1.message, {
           position: "top-center",
@@ -72,7 +58,7 @@ const LoginPage = () => {
           progress: undefined,
           theme: "light",
           onClose: () => {
-            navigate("/account");
+            navigate("/profile");
           },
         });
       }
@@ -145,12 +131,7 @@ const LoginPage = () => {
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <Col
-            xs={24}
-            md={12}
-            style={{ padding: "0" }}
-            className="w-full h-full object-cover hidden md:block"
-          >
+          <Col xs={24} md={12} style={{ padding: "0" }}>
             <img
               src={imgLogIn}
               alt="Login"
@@ -170,11 +151,12 @@ const LoginPage = () => {
           >
             <div className="w-full">
               <Title level={2} style={{ fontWeight: "bold" }}>
-                Login
+                Reset Password
               </Title>
-              <Text>Login to access your Easyset24 account</Text>
+              <Text>Check email to get OTP and reset password.</Text>
+
               <Form
-                name="login"
+                name="resetpassword"
                 layout="vertical"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
@@ -182,33 +164,49 @@ const LoginPage = () => {
                 style={{ marginTop: "20px" }}
               >
                 <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { required: true, message: "Please input your email!" },
-                  ]}
-                >
-                  <Input placeholder="Easyset24@gmail.com" />
-                </Form.Item>
-
-                <Form.Item
                   label="Password"
                   name="password"
                   rules={[
-                    { required: true, message: "Please input your password!" },
+                    { required: true, message: "Please input new password!" },
                   ]}
                 >
-                  <Input.Password placeholder="********" />
+                  <Input placeholder="New password" />
+                </Form.Item>
+
+                <Form.Item
+                  label="Confirm"
+                  name="confirmPassword"
+                  rules={[{ required: true, message: "Please input confirm!" }]}
+                >
+                  <Input placeholder="Confirm password" />
+                </Form.Item>
+
+                <Form.Item
+                  label="OTP"
+                  name="otp"
+                  rules={[
+                    { required: true, message: "Please input new password!" },
+                  ]}
+                >
+                  <div className="flex justify-center items-center">
+                    {" "}
+                    <Input.OTP placeholder="OTP" />
+                  </div>
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked">
                   <div className="flex justify-between items-center">
-                    <Checkbox className="font-medium">Remember Me</Checkbox>
                     <a
                       className="text-[#07689f] font-bold"
                       onClick={() => navigate("/forgot-passowrd")}
                     >
-                      Forgot Password?
+                      Forgot Password
+                    </a>
+                    <a
+                      className="text-[#07689f] font-bold"
+                      // onClick={() => navigate("/forgot-passowrd")}
+                    >
+                      Resent OTP
                     </a>
                   </div>
                 </Form.Item>
@@ -220,9 +218,25 @@ const LoginPage = () => {
                     block
                     className="bg-[#07689f]"
                   >
-                    LOG IN
+                    Reset Password
                   </Button>
                 </Form.Item>
+
+                <div
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "10px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Back to{" "}
+                  <Text
+                    className="text-[#07689f] cursor-pointer font-bold hover:text-blue-400"
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Text>
+                </div>
 
                 <div
                   style={{
@@ -265,4 +279,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;

@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer ">
-        <div className="flex mb-12">
+      <div className="flex mb-12">
         <div>
           <div className="go-further">Go Further With The EasySet24 App</div>
           <div className="enjoy-savings">
@@ -95,13 +95,12 @@ function Footer() {
           </div>
         </div>
         <div>
-        <img src="/homepage/linkedin.png" />
+          <img src="/homepage/linkedin.png" />
           <img src="/homepage/telegram.png" />
           <img src="/homepage/twitter.png" />
           <img src="/homepage/Facebook.png" />
           <img src="/homepage/insta.png" />
         </div>
-        
       </div>
     </div>
   );
