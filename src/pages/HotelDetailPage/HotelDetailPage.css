@@ -1,0 +1,16 @@
+.review-rating-text {
+    font-size: 18px;
+    font-weight: 400;
+    color: #565656;
+}
+
+.review-rates{
+    font-weight: 700;
+    font-size: 24px;
+
+}
+.review-number{
+    font-weight:700;
+    font-size:16px;
+    margin-left: 6px;
+}
