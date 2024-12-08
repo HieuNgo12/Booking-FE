@@ -270,8 +270,8 @@ function HotelSearchBody() {
               <button type="submit" className="search-button  mt-5">Search</button>
             </div>
           </div>
-          <div>
-            <input placeholder="Sort By" />
+          <div className="">
+            <input placeholder="Sort By - Our Top Pick for Family" />
           </div>
         </div>
         <div className="flex">
@@ -289,10 +289,10 @@ function HotelSearchBody() {
                 </div>
                 <div className="flex">
                   <div>
-                    <button>Min Price</button>
+                    <button className="price">Min Price $</button>
                   </div>
                   <div>
-                    <button>Max Price</button>
+                    <button className="price">Max Price $</button>
                   </div>
                 </div>
               </div>
@@ -303,7 +303,7 @@ function HotelSearchBody() {
                 {guestRatings.map((rating) => {
                   return (
                     <div className="flex">
-                      <input type="radio" />
+                      <input type="checkbox" />
                       <div>{rating.label}</div>
                     </div>
                   );
@@ -316,7 +316,7 @@ function HotelSearchBody() {
                 {roomFacilities.map((facility) => {
                   return (
                     <div className="flex">
-                      <input type="radio" />
+                      <input type="checkbox" />
                       <div>{facility.label}</div>
                     </div>
                   );
