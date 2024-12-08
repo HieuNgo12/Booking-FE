@@ -21,12 +21,12 @@ function SamplePrevArrow(props) {
   );
 }
 
-function ArrowSlider({  people, ...props }) {
+function ArrowSlider({ people, ...props }) {
   var settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 6,
     slidesToScroll: 4,
     initialSlide: 0,
     responsive: [
@@ -36,32 +36,32 @@ function ArrowSlider({  people, ...props }) {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
+          slidesToScroll: 1,
+        },
+      },
     ],
-    
+
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
   return (
-      <Slider {...settings} className="mb-6">
-        {/* {people?.length &&
+    <Slider {...settings} className="">
+      {/* {people?.length &&
           people.map((person, index) => {
             return (
               <div className="container">
@@ -72,9 +72,14 @@ function ArrowSlider({  people, ...props }) {
             );
           })} */}
 
-          <Card
-                />
-      </Slider>
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+    </Slider>
   );
 }
 

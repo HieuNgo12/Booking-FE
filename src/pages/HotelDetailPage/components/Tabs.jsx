@@ -73,10 +73,27 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       // onClose: () => setModal(false),
     });
   };
+   const tabSx = {
+    '& .MuiTabs-indicator': {
+      backgroundColor: '#07689F',
+      color: "#07689F",
+    },
+    '& .MuiButtonBase-root.MuiTab-root': {
+      color: 'black',
+      transition: 'color 0.2s ease-in-out',
+      '&:hover': {
+        color: '#07689F)',
+      },
+      '&.Mui-selected': {
+        color: '#07689F',
+      },
+    },
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
+        sx={tabSx }
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"

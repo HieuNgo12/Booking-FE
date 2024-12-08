@@ -15,6 +15,7 @@ import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
  import 'react-toastify/dist/ReactToastify.css';
  import "slick-carousel/slick/slick.css";
  import "slick-carousel/slick/slick-theme.css";
+import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -67,6 +68,11 @@ function App() {
     {
       path: "/confirm-page",
       element: <ConfirmPage/>,
+    },
+    
+    {
+      path: "/hotel-favorite-page",
+      element: <HotelFavoriteListPage/>,
     },
   ]);
 

@@ -289,10 +289,10 @@ function HotelSearchBody() {
                 </div>
                 <div className="flex">
                   <div>
-                    <button className="price">Min Price $</button>
+                    <button className="min-price">Min Price $</button>
                   </div>
                   <div>
-                    <button className="price">Max Price $</button>
+                    <button className="min-price">Max Price $</button>
                   </div>
                 </div>
               </div>

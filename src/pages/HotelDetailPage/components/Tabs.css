@@ -5,6 +5,7 @@
     font-size:16px;
     font-weight: 600;
     line-height: 24px;
+    padding: 6px;
 }
 
 .book-now-button{
@@ -31,7 +32,7 @@
 .per-night {
     color: #353535;
     font-weight: 700;
-    font-size:24;
+    font-size:24px;
 
 }
 .head-title {
