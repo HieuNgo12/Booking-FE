@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
+import RoomsAndBed from "./RoomsAndBed";
+import PlaceRules from "./PlaceRules";
+import HotelInfo from "./HotelInfo";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,13 +37,42 @@ function a11yProps(index) {
   };
 }
 
-export default function HotelDetailTabs() {
+export default function hotelDetailTabs({ hotel, ...props }) {
   const [value, setValue] = React.useState(0);
-
+  React.useEffect(() => {
+    console.log(hotel);
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const onBook = (e) => {
+    // alert("Book Success")
+    e.preventDefault();
+    toast.success("Book Success", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // onClose: () => setModal(false),
+    });
+  };
+  const onFav = () => {
+    toast.success("Favorite Success", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // onClose: () => setModal(false),
+    });
+  };
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -55,56 +88,89 @@ export default function HotelDetailTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className="flex">
-          <div style={{ width: "50%" }}>
-            This stylish and roomy family home is nestled in Stockholm's Kista
-            district, just 14 km away from the Royal Swedish Opera, Museum of
-            Medieval Stockholm, and Stureplan. Offering the convenience of free
-            private parking, it's also a short 9 km drive from Friends Arena and
-            14 km from Sergels Torg Square.
-          </div>
-          <div style={{ width: "50%" }}>
-            Your stay at our hotel includes a complimentary breakfast to
-            kickstart your day, and our rooms offer a cosy and comfortable
-            retreat. Select rooms feature a relaxing bath tub for added luxury.
-            Our dedicated staff is at your service, ensuring a seamless and
-            enjoyable experience throughout your stay. In addition to the
-            inviting accommodations, indulge in extra leisure activities such as
-            our fitness centre or pool. We've thoughtfully curated every aspect
-            to make your stay special, promising a combination of comfort,
-            convenience, and delightful extras.
-          </div>
-      
-          <div style={{ width: "50%" }}>
-            Your stay at our hotel includes a complimentary breakfast to
-            kickstart your day, and our rooms offer a cosy and comfortable
-            retreat. Select rooms feature a relaxing bath tub for added luxury.
-            Our dedicated staff is at your service, ensuring a seamless and
-            enjoyable experience throughout your stay. In addition to the
-            inviting accommodations, indulge in extra leisure activities such as
-            our fitness centre or pool. We've thoughtfully curated every aspect
-            to make your stay special, promising a combination of comfort,
-            convenience, and delightful extras.
-          </div>
-          <div style={{ width: "50%" }}>
-            <div>Amenities</div>
-            <div>
-              <div style={{ width: "50%" }}>
+        {hotel.length
+          ? hotel.map((ht) => {
+            console.log(ht);
+              return (
+                <div>
+                  <div className="flex">
+                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
+                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
+                  </div>
+                  <div>
+                    <div className="flex mt-10">
+                      <div style={{ width: "50%" }} >
+                        <div className="head-title">Amenities</div>
+                        <div className="flex">
 
-                <ul>
-                  <li>Free Wifis</li>  
-                </ul>
-              </div>
-              <div style={{ width: "50%" }}></div>
-            </div>
-          </div>
-        </div>
+                          <div className="flex" style={{ width: "50%" }}>
+                            <div>
+                              <img src="/detailPage/wifi.png"/>
+                            </div>
+                            <div className="amenity ml-6">Free Wifi</div>
+                          </div>
+                          <div style={{ width: "50%" }}>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ width: "50%" }} className="">
+                        <div className="family">
+                          2 Adults, 3 Children, 4 Nights | Two room , Double Bed
+                        </div>
+                        <div className="flex">
+                          <div>
+                            <img src="/homepage/location_on.png"/>
+                          </div>
+                          <div>{ht?.address?.number   + " " + ht?.address?.district  + " " +   " " + ht?.address?.ward + ht?.address?.city}</div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{ marginLeft: "70%" }} className="flex">
+                      <div className="price">240$</div>{" "}
+                      <div className="per-night ml-4">per night</div>
+                    </div>
+                    <div
+                      className="flex"
+                      style={{ marginLeft: "70%", marginTop: "20px" }}
+                    >
+                      <div>
+                        <button
+                          onClick={() => {
+                            onFav();
+                          }}
+                        >
+                          <img src={"/detailPage/fav.png"} />
+                        </button>
+                      </div>
+                      <div>
+                        <button className="book-now-button">
+                          <a
+                            href=""
+                            onClick={(e) => {
+                              onBook(e);
+                            }}
+                          >
+                            Book Now
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <HotelInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <RoomsAndBed />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <PlaceRules />
       </CustomTabPanel>
     </Box>
   );

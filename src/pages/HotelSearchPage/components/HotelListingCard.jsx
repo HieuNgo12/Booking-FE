@@ -5,9 +5,9 @@ import ReactPaginate from "react-paginate";
 function HotelListingCard() {
   
   return (
-    <div className="card flex">
+    <div style={{width:"820px"}} className="card flex">
       <div style={{ width: "30%" }}>
-        <img src="" />
+        <img src="/right2.png" />
       </div>
       <div style={{ width: "40%" }}>
         <div className="head-card-title">Title</div>
@@ -23,7 +23,8 @@ function HotelListingCard() {
           </div>
         </div>
       </div>
-      <div style={{ width: "30%" }}>
+      
+      <div >
         <div>
           <div className="flex">
             <div className="discount">10% off</div>

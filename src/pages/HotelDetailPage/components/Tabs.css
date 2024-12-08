@@ -1,0 +1,52 @@
+.black-card {
+    border: 1px solid #D9D9D9;
+    width: 1224px;
+    height: 72px;
+    font-size:16px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.book-now-button{
+    background-color: #07689F;
+    color: white;
+    border-radius: 4px;
+    padding: 8px;
+    width: 200px;
+    height: 48px;
+}
+
+.head-title {
+    font-weight: 700;
+    font-size:24px;
+    line-height: 33.6px;
+}
+
+.price {
+    font-weight:700;
+    color: green;
+    font-size: 24px;
+}
+
+.per-night {
+    color: #353535;
+    font-weight: 700;
+    font-size:24;
+
+}
+.head-title {
+    font-weight: 700;
+    font-size: 20;
+}
+
+.family {
+    font-weight: 700;
+    font-size:20px;
+
+}
+
+.free-wifi {
+    color: #565656;
+    font-weight:400;
+    font-size:16px;
+}

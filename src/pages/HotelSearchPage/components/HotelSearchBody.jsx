@@ -160,6 +160,9 @@ function HotelSearchBody() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
+        <div>
+          
+        </div>
         <div className="mt-10 mb-10">
           <div className="blue-title ">What is your Next Dream Place?</div>
           <div className="sub-title ">
@@ -374,7 +377,7 @@ function HotelSearchBody() {
             </div>
           </div>
           {/* Card */}
-          <div style={{ width: "70%" }}>
+          <div style={{width: "1000px"}}>
             <HotelListingCard />
             <div className="mt-10">
               <button className="white-button-classic">
@@ -399,6 +402,8 @@ function HotelSearchBody() {
             />
           </div>
         </div>
+        
+      
       </form>
     </div>
   );

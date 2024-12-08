@@ -7,3 +7,7 @@
   border-radius: 6px;
   text-align: center;
 }
+
+.product-tags :hover{
+    background-color: #07689f;
+}
