@@ -1,31 +1,46 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   UserOutlined,
-  ProfileOutlined,
+  CalendarOutlined,
   FolderOpenOutlined,
   QuestionCircleOutlined,
   SettingOutlined,
   RightOutlined,
-  LockOutlined 
+  KeyOutlined,
+  ApiOutlined,
+  StopOutlined,
+  ProfileOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
+import Cookies from "js-cookie";
+
+const list = [
+  { name: "Profile", value: "profile", icon: UserOutlined },
+  { name: "Authentication", value: "authentication", icon: KeyOutlined },
+  { name: "Booking", value: "booking", icon: CalendarOutlined },
+  { name: "Preferences", value: "preferences", icon: ProfileOutlined },
+  { name: "Payment", value: "payment", icon: FolderOpenOutlined },
+  { name: "Support", value: "support", icon: QuestionCircleOutlined },
+  { name: "Setting", value: "setting", icon: SettingOutlined },
+];
 
 const SideBarAccountPage = () => {
-  const list = [
-    { name: "Profile", value: "profile", icon: UserOutlined },
-    { name: "Password", value: "password", icon: LockOutlined  },
-    { name: "Preferences", value: "preferences", icon: ProfileOutlined },
-    { name: "Payment", value: "payment", icon: FolderOpenOutlined },
-    { name: "Support", value: "support", icon: QuestionCircleOutlined },
-    { name: "Setting", value: "setting", icon: SettingOutlined },
-  ];
   const location = useLocation();
   const currentPath = location.pathname;
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("refreshToken");
+    navigate("/login");
+  };
   return (
     <div
       style={{
         width: "25%",
-        height : "50%",
+        height: "50%",
         paddingRight: "20px",
         borderRight: "1px solid #ccc",
         backgroundColor: "#fff",
@@ -63,6 +78,14 @@ const SideBarAccountPage = () => {
                   backgroundColor: isActive ? "#f0f9ff" : "#fff",
                   transition: "all 0.3s",
                 }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#f5f5f5";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = isActive
+                    ? "#f0f9ff"
+                    : "#fff";
+                }}
               >
                 <div
                   style={{
@@ -79,6 +102,48 @@ const SideBarAccountPage = () => {
             </li>
           );
         })}
+        <li
+          style={{
+            marginBottom: "15px",
+            fontFamily: "Poppins",
+            borderTop: "1px solid #eaeaea", // Đường kẻ
+            paddingTop: "15px", // Khoảng cách trên đường kẻ
+            cursor: "pointer",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "12px 16px",
+              textDecoration: "none",
+              fontSize: "16px",
+              border: "1px solid #eaeaea",
+              borderRadius: "8px",
+              transition: "all 0.3s",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#f5f5f5";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#fff";
+            }}
+            onClick={() => Logout()}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <LogoutOutlined style={{ fontSize: "18px" }} />
+              <span>Log Out</span>
+            </div>
+            <RightOutlined />
+          </div>
+        </li>
       </ul>
     </div>
   );

@@ -258,7 +258,7 @@ const SignUpPage = () => {
                     block
                     className="bg-[#07689f]"
                   >
-                    SIGN UP 
+                    SIGN UP
                   </Button>
                 </Form.Item>
                 <div style={{ textAlign: "center", marginTop: "20px" }}>

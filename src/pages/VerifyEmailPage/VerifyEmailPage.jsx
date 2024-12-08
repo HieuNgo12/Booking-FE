@@ -1,15 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Layout,
-  Row,
-  Col,
-  Typography,
-} from "antd";
+import { Form, Input, Button, Layout, Row, Col, Typography } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,9 +13,10 @@ const { Title, Text } = Typography;
 
 const VerifyEmailPage = () => {
   const navigate = useNavigate();
-  const onFinish = async (values) => {
+  const [otp, setOtp] = useState(null);
+  const onFinish = async () => {
     try {
-      console.log(values);
+      console.log(otp);
       const req1 = await fetch(`${import.meta.env.VITE_URL_API}/verify-email`, {
         method: "PATCH",
         headers: {
@@ -32,7 +24,7 @@ const VerifyEmailPage = () => {
         },
         credentials: "include",
         body: JSON.stringify({
-          otp: values.otp,
+          otp: otp,
         }),
       });
       const res1 = await req1.json();
@@ -58,7 +50,7 @@ const VerifyEmailPage = () => {
           progress: undefined,
           theme: "light",
           onClose: () => {
-            navigate("/profile");
+            navigate("/account");
           },
         });
       }
@@ -171,7 +163,10 @@ const VerifyEmailPage = () => {
                 >
                   <div className="flex justify-center items-center">
                     {" "}
-                    <Input.OTP placeholder="OTP" />
+                    <Input.OTP
+                      placeholder="OTP"
+                      onChange={(value) => setOtp(value)}
+                    />
                   </div>
                 </Form.Item>
 
@@ -182,7 +177,7 @@ const VerifyEmailPage = () => {
                     block
                     className="bg-[#07689f]"
                   >
-                    Sent OTP
+                    Submit
                   </Button>
                 </Form.Item>
 

@@ -3,25 +3,33 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import SideBarAccountPage from "./SideBarAccountPage";
 import ProfilePage from "./ProfilePage";
-import PreferencesPage from "./PreferencesPage";
 import PaymentInfoPage from "./PaymentInfoPage";
 import EditInfoPage from "./EditInfoPage";
-import EditContactPage from "./EditContactPage";
 import SupportPage from "./SupportPage";
 import SettingPage from "./SettingPage";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import AuthenticationPage from "./AuthenticationPage";
+import BookingPage from "./BookingPage";
 import PasswordPage from "./PasswordPage";
+import PreferencesPage from "./PreferencesPage";
+import EditEmailPage from "./EditEmailPage";
+import EditPhonePage from "./EditPhonePage";
+import EditIDCardPage from "./EditIDCardPage";
 
 const listRoutes = [
   { namePage: ProfilePage, namePath: "/profile" },
-  { namePage: PasswordPage, namePath: "/password" },
+  { namePage: BookingPage, namePath: "/booking" },
+  { namePage: AuthenticationPage, namePath: "/authentication" },
   { namePage: PreferencesPage, namePath: "/preferences" },
   { namePage: PaymentInfoPage, namePath: "/payment" },
   { namePage: SupportPage, namePath: "/support" },
   { namePage: SettingPage, namePath: "/setting" },
   { namePage: EditInfoPage, namePath: "/profile/edit-info" },
-  { namePage: EditContactPage, namePath: "/profile/edit-contact" },
+  { namePage: EditEmailPage, namePath: "/authentication/edit-email" },
+  { namePage: EditPhonePage, namePath: "/authentication/edit-phone" },
+  { namePage: EditIDCardPage, namePath: "/authentication/edit-id-card" },
+  { namePage: PasswordPage, namePath: "/setting/password" },
 ];
 
 const AccountPage = () => {
@@ -110,7 +118,6 @@ const AccountPage = () => {
               style={{ color: "#07689F", fontWeight: "bold" }}
             >{`${dataUser?.firstName} ${dataUser?.lastName}`}</span>
           </div>
-          {/* <div className="text-right">{dataUser.email}</div> */}
         </div>
       </div>
       <div
@@ -119,7 +126,7 @@ const AccountPage = () => {
           display: "flex",
           flexDirection: "row",
           maxWidth: "1200px",
-          height: "70vh",
+          height: "90vh",
           margin: "0 auto",
           padding: "20px",
           backgroundColor: "#f9f9f9",
@@ -133,8 +140,7 @@ const AccountPage = () => {
             <Route
               key={index}
               path={item.namePath}
-              element={<item.namePage dataUser={dataUser} />}
-              dataUser={dataUser}
+              element={<item.namePage dataUser={dataUser} callApi={callApi} />}
             />
           ))}
         </Routes>

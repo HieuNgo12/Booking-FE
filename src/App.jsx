@@ -21,8 +21,13 @@ import SettingPage from "./pages/AccountPage/SettingPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage/VerifyEmailPage";
 import EditInfoPage from "./pages/AccountPage/EditInfoPage";
-import EditContactPage from "./pages/AccountPage/EditContactPage";
 import PasswordPage from "./pages/AccountPage/PasswordPage";
+import BookingPage from "./pages/AccountPage/BookingPage";
+import DetailBookingPage from "./pages/DetailBookingPage/DetailBookingPage";
+import AuthenticationPage from "./pages/AccountPage/AuthenticationPage";
+import EditEmailPage from "./pages/AccountPage/EditEmailPage";
+import EditPhonePage from "./pages/AccountPage/EditPhonePage";
+import EditIDCardPage from "./pages/AccountPage/EditIDCardPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -96,17 +101,34 @@ function App() {
               element: <EditInfoPage />,
               errorElement: <ErrorPage />,
             },
-            {
-              path: "edit-contact",
-              element: <EditContactPage />,
-              errorElement: <ErrorPage />,
-            },
           ],
         },
         {
-          path: "password",
-          element: <PasswordPage />,
+          path: "booking",
+          element: <BookingPage />,
           errorElement: <ErrorPage />,
+        },
+        {
+          path: "authentication",
+          element: <AuthenticationPage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "edit-email",
+              element: <EditEmailPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "edit-phone",
+              element: <EditPhonePage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "edit-id-card",
+              element: <EditIDCardPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
         },
         {
           path: "preferences",
@@ -127,12 +149,23 @@ function App() {
           path: "setting",
           element: <SettingPage />,
           errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "password",
+              element: <PasswordPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
         },
       ],
     },
     {
       path: "/hotel-detail/:hotelId",
       element: <HotelDetailPage />,
+    },
+    {
+      path: "/booking-detail/:bookingId",
+      element: <DetailBookingPage />,
     },
   ]);
 

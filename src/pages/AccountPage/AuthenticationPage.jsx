@@ -1,33 +1,39 @@
 import { Link, useLocation } from "react-router-dom";
 import {
-  QuestionCircleOutlined,
+  MobileOutlined,
   RightOutlined,
-  PhoneOutlined,
-  MessageOutlined,
-  FormOutlined,
+  IdcardOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
-
-const SupportPage = () => {
+import { FaGlobe } from "react-icons/fa";
+import { Collapse } from "antd";
+const { Panel } = Collapse;
+const AuthenticationPage = () => {
   const list = [
-    { name: "Chat", value: "chat-easyset", icon: MessageOutlined },
+    { name: "Email", value: "edit-email", icon: MailOutlined },
     {
-      name: "Visit the help center",
-      value: "help-center",
-      icon: QuestionCircleOutlined,
+      name: "Phone",
+      value: "edit-phone",
+      icon: MobileOutlined,
     },
     {
-      name: "Call Easyset",
-      value: "call-easyset",
-      icon: PhoneOutlined,
+      name: "ID Card",
+      value: "edit-id-card",
+      icon: IdcardOutlined,
     },
-    { name: "Share your feedback", value: "feedback", icon: FormOutlined },
+    {
+      name: "Passport ",
+      value: "edit-passport",
+      icon: FaGlobe,
+    },
   ];
+
   const location = useLocation();
   const currentPath = location.pathname;
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Support</h2>
+        <h2 className="text-2xl font-bold">Authentication</h2>
       </div>
       <p className="text-gray-600 mb-4 font-[Subtitle]">
         Have questions or feedback for us? We're listening.
@@ -45,7 +51,7 @@ const SupportPage = () => {
                 }}
               >
                 <Link
-                  to={`/account/${item.value}`}
+                  to={`/account/authentication/${item.value}`}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -84,4 +90,4 @@ const SupportPage = () => {
   );
 };
 
-export default SupportPage;
+export default AuthenticationPage;
