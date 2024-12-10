@@ -5,6 +5,7 @@ import {
   PhoneOutlined,
   MessageOutlined,
   FormOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 
 const SupportPage = () => {
@@ -19,6 +20,11 @@ const SupportPage = () => {
       name: "Call Easyset",
       value: "call-easyset",
       icon: PhoneOutlined,
+    },
+    {
+      name: "Sent email",
+      value: "sent-email-to-easyset",
+      icon: MailOutlined,
     },
     { name: "Share your feedback", value: "feedback", icon: FormOutlined },
   ];
@@ -45,7 +51,7 @@ const SupportPage = () => {
                 }}
               >
                 <Link
-                  to={`/account/${item.value}`}
+                  to={`/account/support/${item.value}`}
                   style={{
                     display: "flex",
                     alignItems: "center",

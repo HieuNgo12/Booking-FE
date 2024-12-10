@@ -16,6 +16,9 @@ import PreferencesPage from "./PreferencesPage";
 import EditEmailPage from "./EditEmailPage";
 import EditPhonePage from "./EditPhonePage";
 import EditIDCardPage from "./EditIDCardPage";
+import SupportChatPage from "./SupportChatPage";
+import SupportEmailPage from "./SupportEmailPage";
+import RankPage from "./RankPage";
 
 const listRoutes = [
   { namePage: ProfilePage, namePath: "/profile" },
@@ -30,6 +33,9 @@ const listRoutes = [
   { namePage: EditPhonePage, namePath: "/authentication/edit-phone" },
   { namePage: EditIDCardPage, namePath: "/authentication/edit-id-card" },
   { namePage: PasswordPage, namePath: "/setting/password" },
+  { namePage: SupportEmailPage, namePath: "/support/sent-email-to-easyset" },
+  { namePage: SupportChatPage, namePath: "/support/chat-easyset" },
+  { namePage: RankPage, namePath: "/profile/view-rank" },
 ];
 
 const AccountPage = () => {

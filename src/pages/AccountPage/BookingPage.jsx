@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { List, Avatar } from "antd";// Import useNavigate
+import { List, Avatar, Tabs } from "antd"; // Import useNavigate
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
+import GetHotelBookingPage from "./GetHotelBookingPage";
 
 const BookingPage = ({ dataUser }) => {
   const [dataBooking, setdDataBooking] = useState(null);
@@ -64,6 +65,40 @@ const BookingPage = ({ dataUser }) => {
     }
   };
 
+  const nameHearder = [
+    {
+      name: "All",
+      component: dataBooking ? (
+        <GetHotelBookingPage dataBooking={dataBooking} />
+      ) : (
+        <div>Loading...</div>
+      ),
+    },
+    {
+      name: "Hotel",
+      component: dataBooking ? (
+        <GetHotelBookingPage dataBooking={dataBooking} />
+      ) : (
+        <div>Loading...</div>
+      ),
+    },
+    {
+      name: "Flight",
+      component: dataBooking ? (
+        <GetHotelBookingPage dataBooking={dataBooking} />
+      ) : (
+        <div>Loading...</div>
+      ),
+    },
+    {
+      name: "Tour",
+      component: dataBooking ? (
+        <GetHotelBookingPage dataBooking={dataBooking} />
+      ) : (
+        <div>Loading...</div>
+      ),
+    },
+  ];
   console.log(dataBooking);
   useEffect(() => {
     callApi();
@@ -76,43 +111,34 @@ const BookingPage = ({ dataUser }) => {
           <h2 className="text-2xl font-bold">Booking</h2>
         </div>
         <h2 className="text-lg font-bold">Hotel</h2>
-        {dataBooking && (
-          <div className="bg-white rounded-lg shadow-md">
-            <List
-              itemLayout="horizontal"
-              dataSource={dataBooking}
-              renderItem={(item) => (
-                <List.Item
-                  className="flex justify-between items-center bg-white p-4 shadow-md rounded-lg hover:shadow-lg cursor-pointer"
-                  onClick={() =>
-                    window.open(`/booking-detail/${item._id}`, "_blank")
-                  } // Mở tab mới
+        <Tabs
+          defaultActiveKey="1"
+          type="card"
+          size="large"
+          tabBarStyle={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+          items={nameHearder.map((item, i) => {
+            const id = String(i + 1);
+            return {
+              label: (
+                <div
+                  style={{
+                    flex: 1, // Chia đều mỗi tab
+                    width: "100px",
+                    textAlign: "center",
+                  }}
                 >
-                  <div className="flex items-center gap-4 m-2">
-                    <Avatar
-                      src={item.avatar}
-                      size={64}
-                      className="rounded-md"
-                    />
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-900">
-                        {item.objectId.hotelName}
-                      </h4>
-                      <p className="text-sm text-gray-500">
-                        {item.bookingStartDate.slice(0, 10)} -{" "}
-                        {item.bookingEndDate.slice(0, 10)}{" "}
-                      </p>
-                      <p className="text-sm text-green-600">{item.status}</p>
-                    </div>
-                  </div>
-                  <div className="text-right flex items-center gap-4 mr-3 font-bold">
-                    {item.totalAmount}
-                  </div>
-                </List.Item>
-              )}
-            />
-          </div>
-        )}
+                  {item.name}
+                </div>
+              ),
+              key: id,
+              children: item.component,
+            };
+          })}
+        />
       </div>
     </div>
   );

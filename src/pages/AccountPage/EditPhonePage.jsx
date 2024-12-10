@@ -10,7 +10,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 const EditPhonePage = ({ dataUser }) => {
   const navigate = useNavigate();
   const [formPhone] = Form.useForm();
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(dataUser?.phone || "");
   const [changeBtn, setChangeBtn] = useState(true);
   const [otp, setOtp] = useState("");
   const [confirmationResult, setConfirmationResult] = useState(null);
@@ -51,6 +51,16 @@ const EditPhonePage = ({ dataUser }) => {
       console.log(confirmation);
       setConfirmationResult(confirmation);
       console.log("OTP sent to phone:", phone);
+      toast.success(`OTP sent to phone: ${phone}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.error("Error sending OTP:", error.message);
     }
@@ -168,6 +178,15 @@ const EditPhonePage = ({ dataUser }) => {
     }
   };
 
+  useEffect(() => {
+    if (dataUser?.phone) {
+      setPhone(dataUser.phone);
+    }
+  }, [dataUser]);
+  
+  console.log(dataUser);
+  console.log(phone);
+
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">
       <div className="flex justify-between">
@@ -185,8 +204,14 @@ const EditPhonePage = ({ dataUser }) => {
 
       {dataUser ? (
         <>
-          <Form form={formPhone} layout="vertical" className="mt-5 mb-5">
+          <Form
+            form={formPhone}
+            layout="vertical"
+            className="mt-5 mb-5"
+            initialValues={{ phone: dataUser?.phone || "" }}
+          >
             <Form.Item
+              name="phone"
               label={
                 <div className="flex items-end gap-2">
                   <h3 className="text-lg font-bold">Phone</h3>

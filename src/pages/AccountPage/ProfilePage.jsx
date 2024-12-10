@@ -127,7 +127,7 @@ const ProfilePage = ({ dataUser }) => {
             <p className="text-sm font-bold text-gray-700">ID Card</p>
             <p className="text-gray-900">
               {" "}
-              {dataUser?.idCard ? dataUser?.idCard : "Not Provided"}
+              {dataUser?.idCard ? dataUser?.idCard?.number : "Not Provided"}
             </p>
             {dataUser?.verificationStatus.idCardVerified ? (
               <p className="text-green-500 font-[Subtitle]">
@@ -147,7 +147,7 @@ const ProfilePage = ({ dataUser }) => {
           <h2 className="text-2xl font-bold">Rank</h2>
           <div
             className="text-[#07689F] text-sm hover:underline cursor-pointer"
-            onClick={() => navigate("/account/profile/edit-rank")}
+            onClick={() => navigate("/account/profile/view-rank")}
           >
             View Details
           </div>
@@ -163,31 +163,6 @@ const ProfilePage = ({ dataUser }) => {
           <p className="text-blue-500 text-lg font-semibold">Gold Member</p>
           <p className="text-gray-600">
             Enjoy exclusive 10% discounts on all bookings!
-          </p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mb-4">
-          <p className="text-sm font-bold text-gray-700">
-            Progress to Next Rank
-          </p>
-          <div className="bg-gray-200 rounded-full h-4 w-full">
-            <div
-              className="bg-green-500 h-4 rounded-full"
-              style={{ width: "70%" }}
-            ></div>
-          </div>
-          <p className="text-sm text-gray-600 mt-2">
-            70% completed to reach Platinum Rank.
-          </p>
-        </div>
-
-        {/* Loyalty Points */}
-        <div>
-          <p className="text-sm font-bold text-gray-700">Loyalty Points</p>
-          <p className="text-gray-900">1200 Points</p>
-          <p className="text-gray-600">
-            Earn 300 more points to unlock the next level.
           </p>
         </div>
       </div>

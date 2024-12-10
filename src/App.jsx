@@ -28,6 +28,10 @@ import AuthenticationPage from "./pages/AccountPage/AuthenticationPage";
 import EditEmailPage from "./pages/AccountPage/EditEmailPage";
 import EditPhonePage from "./pages/AccountPage/EditPhonePage";
 import EditIDCardPage from "./pages/AccountPage/EditIDCardPage";
+import SupportChatPage from "./pages/AccountPage/SupportChatPage";
+import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
+import FilterPage from "./pages/AccountPage/FilterPage";
+import RankPage from "./pages/AccountPage/RankPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -87,6 +91,11 @@ function App() {
       errorElement: <ErrorPage />,
     },
     {
+      path: "filter",
+      element: <FilterPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
       path: "/account",
       element: <AccountPage />,
       errorElement: <ErrorPage />,
@@ -99,6 +108,11 @@ function App() {
             {
               path: "edit-info",
               element: <EditInfoPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "view-rank",
+              element: <RankPage />,
               errorElement: <ErrorPage />,
             },
           ],
@@ -144,6 +158,18 @@ function App() {
           path: "support",
           element: <SupportPage />,
           errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "chat-easyset",
+              element: <SupportChatPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "sent-email-to-easyset",
+              element: <SupportEmailPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
         },
         {
           path: "setting",

@@ -4,29 +4,27 @@ import {
   Input,
   Button,
   Typography,
-  Space,
   DatePicker,
   Upload,
   message,
+  Row,
+  Col,
 } from "antd";
-import {
-  LoadingOutlined,
-  PlusOutlined,
-  LogoutOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import { ToastContainer, toast } from "react-toastify";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-phone-input-2/lib/style.css";
+import moment from "moment";
 
 const EditIDCardPage = ({ dataUser }) => {
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [fileList, setFileList] = useState([]);
+  const [frontFileList, setFrontFileList] = useState([]);
+  const [backFileList, setBackFileList] = useState([]);
+  const [changeBtn, setChangeBtn] = useState(true);
   const navigate = useNavigate();
 
-  //upload
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
@@ -41,23 +39,12 @@ const EditIDCardPage = ({ dataUser }) => {
     return true;
   };
 
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList.slice(-1));
+  const handleFrontChange = ({ fileList }) => {
+    setFrontFileList(fileList.slice(-1));
   };
 
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
+  const handleBackChange = ({ fileList }) => {
+    setBackFileList(fileList.slice(-1));
   };
 
   const uploadButton = (
@@ -67,9 +54,125 @@ const EditIDCardPage = ({ dataUser }) => {
     </div>
   );
 
+  const handleNameUpperCase = (e) => {
+    const value = e.target.value.toUpperCase();
+    form.setFieldsValue({ fullName: value });
+  };
+
+  const onFinish = async (values) => {
+    console.log("Form Values: ", values);
+    try {
+      let req1 = await fetch(`${import.meta.env.VITE_URL_API}/update-id-card`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          number: values.number,
+          fullName: values.fullName,
+          DOI: values.DOI,
+          POI: values.POI,
+        }),
+      });
+      if (req1.status === 401) {
+        const req2 = await fetch(
+          `${import.meta.env.VITE_URL_API}/refresh-token`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        if (req2.ok) {
+          let req1 = await fetch(
+            `${import.meta.env.VITE_URL_API}/update-id-card`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+              body: JSON.stringify({
+                number: values.number,
+                fullName: values.fullName,
+                DOI: values.DOI,
+                POI: values.POI,
+              }),
+            }
+          );
+          let res1 = await req1.json();
+          if (req1.ok) {
+            toast.success(res1.message, {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              onClose: () => setChangeBtn(true),
+            });
+          } else if (req1.status === 400) {
+            toast.warn(res1.message, {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        }
+      }
+      let res1 = await req1.json();
+      if (req1.ok) {
+        toast.success(res1.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => setChangeBtn(true),
+        });
+      } else if (req1.status === 400) {
+        toast.warn(res1.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error internal", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   return (
-    <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">
-      <div className="flex justify-between">
+    <div className="p-6 w-3/4 mx-auto bg-white rounded-lg shadow-md">
+      <div className="flex justify-between items-center">
         <Typography.Title level={2}>Edit ID Card</Typography.Title>
         <Button
           type="default"
@@ -81,111 +184,157 @@ const EditIDCardPage = ({ dataUser }) => {
       </div>
 
       <p className="text-gray-600 mb-5">
-        Keep your account safe with a secure password and by signing out of
-        devices you're not actively using.
+        Please upload your ID card information to keep your account secure.
       </p>
 
       {dataUser ? (
-        <>
-          {/* Verify ID Card Section */}
-          <h3 className="text-lg font-bold mt-5">Verify ID Card</h3>
-          <Form layout="vertical" className="mt-5">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Form
+          form={form}
+          layout="vertical"
+          className="mt-5"
+          onFinish={onFinish}
+          initialValues={{
+            number: dataUser?.idCard.number || "",
+            DOI: dataUser?.idCard.DOI ? moment(dataUser.idCard.DOI) : null,
+            fullName: dataUser?.idCard.fullName || "",
+            POI: dataUser?.idCard.POI || "",
+          }}
+        >
+          {/* First Row */}
+          <Row gutter={16}>
+            <Col span={12}>
               <Form.Item
-                name="idCard"
+                name="number"
                 label="ID Card"
                 rules={[{ required: true, message: "ID Card is required" }]}
-                style={{ width: "48%" }}
               >
-                <Input placeholder="ID Card" />
+                <Input
+                  placeholder="Enter ID Card Number"
+                  disabled={changeBtn}
+                />
               </Form.Item>
-
+            </Col>
+            <Col span={12}>
               <Form.Item
                 name="DOI"
                 label="Date of Issue"
                 rules={[
                   { required: true, message: "Date of Issue is required" },
                 ]}
-                style={{ width: "48%" }}
               >
-                <DatePicker style={{ width: "100%" }} />
+                <DatePicker
+                  style={{ width: "100%" }}
+                  placeholder="Select Date"
+                  disabled={changeBtn}
+                />
               </Form.Item>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            </Col>
+          </Row>
+
+          {/* Second Row */}
+          <Row gutter={16}>
+            <Col span={12}>
               <Form.Item
                 name="fullName"
                 label="Full Name"
                 rules={[{ required: true, message: "Full Name is required" }]}
-                style={{ width: "48%" }}
               >
-                <Input placeholder="Full Name" />
+                <Input
+                  placeholder="Enter Full Name"
+                  disabled={changeBtn}
+                  onChange={handleNameUpperCase}
+                />
               </Form.Item>
-
+            </Col>
+            <Col span={12}>
               <Form.Item
                 name="POI"
                 label="Place of Issue"
                 rules={[
                   { required: true, message: "Place of Issue is required" },
                 ]}
-                style={{ width: "48%" }}
               >
-                <Input placeholder="Place of Issue" />
+                <Input
+                  placeholder="Enter Place of Issue"
+                  disabled={changeBtn}
+                />
               </Form.Item>
-            </div>
-            <div className="flex justify-around">
-              <div>
-                <div className="font-bold">Front ID Card</div>
+            </Col>
+          </Row>
+
+          {/* Image Upload Section */}
+          <div className="mt-5">
+            <Row gutter={16}>
+              <Col span={12}>
+                <div className="font-bold mb-2">Front ID Card</div>
                 <Form.Item>
-                  <ImgCrop
-                    rotationSlider
-                    rotate
-                    aspect={85.6 / 54} // Tỉ lệ ID Card
-                    modalWidth={600}
-                    grid
-                  >
+                  <ImgCrop rotate aspect={85.6 / 54} grid>
                     <Upload
-                      name="avatar"
+                      name="frontId"
                       listType="picture-card"
-                      fileList={fileList} // Chỉ giữ 1 file
+                      fileList={frontFileList}
                       beforeUpload={beforeUpload}
-                      onChange={handleChange} // Cập nhật danh sách file
-                      onPreview={onPreview}
+                      onChange={handleFrontChange}
                     >
-                      {fileList.length < 1 && uploadButton}
+                      {frontFileList.length < 1 && uploadButton}
                     </Upload>
                   </ImgCrop>
                 </Form.Item>
-              </div>
-              <div>
-                <div className="font-bold">Back ID Card</div>
+              </Col>
+              <Col span={12}>
+                <div className="font-bold mb-2">Back ID Card</div>
                 <Form.Item>
-                  <ImgCrop
-                    rotationSlider
-                    rotate
-                    aspect={85.6 / 54} // Tỉ lệ ID Card
-                    modalWidth={600}
-                    grid
-                  >
+                  <ImgCrop rotate aspect={85.6 / 54} grid>
                     <Upload
-                      name="avatar"
+                      name="backId"
                       listType="picture-card"
-                      fileList={fileList} // Chỉ giữ 1 file
+                      fileList={backFileList}
                       beforeUpload={beforeUpload}
-                      onChange={handleChange} // Cập nhật danh sách file
-                      onPreview={onPreview}
+                      onChange={handleBackChange}
                     >
-                      {fileList.length < 1 && uploadButton}
+                      {backFileList.length < 1 && uploadButton}
                     </Upload>
                   </ImgCrop>
                 </Form.Item>
-              </div>
-            </div>
-          </Form>
-        </>
+              </Col>
+            </Row>
+          </div>
+
+          {/* Submit Button */}
+          <Form.Item>
+            {changeBtn ? (
+              <Button
+                type="primary"
+                htmlType="button"
+                className="w-full bg-[#07689F]"
+                style={{
+                  whiteSpace: "nowrap",
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setChangeBtn(false);
+                }}
+              >
+                CHANGE
+              </Button>
+            ) : (
+              <Button
+                htmlType="submit"
+                type="primary"
+                className="w-full"
+                style={{
+                  whiteSpace: "nowrap",
+                  backgroundColor: "green",
+                }}
+              >
+                SAVE
+              </Button>
+            )}
+          </Form.Item>
+        </Form>
       ) : (
         <p>Loading...</p>
       )}
-
       <ToastContainer />
     </div>
   );

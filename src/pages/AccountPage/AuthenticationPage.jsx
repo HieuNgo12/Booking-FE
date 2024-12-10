@@ -5,7 +5,6 @@ import {
   IdcardOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import { FaGlobe } from "react-icons/fa";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 const AuthenticationPage = () => {
@@ -20,11 +19,6 @@ const AuthenticationPage = () => {
       name: "ID Card",
       value: "edit-id-card",
       icon: IdcardOutlined,
-    },
-    {
-      name: "Passport ",
-      value: "edit-passport",
-      icon: FaGlobe,
     },
   ];
 
