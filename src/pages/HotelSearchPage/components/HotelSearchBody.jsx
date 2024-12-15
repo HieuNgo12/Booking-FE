@@ -160,6 +160,9 @@ function HotelSearchBody() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
+        <div>
+          
+        </div>
         <div className="mt-10 mb-10">
           <div className="blue-title ">What is your Next Dream Place?</div>
           <div className="sub-title ">
@@ -267,8 +270,8 @@ function HotelSearchBody() {
               <button type="submit" className="search-button  mt-5">Search</button>
             </div>
           </div>
-          <div>
-            <input placeholder="Sort By" />
+          <div className="">
+            <input placeholder="Sort By - Our Top Pick for Family" />
           </div>
         </div>
         <div className="flex">
@@ -286,10 +289,10 @@ function HotelSearchBody() {
                 </div>
                 <div className="flex">
                   <div>
-                    <button>Min Price</button>
+                    <button className="min-price">Min Price $</button>
                   </div>
                   <div>
-                    <button>Max Price</button>
+                    <button className="min-price">Max Price $</button>
                   </div>
                 </div>
               </div>
@@ -300,7 +303,7 @@ function HotelSearchBody() {
                 {guestRatings.map((rating) => {
                   return (
                     <div className="flex">
-                      <input type="radio" />
+                      <input type="checkbox" />
                       <div>{rating.label}</div>
                     </div>
                   );
@@ -313,7 +316,7 @@ function HotelSearchBody() {
                 {roomFacilities.map((facility) => {
                   return (
                     <div className="flex">
-                      <input type="radio" />
+                      <input type="checkbox" />
                       <div>{facility.label}</div>
                     </div>
                   );
@@ -374,7 +377,7 @@ function HotelSearchBody() {
             </div>
           </div>
           {/* Card */}
-          <div style={{ width: "70%" }}>
+          <div style={{width: "1000px"}}>
             <HotelListingCard />
             <div className="mt-10">
               <button className="white-button-classic">
@@ -399,6 +402,8 @@ function HotelSearchBody() {
             />
           </div>
         </div>
+        
+      
       </form>
     </div>
   );

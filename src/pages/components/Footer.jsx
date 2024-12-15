@@ -18,7 +18,7 @@ function Footer() {
         </div>
       </div>
       <hr />
-      <div className=" flex" style={{ width: "1600px" }}>
+      <div className=" flex" style={{ width: "1400px" }}>
         <div className="footer-text">
           <ul>
             <li className="footer-title">About Us</li>
@@ -94,12 +94,16 @@ function Footer() {
             <button className="subscribe">Subscribe</button>
           </div>
         </div>
-        <div>
-          <img src="/homepage/linkedin.png" />
-          <img src="/homepage/telegram.png" />
-          <img src="/homepage/twitter.png" />
-          <img src="/homepage/Facebook.png" />
-          <img src="/homepage/insta.png" />
+        <div></div>
+      </div>
+      <div className="flex">
+        <div className="  flex justify-center ">Copyright Rimel EasySet</div>
+        <div className=" flex justify-center ">Easyset@gmail.com</div>
+        <div className="  flex justify-center ">
+          Easyset24: Seamless Journeys. Unrivalled Travel Wisdom
+        </div>
+        <div className="   flex justify-center ">
+          123 Oxford Street. London Kingdom
         </div>
       </div>
     </div>

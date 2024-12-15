@@ -15,7 +15,7 @@ function Navbar() {
           <a href="/signup" >Register</a>
         </div>
       </nav>
-      <div className="flex product-tags">
+      <div  style={{marginLeft: "20%"}} className="flex product-tags">
         <div>
           <a href="/hotel-search">Trip</a>
         </div>
