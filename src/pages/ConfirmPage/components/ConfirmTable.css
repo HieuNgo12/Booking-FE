@@ -1,0 +1,17 @@
+th {
+    background-color: #A6A6A6 !important;
+}
+
+td{
+    color: #000000;
+    font-size: 16px;
+    line-height: 22.4px;
+    font-weight:700;
+}
+
+.sub-title {
+    color: #000000;
+    font-size: 16px;
+    line-height: 22.4px;
+    font-weight:700;
+}

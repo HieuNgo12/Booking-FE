@@ -1,16 +1,124 @@
 .side-card-payment {
-    width: 519px;
-    height:576px;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid black;
+  width: 519px;
+  height: 576px;
+  border-radius: 8px;
+  border: 1px solid white;
 }
 
-.ancilaries{
-    color:#565656;
-    font-weight: 400;
+.ancilaries {
+  color: #565656;
+  font-weight: 400;
 }
 
 .description div {
-    color : #565656;
+  color: #565656;
+}
+
+.payment-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.payment-mail {
+  font-weight: 400;
+  font-size: 12px;
+  color: #000000;
+}
+
+.check-button {
+  border: 1px solid #07689f;
+  border-radius: 4px;
+  color: #07689f;
+  padding: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 10%;
+}
+
+.who-are-you {
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.main-guest {
+  color: #565656;
+}
+
+.enter-info {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.edit-profile {
+  font-weight: 400;
+  font-size: 14px;
+  color: #07689f;
+  margin-left: auto;
+}
+
+.profile-card {
+  border: 1px solid #ffffff;
+}
+
+.payment-container {
+  background-color: #efefef;
+}
+
+.head-title {
+  color: #000000;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.classic-input {
+  width: 180px;
+  height: 48px;
+  border-radius: 4px;
+  border: 1px solid grey;
+}
+
+.email-phone {
+  font-size: 12px;
+}
+
+.long-payment-input {
+  width: 364px;
+  height: 48px;
+}
+
+.check-in {
+  width: 200px;
+}
+
+.price-summary {
+  color: #000000;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 33.6px;
+}
+
+.original-price {
+  color: #000000;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.price-and-nights {
+  margin-left: auto;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22.4px;
+}
+
+.check-in-border {
+  border-left: 2px solid #07689f;
+  padding-left: 9px;
+  border-radius: 4px;
+}
+
+.sub-title{
+    color: #000000;
+    font-size: 16px;
+    font-weight: 700;
 }

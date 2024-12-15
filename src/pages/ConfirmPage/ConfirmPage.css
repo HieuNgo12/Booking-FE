@@ -1,0 +1,68 @@
+.your-hotel-reservation {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+
+}
+
+.confirmed{
+    color: #07689F;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.sub-head-title{ 
+    font-weight: 500;
+    font-size: 16px;
+
+}
+
+.cancellation-policy{
+    font-weight : 700;
+    font-size: 24px;
+}
+
+.confirm-page-container{
+    padding: 5%;
+    background-color: white;
+    margin: 20px;
+    border-radius: 4px;
+}
+
+.container{
+    background-color: #EFEFEF;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.booking-no{
+    color: #112211;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33.6px;
+}
+
+.check-your {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22.4px;
+}
+
+.hotel-roles{
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pay-attention{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22.4px;
+}
+
+.sub-title {
+    color: #000000;
+    font-size: 16px;
+    line-height: 22.4px;
+    font-weight:700;
+}

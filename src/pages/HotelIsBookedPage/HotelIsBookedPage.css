@@ -1,0 +1,63 @@
+.container-center{
+    /* background-image: ; */
+        padding-left: 30%;
+        padding-top: 5%;
+    background-image: url("");
+    
+}
+
+.is-booked-card {
+    border: 1px solid #D9D9D9;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.room-availability {
+    padding: 16px;
+    width: 464px;
+    height: 48px;
+    color: white;
+    background-color: #07689F;
+    margin-left: 5%;
+}
+
+.during-your {
+    color: #565656;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+.subscribe-for {
+    color: #000000;
+    font-size: 14px;
+
+    font-weight: 400;   
+}
+
+.our-hotel{
+    color: #A80102;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.we-apologize{
+    font-weight:700;
+}
+
+.thank-you{
+ color: #000000;
+ font-size: 16px;
+ font-weight: 600;
+ margin-top:16px;
+}
+
+.is-booked-card{
+    width: 640px;
+    height: 387px;
+}
+
+.checking-back{
+    color: #565656;
+    margin-bottom: 16px;
+}

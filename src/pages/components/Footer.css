@@ -91,3 +91,11 @@ footer li:hover {
   padding-left: 16px;
 
 }
+
+.bottom-footer{
+  background-color: #F8F8F8;
+  width:1224px;
+  height:22px;
+  padding:19px;
+  padding-left: 108px;
+}

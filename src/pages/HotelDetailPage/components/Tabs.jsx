@@ -73,27 +73,30 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       // onClose: () => setModal(false),
     });
   };
-   const tabSx = {
-    '& .MuiTabs-indicator': {
-      backgroundColor: '#07689F',
+  const tabSx = {
+    "& .MuiTabs-indicator": {
+      backgroundColor: "#07689F",
       color: "#07689F",
     },
-    '& .MuiButtonBase-root.MuiTab-root': {
-      color: 'black',
-      transition: 'color 0.2s ease-in-out',
-      '&:hover': {
-        color: '#07689F)',
+    "& .MuiButtonBase-root.MuiTab-root": {
+      color: "black",
+      transition: "color 0.2s ease-in-out",
+      "&:hover": {
+        color: "#07689F)",
       },
-      '&.Mui-selected': {
-        color: '#07689F',
+      "&.Mui-selected": {
+        color: "#07689F",
       },
     },
   };
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box className="p-6" sx={{ width: "100%" }}>
+      <Box
+        className="container-center"
+        sx={{ borderBottom: 1, borderColor: "divider", alignItem: "center" }}
+      >
         <Tabs
-        sx={tabSx }
+          sx={tabSx}
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
@@ -107,7 +110,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       <CustomTabPanel value={value} index={0}>
         {hotel.length
           ? hotel.map((ht) => {
-            console.log(ht);
+              console.log(ht);
               return (
                 <div>
                   <div className="flex">
@@ -116,19 +119,20 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "50%" }} >
+                      <div style={{ width: "50%" }}>
                         <div className="head-title">Amenities</div>
-                        <div className="flex">
-
-                          <div className="flex" style={{ width: "50%" }}>
-                            <div>
-                              <img src="/detailPage/wifi.png"/>
-                            </div>
-                            <div className="amenity ml-6">Free Wifi</div>
-                          </div>
-                          <div style={{ width: "50%" }}>
-
-                          </div>
+                        <div className="">
+                          {hotel[0].roomId[0].amenities.map((amenity) => {
+                            return (
+                              <div className="flex" style={{ width: "50%" }}>
+                                <div>
+                                  <img src="/detailPage/wifi.png" />
+                                </div>
+                                <div className="amenity ml-6">{amenity}</div>
+                              </div>
+                            );
+                          })}
+                          <div style={{ width: "50%" }}></div>
                         </div>
                       </div>
                       <div style={{ width: "50%" }} className="">
@@ -137,10 +141,17 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                         </div>
                         <div className="flex">
                           <div>
-                            <img src="/homepage/location_on.png"/>
+                            <img src="/homepage/location_on.png" />
                           </div>
-                          <div>{ht?.address?.number   + " " + ht?.address?.district  + " " +   " " + ht?.address?.ward + ht?.address?.city}</div>
-
+                          <div>
+                            {ht?.address?.number +
+                              " " +
+                              ht?.address?.district +
+                              " " +
+                              " " +
+                              ht?.address?.ward +
+                              ht?.address?.city}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -181,10 +192,10 @@ export default function hotelDetailTabs({ hotel, ...props }) {
           : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <HotelInfo />
+        <HotelInfo hotel={hotel} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <RoomsAndBed />
+        {hotel[0]?.roomId?.length ? <RoomsAndBed hotel={hotel} /> : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <PlaceRules />

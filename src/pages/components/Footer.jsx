@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer ">
-        <div className="flex mb-12">
+      <div className="flex mb-12">
         <div>
           <div className="go-further">Go Further With The EasySet24 App</div>
           <div className="enjoy-savings">
@@ -94,18 +94,22 @@ function Footer() {
             <button className="subscribe">Subscribe</button>
           </div>
         </div>
-        <div>
-        </div>
-        
+        <div></div>
       </div>
-      <div className="flex">
-        <div className="  flex justify-center ">
-          Copyright Rimel EasySet
+      <div className="flex bottom-footer">
+        <div className="  flex justify-center mr-6 ">
+          <div>
+            <img src="/homepage/R.png" />
+          </div>
+          <div>Copyright Rimel EasySet</div>
         </div>
-        <div className=" flex justify-center ">
-          Easyset@gmail.com
+        <div className=" flex justify-center mr-6 ">
+          <div>
+            <img src="/homepage/mail.png" />
+          </div>
+          <div>Easyset@gmail.com</div>
         </div>
-        <div className="  flex justify-center ">
+        <div className="  flex justify-center mr-6 ">
           Easyset24: Seamless Journeys. Unrivalled Travel Wisdom
         </div>
         <div className="   flex justify-center ">
