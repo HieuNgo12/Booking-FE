@@ -1,0 +1,15 @@
+.favorite-card{
+    width: 392px;
+    height: 248px;
+    border: 1px solid #D9D9D9;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.fav-card-image {
+    width: 30%;
+}
+
+.fav-card-infp{
+    width: 70%;
+}

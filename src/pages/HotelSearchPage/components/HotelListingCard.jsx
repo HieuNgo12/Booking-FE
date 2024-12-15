@@ -45,14 +45,14 @@ function HotelListingCard() {
         <div>
           <div className="flex">
             <div className="discount">10% off</div>
-            <div className="ml-6 money">$130</div>
+            <div className="ml-6 money black-price">$130</div>
           </div>
           <div>Included taxes and charges</div>
           <div className="sustainable-level flex">
             <div>
               <img src="/listpage/leaves-2.png" />
             </div>
-            <div>Trip Sustainable level 5</div>
+            <div className="trip-sustainable">Trip Sustainable level 5</div>
           </div>
           <div className="available flex">
             {" "}

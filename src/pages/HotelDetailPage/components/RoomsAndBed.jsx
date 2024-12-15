@@ -1,40 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./RoomsAndBed.css";
-function RoomsAndBed() {
+function RoomsAndBed({ hotel, ...props }) {
+  useEffect(() => {
+    console.log(hotel);
+  }, []);
   return (
     <table class="table-auto">
       <thead>
         <tr>
-          <th>Room Type</th>
+          <th></th>
+
+          <th>Room Name</th>
           <th>Number Of Guest</th>
-          <th>Today's Price</th>
+          <th>Room Type</th>
           <th>Your Choices</th>
-          <th>Select Room</th>
+          <th>Room Detail</th>
           <th>Today's Price</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type="select" />
-          </td>
+      <tbody className="content-center	">
+        {hotel[0].roomId?.length ? (
+          hotel[0].roomId.map((room) => {
+            console.log(room);
+            return (
+              <tr>
+                <td>
+                  <img src={room.imgRoom} />
+                </td>
+                <td>{room.roomName}</td>
 
-          <td>
-            <input type="select" />
-          </td>
+                <td className="">{room.maxOccupancy}</td>
 
-          <td>
-            Free cancellation before 2:00 PM on December 13, 2024 10% Genius
-            discount applied to the price before taxes and charges • Only 2
-            rooms left on our site
-          </td>
-          <td>
-            <input type="select" />
-          </td>
-          <td>
-            <button>I'll Reserve</button>
-          </td>
-        </tr>
+                <td>{room.roomType}</td>
+                <td>
+                  <input type="select" />
+                </td>
+                <td>{room.detailRoom}</td>
+                <td>
+                  <button>{room.pricePerNight} $</button>
+                </td>
+              </tr>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </tbody>
     </table>
   );

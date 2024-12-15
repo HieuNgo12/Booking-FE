@@ -1,0 +1,27 @@
+.explore-stay-card {
+    width: 288px;
+    height: 367px;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+
+}
+
+
+.side{
+    color: #A6A6A6;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.date-explore-stay{
+    color: #000000;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16.8px;
+}
+
+.profile-image{
+    width: 272px;
+    height: 203px;
+}
