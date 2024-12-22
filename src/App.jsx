@@ -45,7 +45,7 @@ function App() {
       children: [],
     },
     {
-      path: "/payment-detail",
+      path: "/payment-detail/:roomId",
       element: <PaymentDetailPage />,
       errorElement: <ErrorPage />,
       children: [],
@@ -67,7 +67,7 @@ function App() {
       element: <HotelDetailPage />,
     },
     {
-      path: "/confirm-page",
+      path: "/confirm-page/:bookingId",
       element: <ConfirmPage />,
     },
 

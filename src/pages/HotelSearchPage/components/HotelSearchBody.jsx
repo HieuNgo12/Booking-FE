@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./HotelSearchBody.css";
 import { Slider } from "@mui/material";
 import HotelListingCard from "./HotelListingCard";
 import ReactPaginate from "react-paginate";
+import { services } from "../../Services/services";
+import PassengerModal from "./PassengerModal";
+import RadioGroup from "../../components/RadioGroup";
 const SignupSchema = Yup.object().shape({
   place: Yup.string()
     .min(2, "Required at least 2 letters")
@@ -13,9 +16,13 @@ const SignupSchema = Yup.object().shape({
   vip: Yup.string()
     .min(2, "Company must be at least 2 letters")
     .max(50, "Company name must be maximum 50 letters")
-    .required("Company name is Required"),
-  passengers: Yup.string().required("Required"),
-  checkout: Yup.string().required("Required"),
+    .required("VIP is Required"),
+  passengers: Yup.string().required("Passengers is Required"),
+  checkin: Yup.string().required("Check In is Required"),
+
+  checkout: Yup.string()
+    // .moreThan(Yup.ref("checkin"), "Cannot Exceed Checkin Date")
+    .required("Check Out Is Required"),
 });
 const popularFilters = [
   {
@@ -133,17 +140,28 @@ const travelSustainability = [
 ];
 function HotelSearchBody() {
   const [pageCount, setPageCount] = useState(1);
+  const [roomList, setRoomList] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const handlePageClick = ({ selected }) => {
     console.log(selected);
     // setLoading(true);
     setCurrentPage(selected);
   };
 
-  const [hotelList, setHotelList] = useState([
-    {
-      title: "Radisson Blu",
-    },
-  ]);
+  const itemsPerPage = 5;
+  const getRooms = async () => {
+    const data = await services.getRoomList(itemsPerPage, currentPage);
+
+    console.log(data.data.data);
+    setRoomList(data.data.data);
+  };
+  useEffect(() => {
+    getRooms();
+  }, [currentPage]);
   const formik = useFormik({
     initialValues: {
       place: "",
@@ -152,7 +170,12 @@ function HotelSearchBody() {
       checkout: "",
     },
     validationSchema: SignupSchema,
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      console.log(values);
+      alert("Hello");
+      const data = await services.postRoomSearch(values);
+      console.log(data);
+    },
     // return redirect("");
 
     // setSuccess(true);
@@ -177,7 +200,7 @@ function HotelSearchBody() {
                 name="place"
                 type="place"
                 onChange={formik.handleChange}
-                value={formik.values.firstName}
+                value={formik.values.place}
               />
 
               <div className="flex">
@@ -191,7 +214,7 @@ function HotelSearchBody() {
               <div className="title">VIP</div>
               <input
                 id="vip"
-                className="search-input"
+                className="small-input"
                 name="vip"
                 type="vip"
                 onChange={formik.handleChange}
@@ -208,6 +231,7 @@ function HotelSearchBody() {
             <div>
               <div className="title">Passengers - Room Condition</div>
               <input
+                onClick={(ev) => setOpen(true)}
                 className="search-input"
                 id="passengers"
                 name="passengers"
@@ -224,6 +248,12 @@ function HotelSearchBody() {
                   )}
                 </div>
               </div>
+              <PassengerModal
+                open={open}
+                setOpen={setOpen}
+                handleClose={handleClose}
+                handleOpen={handleOpen}
+              />
             </div>
             <div>
               <div className="title">Check In</div>
@@ -297,13 +327,13 @@ function HotelSearchBody() {
               </div>
             </div>
             <div>
-              <div className="head-sidebar-title">Guests Rating</div>
+              <div className="head-sidebar-title">Popular Rating</div>
               <div>
                 {guestRatings.map((rating) => {
                   return (
                     <div className="flex">
                       <input type="checkbox" />
-                      <div>{rating.label}</div>
+                      <div className="ml-2">{rating.label}</div>
                     </div>
                   );
                 })}
@@ -316,7 +346,7 @@ function HotelSearchBody() {
                   return (
                     <div className="flex">
                       <input type="checkbox" />
-                      <div>{facility.label}</div>
+                      <div className="ml-2">{facility.label}</div>
                     </div>
                   );
                 })}
@@ -329,7 +359,7 @@ function HotelSearchBody() {
                   return (
                     <div className="flex">
                       <input type="radio" />
-                      <div>{facility.label}</div>
+                      <div className="ml-2">{facility.label}</div>
                     </div>
                   );
                 })}
@@ -342,42 +372,88 @@ function HotelSearchBody() {
                   return (
                     <div className="flex">
                       <input type="radio" />
-                      <div>{facility.label}</div>
+                      <div className="ml-2">{facility.label}</div>
                     </div>
                   );
                 })}
               </div>
             </div>
             <div>
-              <div>Guests Rating</div>
+              <div className="head-sidebar-title">Leisure Activities</div>
+              <div>{<RadioGroup object={leisureActivities} />}</div>
+            </div>
+            <div>
+              <div className="head-sidebar-title">Travel Sustainability</div>
               <div>
-                {guestRatings.map((rating) => {
-                  return (
-                    <div className="flex">
-                      <input type="radio" />
-                      <div>{rating.label}</div>
-                    </div>
-                  );
-                })}
+                <RadioGroup
+                  flex={false}
+                  object={[
+                    {
+                      value: "level2AndAbove1",
+                      label: "Level 2 and Above 1",
+                    },
+                    {
+                      value: "level2AndAbove2",
+                      label: "Level  and Above 2",
+                    },
+                  ]}
+                />
               </div>
             </div>
             <div>
-              <div>Leisure Activities</div>
+              <div className="head-sidebar-title">
+                Accommodation Classification
+              </div>
               <div>
-                {leisureActivities.map((activity) => {
-                  return (
-                    <div className="flex">
-                      <input type="radio" />
-                      <div>{activity.label}</div>
-                    </div>
-                  );
-                })}
+                <RadioGroup
+                  flex={false}
+                  object={[
+                    {
+                      value: "5stars",
+                      label: "5 Stars",
+                    },
+                    {
+                      value: "4stars",
+                      label: "4 Stars",
+                    },
+                    {
+                      value: "3stars",
+                      label: "3 Stars",
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="head-sidebar-title">Distance From the Centre</div>
+              <div>
+                <RadioGroup
+                  flex={false}
+                  object={[
+                    {
+                      value: "lessThan1KM",
+                      label: "Less Than 1 KM",
+                    },
+                    {
+                      value: "lessThan5KM",
+                      label: "Less Than 5 KM",
+                    },
+                    {
+                      value: "lessThan15KM",
+                      label: "Less Than 15KM",
+                    },
+                  ]}
+                />
               </div>
             </div>
           </div>
           {/* Card */}
           <div style={{ width: "1000px" }}>
-            <HotelListingCard />
+            {roomList.length
+              ? roomList.map((room) => {
+                  return <HotelListingCard room={room} />;
+                })
+              : null}
             <div className="mt-10">
               <button className="white-button-classic">
                 List Your Favorite Places

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Questions() {
+function Questions({hotel,...props}) {
   const [openCard, setOpenCard] = useState(false);
   return (
     <div>

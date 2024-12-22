@@ -11,6 +11,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Questions from "./components/Questions";
+import { addDefaultSrc } from "../Services/defaultImage";
 function HotelDetailPage({ hotels, ...props }) {
   const { hotelId } = useParams();
   const [hotel, setHotel] = useState([]);
@@ -25,39 +26,44 @@ function HotelDetailPage({ hotels, ...props }) {
     getHotel();
   }, []);
   return (
-    <div>
+    <div className="center-gov ">
       <Navbar />
       {hotel?.length ? (
         <div className="img-container  flex p-6">
-          <div
-            className="p-6"
-            style={{ width: "601px", height: "558px", borderRadius: "4px" }}
-          >
-            <img src={"/detailPage/photo.png"} />
+          <div className="">
+            <img
+              src={hotel[0]?.imgHotel?.avatar}
+              onError={(ev) => addDefaultSrc(ev)}
+              style={{ width: "601px", height: "565px", borderRadius: "4px" }}
+            />
           </div>
           <div style={{ width: "601px", height: "558px" }}>
-            <div className="flex p-6">
+            <div className="flex ml-2 ">
               <img
-                className="image-corner mr-6"
-                style={{ width: "294px", height: "247px", borderRadius: "4px" }}
-                src={"/detailPage/photo.png"}
+                className="image-corner mr-2 mb-2"
+                style={{ width: "294px", height: "279px", borderRadius: "4px" }}
+                onError={(ev) => addDefaultSrc(ev)}
+                src={hotel[0]?.imgHotel?.avatar}
               />
               <img
-                className="image-corner"
-                style={{ width: "294px", height: "247px", borderRadius: "4px" }}
-                src={"/detailPage/photo.png"}
+                className="image-corner mb-2"
+                style={{ width: "294px", height: "279px", borderRadius: "4px" }}
+                onError={(ev) => addDefaultSrc(ev)}
+                src={hotel[0]?.imgHotel?.avatar}
               />
             </div>
-            <div className="flex p-6">
+            <div className="flex  ml-2">
               <img
-                className="image-corner mr-6"
-                style={{ width: "50%", height: "247px", borderRadius: "4px" }}
-                src={"/detailPage/photo.png"}
+                className="image-corner mr-2"
+                style={{ width: "294px", height: "279px", borderRadius: "4px" }}
+                onError={(ev) => addDefaultSrc(ev)}
+                src={hotel[0]?.imgHotel?.avatar}
               />
               <img
                 className="image-corner"
-                style={{ width: "50%", height: "247px", borderRadius: "4px" }}
-                src={"/detailPage/photo.png"}
+                style={{ width: "294px", height: "279px", borderRadius: "4px" }}
+                onError={(ev) => addDefaultSrc(ev)}
+                src={hotel[0]?.imgHotel?.avatar}
               />
             </div>
           </div>
@@ -67,16 +73,14 @@ function HotelDetailPage({ hotels, ...props }) {
       <div className="ml-6">
         <div>
           <div>
-        
-            <div className="head-title">
+            <div className="head-title mb-6">
               The Most Frequented Questions Asked By Travellers
             </div>
-         
           </div>
         </div>
         <div>
-              <Questions />
-            </div>
+          <Questions />
+        </div>
 
         <div className="black-card">
           Since This option is a non-refundable reservation And there is no
@@ -96,9 +100,9 @@ function HotelDetailPage({ hotels, ...props }) {
       </div>
 
       <div className=" mt-6 ">
-        <ArrowSlider />
+        <ArrowSlider hotel={hotel[0]}/>
         <div>
-          <div className="review-rates mb-2 mt-2 ml-6">Review Rates</div>
+          <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
           <div className="flex ml-6">
             <div style={{ width: "20%" }}>
               <div className="flex">

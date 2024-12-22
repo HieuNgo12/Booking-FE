@@ -7,9 +7,15 @@
 }
 
 .fav-card-image {
-    width: 30%;
+    width: 50%;
 }
 
-.fav-card-infp{
-    width: 70%;
+.fav-card-info{
+    width: 50%;
+}
+
+.black-price{
+    font-weight: 700;
+    font-size: 16px;
+    
 }

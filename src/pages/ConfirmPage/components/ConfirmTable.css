@@ -1,5 +1,6 @@
 th {
     background-color: #A6A6A6 !important;
+    text-align: center;
 }
 
 td{
@@ -7,6 +8,8 @@ td{
     font-size: 16px;
     line-height: 22.4px;
     font-weight:700;
+    border: 1px solid #D9D9D9;
+    text-align: center;
 }
 
 .sub-title {
