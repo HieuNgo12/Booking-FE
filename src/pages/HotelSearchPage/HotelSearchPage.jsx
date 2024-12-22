@@ -5,7 +5,7 @@ import HotelSearchBody from './components/HotelSearchBody'
 
 function HotelSearchPage() {
   return (
-    <div className='center-gov'>
+    <div className='ml-12'>
     <Navbar />
     <HotelSearchBody />
     <Footer />

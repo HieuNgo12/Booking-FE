@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Card.css";
-function Card({ review, ...props }) {
-  useEffect(()=>{
-    console.log(review);
-  },[])
+function Card({ person, ...props }) {
   return (
     <div className="card p-2">
       <div>

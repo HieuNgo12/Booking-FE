@@ -74,7 +74,7 @@ function Footer() {
         </div>
       </div>
       <div className="flex">
-        <div className="copy-right  text-gray-400 flex mt-12 flex mb-12">
+        <div className="copy-right  text-gray-400 flex mt-12 flex">
           <img src="/homepage/visacard.png" />
           <img src="/homepage/ameexpress.png" />
           <img src="/homepage/mastercard.png" />
@@ -96,29 +96,15 @@ function Footer() {
         </div>
         <div></div>
       </div>
-      <div className="flex bottom-footer ">
-        <div className="  flex justify-center mr-6 ">
-          <div>
-            <img src="/homepage/R.png" />
-          </div>
-          <div className="ml-2">Copyright Rimel EasySet</div>
-        </div>
-        <div className=" flex justify-center mr-6 ">
-          <div>
-            <img src="/homepage/mail.png" />{" "}
-            <div className="   flex justify-center ">
-              123 Oxford Street. London Kingdom
-            </div>
-          </div>
-          <div className="ml-2">Easyset@gmail.com</div>
-        </div>
-        <div className="  flex justify-center mr-6 ">
+      <div className="flex">
+        <div className="  flex justify-center ">Copyright Rimel EasySet</div>
+        <div className=" flex justify-center ">Easyset@gmail.com</div>
+        <div className="  flex justify-center ">
           Easyset24: Seamless Journeys. Unrivalled Travel Wisdom
         </div>
         <div className="   flex justify-center ">
           123 Oxford Street. London Kingdom
         </div>
-        <div className="   flex justify-center ml-10">446699</div>
       </div>
     </div>
   );
