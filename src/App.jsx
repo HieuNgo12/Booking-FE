@@ -9,14 +9,34 @@ import { ToastContainer } from "react-toastify";
 import HotelSearchPage from "./pages/HotelSearchPage/HotelSearchPage";
 import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
-import SignUpPage from "./pages/SignUp/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import AccountPage from "./pages/AccountPage/AccountPage";
+import ProfilePage from "./pages/AccountPage/ProfilePage";
+import PreferencesProfilePage from "./pages/AccountPage/PreferencesPage";
+import PaymentInfoPage from "./pages/AccountPage/PaymentInfoPage";
+import SupportPage from "./pages/AccountPage/SupportPage";
+import SettingPage from "./pages/AccountPage/SettingPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage/VerifyEmailPage";
+import EditInfoPage from "./pages/AccountPage/EditInfoPage";
+import PasswordPage from "./pages/AccountPage/PasswordPage";
+import BookingPage from "./pages/AccountPage/BookingPage";
+import DetailBookingPage from "./pages/DetailBookingPage/DetailBookingPage";
+import AuthenticationPage from "./pages/AccountPage/AuthenticationPage";
+import EditEmailPage from "./pages/AccountPage/EditEmailPage";
+import EditPhonePage from "./pages/AccountPage/EditPhonePage";
+import EditIDCardPage from "./pages/AccountPage/EditIDCardPage";
+import SupportChatPage from "./pages/AccountPage/SupportChatPage";
+import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
+import FilterPage from "./pages/AccountPage/FilterPage";
+import RankPage from "./pages/AccountPage/RankPage";
 import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
-import "react-toastify/dist/ReactToastify.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+ import 'react-toastify/dist/ReactToastify.css';
+ import "slick-carousel/slick/slick.css";
+ import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
-import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -45,7 +65,7 @@ function App() {
       children: [],
     },
     {
-      path: "/payment-detail/:roomId",
+      path: "/payment-detail",
       element: <PaymentDetailPage />,
       errorElement: <ErrorPage />,
       children: [],
@@ -54,31 +74,134 @@ function App() {
       path: "/login",
       element: <LoginPage />,
       errorElement: <ErrorPage />,
-      children: [],
     },
     {
       path: "/signup",
       element: <SignUpPage />,
       errorElement: <ErrorPage />,
-      children: [],
+    },
+    {
+      path: "/forgot-passowrd",
+      element: <ForgotPasswordPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/reset-passowrd",
+      element: <ResetPasswordPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/verify-email",
+      element: <VerifyEmailPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "filter",
+      element: <FilterPage />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/account",
+      element: <AccountPage />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "profile",
+          element: <ProfilePage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "edit-info",
+              element: <EditInfoPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "view-rank",
+              element: <RankPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
+        },
+        {
+          path: "booking",
+          element: <BookingPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "authentication",
+          element: <AuthenticationPage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "edit-email",
+              element: <EditEmailPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "edit-phone",
+              element: <EditPhonePage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "edit-id-card",
+              element: <EditIDCardPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
+        },
+        {
+          path: "preferences",
+          element: <PreferencesProfilePage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "payment",
+          element: <PaymentInfoPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
+          path: "support",
+          element: <SupportPage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "chat-easyset",
+              element: <SupportChatPage />,
+              errorElement: <ErrorPage />,
+            },
+            {
+              path: "sent-email-to-easyset",
+              element: <SupportEmailPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
+        },
+        {
+          path: "setting",
+          element: <SettingPage />,
+          errorElement: <ErrorPage />,
+          children: [
+            {
+              path: "password",
+              element: <PasswordPage />,
+              errorElement: <ErrorPage />,
+            },
+          ],
+        },
+      ],
     },
     {
       path: "/hotel-detail/:hotelId",
       element: <HotelDetailPage />,
     },
     {
-      path: "/confirm-page/:bookingId",
-      element: <ConfirmPage />,
+      path: "/booking-detail/:bookingId",
+      element: <DetailBookingPage />,
     },
-
+    
     {
       path: "/hotel-favorite-page",
-      element: <HotelFavoriteListPage />,
-    },
-
-    {
-      path: "/hotel-is-booked",
-      element: <HotelIsBookedPage />,
+      element: <HotelFavoriteListPage/>,
     },
   ]);
 
