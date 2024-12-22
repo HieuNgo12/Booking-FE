@@ -27,14 +27,19 @@ export const services = {
     const data = await axios.get(dataUrl);
     return data;
   },
-  postRoomSearch: async ( body) => {
+  postRoomSearch: async (body) => {
     const dataUrl = `${url}/api/v1/searchRoom`;
     const data = await axios.post(dataUrl, body);
     return data;
   },
-  createBooking: async ( body) => {
+  createBooking: async (body) => {
     const dataUrl = `${url}/api/v1/createBookingWithoutAuthen`;
     const data = await axios.post(dataUrl, body);
+    return data;
+  },
+  getHotelListByQuery: async (itemsPerPage, currentPage,body) => {
+    const dataUrl = `${url}/api/v1/getHotelList?limit=${itemsPerPage}&page=${currentPage}`;
+    const data = await axios.get(dataUrl, body);
     return data;
   },
 };

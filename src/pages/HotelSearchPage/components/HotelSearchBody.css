@@ -1,75 +1,77 @@
 .title {
-    color: black;
-    font-weight: 700;
-    font-size: 14px;
+  color: black;
+  font-weight: 700;
+  font-size: 14px;
 }
-.search-input{
-    width:264px;
-    height: 56px;
-    border: 2px solid #D9D9D9;
+.search-input {
+  width: 264px;
+  height: 56px;
+  border: 2px solid #d9d9d9;
 }
-.head-sidebar-title{
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+.head-sidebar-title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .search-button {
-    background-color: #07689F;
-    color: white;
-    border-radius: 4px;
-    width: 182px;
-    height: 56px;
+  background-color: #07689f;
+  color: white;
+  border-radius: 4px;
+  width: 182px;
+  height: 56px;
 }
 
 .min-price {
-    border: 1px solid #A6A6A6;
-    color: #A6A6A6 !important;
-    font-size: 12px !important;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 4px;
+  border: 1px solid #a6a6a6;
+  color: #a6a6a6 !important;
+  font-size: 12px !important;
+  margin: 2px;
+  padding: 2px;
+  border-radius: 4px;
 }
 
-.sort-by {
-
+.sort-by-input {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  width: 269px;
+  height: 40px;
+  padding-left: 6px;
+  padding-top: 6px;
 }
-
 
 .pagination {
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin-top: 10%;
-  }
-  
-  .pagination li {
-    margin: 0 5px 20px 20px;
-  }
-  
-  .pagination li a {
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10%;
+}
 
-    color: #07689F;
-    cursor: pointer;
-  }
-  
-  .pagination li a:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .pagination li.active a {
-    background-color: #07689F;
-    color: white;
-    border: 1px solid #07689F;
-  }
+.pagination li {
+  margin: 0 5px 20px 20px;
+}
 
+.pagination li a {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 
-  .small-input{
+  color: #07689f;
+  cursor: pointer;
+}
 
-    width:50px;
-    height: 56px;
-    border: 2px solid #D9D9D9;
-  }
+.pagination li a:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination li.active a {
+  background-color: #07689f;
+  color: white;
+  border: 1px solid #07689f;
+}
+
+.small-input {
+  width: 50px;
+  height: 56px;
+  border: 2px solid #d9d9d9;
+}

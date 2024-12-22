@@ -140,7 +140,7 @@ const travelSustainability = [
 ];
 function HotelSearchBody() {
   const [pageCount, setPageCount] = useState(1);
-  const [roomList, setRoomList] = useState([]);
+  const [hotelList, sethotelList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -154,14 +154,15 @@ function HotelSearchBody() {
 
   const itemsPerPage = 5;
   const getRooms = async () => {
-    const data = await services.getRoomList(itemsPerPage, currentPage);
+    const data = await services.getHotelListByQuery(itemsPerPage, currentPage);
 
     console.log(data.data.data);
-    setRoomList(data.data.data);
+    sethotelList(data.data.data);
   };
   useEffect(() => {
     getRooms();
   }, [currentPage]);
+
   const formik = useFormik({
     initialValues: {
       place: "",
@@ -299,8 +300,29 @@ function HotelSearchBody() {
               </button>
             </div>
           </div>
-          <div className="">
-            <input placeholder="Sort By - Our Top Pick for Family" />
+          <div className="flex mt-6 mb-6">
+            <div className="mr-6">
+              <img src="/listpage/horizontal.png" />
+            </div>
+            <div>
+              <div className="  sort-by-input">
+                <input placeholder="Sort By - Our Top Pick for Family" />
+              </div>
+              <div>
+                <div>Gothenberg</div>
+                <div>120 properties found</div>
+                <div className="flex">
+                  <div>
+                    Travel professionals dedicated to simplifying your travel
+                    experience by curating flight and accommodation services on
+                    a user-friendly platform. Committed to quality and
+                    assurance.
+                  </div>
+
+                  <div>Find More Here ...</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex">
@@ -449,9 +471,9 @@ function HotelSearchBody() {
           </div>
           {/* Card */}
           <div style={{ width: "1000px" }}>
-            {roomList.length
-              ? roomList.map((room) => {
-                  return <HotelListingCard room={room} />;
+            {hotelList.length
+              ? hotelList.map((hotel) => {
+                  return <HotelListingCard hotel={hotel} />;
                 })
               : null}
             <div className="mt-10">
