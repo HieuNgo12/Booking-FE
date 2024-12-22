@@ -67,14 +67,6 @@ const BookingPage = ({ dataUser }) => {
 
   const nameHearder = [
     {
-      name: "All",
-      component: dataBooking ? (
-        <GetHotelBookingPage dataBooking={dataBooking} />
-      ) : (
-        <div>Loading...</div>
-      ),
-    },
-    {
       name: "Hotel",
       component: dataBooking ? (
         <GetHotelBookingPage dataBooking={dataBooking} />
@@ -99,7 +91,7 @@ const BookingPage = ({ dataUser }) => {
       ),
     },
   ];
-  console.log(dataBooking);
+
   useEffect(() => {
     callApi();
   }, []);

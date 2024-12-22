@@ -197,8 +197,6 @@ function App() {
     {
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
-      // path: "/confirm-page",
-      // element: <ConfirmPage/>,
     },
     
     {

@@ -15,7 +15,11 @@ const GetHotelBookingPage = ({ dataBooking }) => {
             onClick={() => window.open(`/booking-detail/${item._id}`, "_blank")} // Mở tab mới
           >
             <div className="flex items-center gap-4 m-2">
-              <Avatar src={item.avatar} size={64} className="rounded-md" />
+              <Avatar
+                src={item.objectId.imgHotel.avatar}
+                size={64}
+                className="rounded-md"
+              />
               <div>
                 <h4 className="text-lg font-semibold text-gray-900">
                   {item.objectId.hotelName}

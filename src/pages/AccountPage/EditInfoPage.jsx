@@ -64,6 +64,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
+        console.log(response)
         const data = await response.json();
         setCities(data);
       } catch (error) {
@@ -74,9 +75,6 @@ const EditInfoPage = ({ dataUser, callApi }) => {
     fetchData();
   }, []);
 
-  console.log(selectedCity);
-  console.log(selectedDistrict);
-  console.log(selectedWard);
 
   useEffect(() => {
     if (dataUser) {

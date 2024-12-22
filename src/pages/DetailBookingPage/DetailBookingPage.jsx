@@ -136,7 +136,7 @@ const DetailBookingPage = () => {
               <div className="flex gap-6">
                 {/* Hotel Image */}
                 <img
-                  src={dataBooking.objectId.imgHotel}
+                  src={dataBooking.objectId.imgHotel.avatar}
                   alt="Hotel"
                   className="w-24 h-24 rounded-md object-cover"
                 />
