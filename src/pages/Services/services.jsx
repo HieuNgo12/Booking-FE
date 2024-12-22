@@ -17,8 +17,8 @@ export const services = {
     const data = await axios.get(dataUrl);
     return data;
   },
-  getRoomList: async (itemsPerPage, currentPage) => {
-    const dataUrl = `${url}/api/v1/getRoomList?limit=${itemsPerPage}&page=${currentPage}`;
+  getHotelListSearch: async (itemsPerPage, currentPage) => {
+    const dataUrl = `${url}/api/v1/getHotelList?limit=${itemsPerPage}&page=${currentPage}`;
     const data = await axios.get(dataUrl);
     return data;
   },

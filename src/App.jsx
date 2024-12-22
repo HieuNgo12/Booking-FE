@@ -37,6 +37,7 @@ import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
  import "slick-carousel/slick/slick.css";
  import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
+import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -65,7 +66,7 @@ function App() {
       children: [],
     },
     {
-      path: "/payment-detail",
+      path: "/payment-detail/:roomId",
       element: <PaymentDetailPage />,
       errorElement: <ErrorPage />,
       children: [],
@@ -202,6 +203,13 @@ function App() {
     {
       path: "/hotel-favorite-page",
       element: <HotelFavoriteListPage/>,
+    },
+    {
+      path: "/confirm-page/:bookingId",
+      element: <ConfirmPage/>,
+    },  {
+      path: "/hotel-is-booked",
+      element: <HotelIsBookedPage />,
     },
   ]);
 

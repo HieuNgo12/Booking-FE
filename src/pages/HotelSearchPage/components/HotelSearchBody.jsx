@@ -140,7 +140,7 @@ const travelSustainability = [
 ];
 function HotelSearchBody() {
   const [pageCount, setPageCount] = useState(1);
-  const [roomList, setRoomList] = useState([]);
+  const [hotelList, setHotelList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -154,10 +154,10 @@ function HotelSearchBody() {
 
   const itemsPerPage = 5;
   const getRooms = async () => {
-    const data = await services.getRoomList(itemsPerPage, currentPage);
+    const data = await services.getHotelListSearch(itemsPerPage, currentPage);
 
     console.log(data.data.data);
-    setRoomList(data.data.data);
+    setHotelList(data.data.data);
   };
   useEffect(() => {
     getRooms();
@@ -449,9 +449,9 @@ function HotelSearchBody() {
           </div>
           {/* Card */}
           <div style={{ width: "1000px" }}>
-            {roomList.length
-              ? roomList.map((room) => {
-                  return <HotelListingCard room={room} />;
+            {hotelList.length
+              ? hotelList.map((hotel) => {
+                  return <HotelListingCard hotel={hotel} />;
                 })
               : null}
             <div className="mt-10">
