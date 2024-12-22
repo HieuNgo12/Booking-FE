@@ -54,7 +54,7 @@
   font-weight: 400;
   font-size: 14px;
   color: #07689f;
-  margin-left: auto;
+  margin-left: 70%;
 }
 
 .profile-card {
@@ -77,7 +77,12 @@
   border-radius: 4px;
   border: 1px solid grey;
 }
-
+.short-input {
+  width: 80px;
+  height: 48px;
+  border-radius: 4px;
+  border: 1px solid grey;
+}
 .email-phone {
   font-size: 12px;
 }
@@ -85,6 +90,8 @@
 .long-payment-input {
   width: 364px;
   height: 48px;
+  border-radius: 4px;
+  border: 1px solid grey;
 }
 
 .check-in {
@@ -109,6 +116,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 22.4px;
+  color: #4C9839;
 }
 
 .check-in-border {
@@ -117,8 +125,131 @@
   border-radius: 4px;
 }
 
-.sub-title{
-    color: #000000;
-    font-size: 16px;
-    font-weight: 700;
+.sub-title {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 700;
+}
+.radio-text {
+  color: #565656;
+  font-size: 10px;
+  font-weight: 300;
+}
+.room-characters div {
+  background-color: #e8f5e4;
+  border: 1px solid #4c9839;
+  border-radius: 4px;
+  width: 149.67px;
+  height: 40px;
+  text-align: center;
+  padding-top: 8px;
+  margin: 4px;
+}
+
+.text-area-message {
+  width: 613px;
+  height: 106px;
+  border: 1px solid #a6a6a6;
+  border-radius: 2px;
+}
+
+.smart-title {
+  font-weight: 500;
+  font-size: 14;
+}
+
+.superior-twin-room {
+  font-size: 20px;
+  font-weight: 400;
+  margin-left: 4px;
+  padding-top: 2px;
+}
+
+.plain-text
+{
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.save-in-shortcut {
+  border: 1px solid #07689F;
+  border-radius: 4px;
+  padding: 16px;
+  width: 277px;
+  height: 48px;
+  color: #07689F;
+}
+
+.payment-button {
+  width: 277px;
+  height: 48px;
+  padding: 16px;
+  color: white;
+  background-color: #07689F;
+  border-radius: 4px;
+}
+
+.cleanliness-room-rate{
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.reviews{
+  width: 20px;
+  height: 20px;
+  border: 1px solid #07689F;
+  border-radius: 4px;
+  padding: 1px;
+  color: #07689F;
+}
+
+.please-select{
+  border: 1px solid #A6A6A6;
+  border-radius: 4px;
+  width: 244px;
+  height: 32px;
+  padding-left: 4px;
+  margin-bottom: 6px;
+}
+
+.payment-method-input{
+  width: 94px;
+  height: 48px;
+  border-radius: 4px;
+  border: 1px solid grey;
+  margin-right: 20%;
+}
+
+.booking-for-work{
+  margin-left: 20%;
+}
+
+.adult-number{
+  color: #000000;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.pay-part-now-radio{
+  margin-left: auto;
+}
+
+.background-payment{
+  background-color: #EFEFEF;
+}
+
+.nights-stay{
+  font-size: 16px;
+  font-weight: 700;
+  color: #565656 !important;
+}
+
+.discount {
+  margin-left: auto;
+
+}
+
+.discount-letter{
+  color: #565656 !important;
 }

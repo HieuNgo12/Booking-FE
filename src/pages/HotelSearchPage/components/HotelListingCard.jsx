@@ -1,42 +1,73 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./HotelListingCard.css";
 import ReactPaginate from "react-paginate";
 
-function HotelListingCard() {
+function HotelListingCard({ hotel, ...props }) {
+  useEffect(()=>{
+    console.log(hotel);
+  },[])
   return (
     <div style={{ width: "820px" }} className="card flex">
       <div style={{ width: "30%", padding: "4px" }}>
-        <img src="/listpage/Picture.png" />
+        <img src={hotel.imgHotel.avatar} onError={(ev)=> addDefaultSrc(ev)}/>
       </div>
       <div style={{ width: "40%" }}>
-        <div className="head-card-title">Title</div>
-        <div className="flex">
+        <div className="head-card-title">{hotel.hotelName}</div>
+        <div className="flex mt-2">
           <div>
-            <img src="/detailPage/loc.png" />
+            <img src="/detailPage/loc.png" className="mr-2 ml-2" />
           </div>
-          <div>Location</div>
+          <div>
+            {
+            hotel.address.street +
+            " " +
+            hotel.address.ward +
+            hotel.address.city +
+              " " +
+              hotel.address.country +
+              " " +
+              hotel.address.district +
+              " " 
+              }
+          </div>
         </div>
-        <div className="breakfast">Breakfast included</div>
+        <div className="flex">
+        {hotel.amenities.map((amenity) => {
+          return (
+            <div className="breakfast  mt-2 flex">
+              <div>
+                <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+              </div>
+              <div>{amenity}</div>
+            </div>
+          );
+        })}
+        </div>
+   
         <div>
-          <div className="flex">
+          <div className="flex  mt-2 mr-2 ml-2">
             <div className="flex">
               <div>
                 <img src="/listpage/people-right.png" />
               </div>
-              <div></div>1 Adult, 2 Children,
+              <div className="ml-2">2 Adult, 2 Children,</div>
             </div>
-            <div className="flex">
+            <div className="flex ">
               <div>
-                <img src="/listpage/time.png" />
+                <img className="ml-2" src="/listpage/time.png" />
               </div>
-              <div>4 nights</div>
+              <div className="ml-2 ">4 nights</div>
             </div>
           </div>
-          <div className="experience">Experience Unique Oportunities</div>
-          <div>Standard rooms</div>
-          <div className="flex">
+          <div className="experience mr-2 ml-2">
+            Experience Unique Oportunities
+          </div>
+          <div className="mr-2 ml-2">Standard rooms</div>
+          <div className="flex mr-2 ml-2">
             <div className="head-card-title">Very Good</div>
-            <div className="review ml-4">2259 reviews</div>
+            <div className="review ml-4">
+              {hotel.reviewId.length} reviews
+            </div>
           </div>
         </div>
       </div>
@@ -45,23 +76,32 @@ function HotelListingCard() {
         <div>
           <div className="flex">
             <div className="discount">10% off</div>
-            <div className="ml-6 money black-price">$130</div>
+            <div className="ml-6 money black-price">$120</div>
           </div>
-          <div>Included taxes and charges</div>
-          <div className="sustainable-level flex">
+          <div className="mt-2">Included taxes and charges</div>
+          <div className="sustainable-level flex mt-2">
             <div>
               <img src="/listpage/leaves-2.png" />
             </div>
-            <div className="trip-sustainable">Trip Sustainable level 5</div>
+            <div className="trip-sustainable ml-2">
+              Trip Sustainable level 5
+            </div>
           </div>
-          <div className="available flex">
+          <div className="available flex mt-2">
             {" "}
             <div>
               <img src="/listpage/attention.png" />
             </div>
-            <div>We have 2 left at 8% off</div>
+            <div className="ml-2">We have 2 left at 8% off</div>
           </div>
-          <div className="see-availability">See availability {">"}</div>
+          <div className="mt-2">
+            <a
+              className="see-availability"
+              href={`/hotel-detail/${hotel._id}`}
+            >
+              See availability {">"}
+            </a>
+          </div>
         </div>
         <div></div>
       </div>

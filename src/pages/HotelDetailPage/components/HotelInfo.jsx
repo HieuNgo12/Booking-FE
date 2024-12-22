@@ -1,5 +1,6 @@
 import React from "react";
 import "./HotelInfo.css";
+import { addDefaultSrc } from "../../Services/defaultImage";
 function HotelInfo({ hotel, ...props }) {
   return (
     <table class="table-auto">
@@ -10,7 +11,6 @@ function HotelInfo({ hotel, ...props }) {
           <th>Room Name</th>
           <th>Number Of Guest</th>
           <th>Room Type</th>
-          <th>Your Choices</th>
           <th>Room Detail</th>
           <th>Today's Price</th>
         </tr>
@@ -22,16 +22,15 @@ function HotelInfo({ hotel, ...props }) {
             return (
               <tr>
                 <td>
-                  <img src={room.imgRoom} />
+                  <img src={room.imgRoom}          onError={(ev) =>  addDefaultSrc(ev) }
+/>
                 </td>
                 <td>{room.roomName}</td>
 
                 <td className="">{room.maxOccupancy}</td>
 
                 <td>{room.roomType}</td>
-                <td>
-                  <input type="select" />
-                </td>
+             
                 <td>{room.detailRoom}</td>
                 <td>
                   <button>{room.pricePerNight} $</button>

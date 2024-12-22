@@ -21,7 +21,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-function ArrowSlider({ people, ...props }) {
+function ArrowSlider({ people, hotel, ...props }) {
   var settings = {
     dots: true,
     infinite: false,
@@ -71,14 +71,11 @@ function ArrowSlider({ people, ...props }) {
               </div>
             );
           })} */}
-
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {hotel
+        ? hotel.reviewId.map((review) => {
+            return <Card review={review} />;
+          })
+        : null}
     </Slider>
   );
 }

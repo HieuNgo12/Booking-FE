@@ -42,6 +42,8 @@
 }
 
 .product-tags div {
+  position: relative;
+
   color: #a6a6a6;
   width: 121.67px;
   height: 40px;
@@ -49,9 +51,11 @@
   border: 1px solid #a6a6a6;
   text-align: center;
   margin-right: 10px;
-  padding-top: 5px;
+  vertical-align: middle;
 }
-
+.middle {
+  padding-top: 10px;
+}
 .button-classic {
   background-color: #07689f;
   color: white;
@@ -97,4 +101,17 @@
   font-size: 12px;
   color: #000000 !important;
   padding-left: 10px;
+}
+
+body {
+  overflow-x: hidden; /* Hide scrollbars */
+}
+
+.error-field {
+  color: #e5062e;
+  font-size: 12px;
+}
+
+.center-gov{
+  padding-left: 130px;
 }

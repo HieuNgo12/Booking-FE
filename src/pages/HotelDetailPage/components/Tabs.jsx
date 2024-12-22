@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import RoomsAndBed from "./RoomsAndBed";
 import PlaceRules from "./PlaceRules";
 import HotelInfo from "./HotelInfo";
+import { useNavigate } from "react-router-dom";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,9 +46,12 @@ export default function hotelDetailTabs({ hotel, ...props }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  let navigate = useNavigate();
+
   const onBook = (e) => {
     // alert("Book Success")
     e.preventDefault();
+
     toast.success("Book Success", {
       position: "top-center",
       autoClose: 3000,
@@ -59,6 +63,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    navigate(`/payment-detail/${hotel[0].roomId[0]._id}`);
   };
   const onFav = () => {
     toast.success("Favorite Success", {
@@ -72,17 +77,28 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    const savedList = JSON?.parse(localStorage?.getItem("favList")) || [];
+    const filterList = savedList.filter((ht) => ht._id === hotel[0]._id);
+    console.log(savedList);
+    savedList.push(hotel[0]);
+    if (!filterList.length) {
+      localStorage.setItem("favList", JSON.stringify(savedList));
+    }
   };
   const tabSx = {
     "& .MuiTabs-indicator": {
       backgroundColor: "#07689F",
       color: "#07689F",
+      width: "250px",
     },
     "& .MuiButtonBase-root.MuiTab-root": {
-      color: "black",
+      fontWeight: "700",
+      color: "#07689F",
       transition: "color 0.2s ease-in-out",
+      width: "250px",
+
       "&:hover": {
-        color: "#07689F)",
+        color: "#07689F",
       },
       "&.Mui-selected": {
         color: "#07689F",
@@ -91,10 +107,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
   };
   return (
     <Box className="p-6" sx={{ width: "100%" }}>
-      <Box
-        className="container-center"
-        sx={{ borderBottom: 1, borderColor: "divider", alignItem: "center" }}
-      >
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           sx={tabSx}
           value={value}
@@ -109,7 +122,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       </Box>
       <CustomTabPanel value={value} index={0}>
         {hotel.length
-          ? hotel.map((ht) => {
+          ? hotel?.map((ht) => {
               console.log(ht);
               return (
                 <div>
@@ -122,7 +135,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                       <div style={{ width: "50%" }}>
                         <div className="head-title">Amenities</div>
                         <div className="">
-                          {hotel[0].roomId[0].amenities.map((amenity) => {
+                          {hotel[0].roomId[0].amenities?.map((amenity) => {
                             return (
                               <div className="flex" style={{ width: "50%" }}>
                                 <div>
@@ -144,19 +157,19 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                             <img src="/homepage/location_on.png" />
                           </div>
                           <div>
-                            {ht?.address?.number +
-                              " " +
-                              ht?.address?.district +
-                              " " +
-                              " " +
-                              ht?.address?.ward +
-                              ht?.address?.city}
+                            {ht?.address?.number ||
+                              "No Number" + " " + ht?.address?.district ||
+                              "No District" + " " + " " + ht?.address?.ward ||
+                              "No Ward" + ht?.address?.city ||
+                              "No Location"}
                           </div>
                         </div>
                       </div>
                     </div>
                     <div style={{ marginLeft: "70%" }} className="flex">
-                      <div className="price">240$</div>{" "}
+                      <div className="price">
+                        {hotel[0].roomId[0].pricePerNight}$
+                      </div>{" "}
                       <div className="per-night ml-4">per night</div>
                     </div>
                     <div

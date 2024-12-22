@@ -6,7 +6,7 @@
 }
 
 .confirmed{
-    color: #07689F;
+    color: #07689F !important;
     font-weight: 700;
     font-size: 40px;
 }
@@ -65,4 +65,8 @@
     font-size: 16px;
     line-height: 22.4px;
     font-weight:700;
+}
+
+.top-header{
+    background-color: #D9D9D9;
 }
