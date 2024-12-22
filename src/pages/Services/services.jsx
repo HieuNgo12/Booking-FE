@@ -19,7 +19,7 @@ export const services = {
   },
   getHotelListSearch: async (itemsPerPage, currentPage) => {
     const dataUrl = `${url}/api/v1/getHotelList?limit=${itemsPerPage}&page=${currentPage}`;
-    const data = await axios.get(dataUrl);
+    const data = await axios.post(dataUrl);
     return data;
   },
   getBookingById: async (bookingId) => {

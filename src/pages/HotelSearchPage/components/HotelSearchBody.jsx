@@ -299,8 +299,35 @@ function HotelSearchBody() {
               </button>
             </div>
           </div>
-          <div className="">
-            <input placeholder="Sort By - Our Top Pick for Family" />
+          <div>
+            <div className="flex mt-6">
+              <div>
+                <img src="/listpage/map.png" />
+              </div>
+              <div></div>
+              <div>
+              <div>
+                <input
+                  className="sort-by-input"
+                  placeholder="Sort By - Our Top Pick for Family"
+                />
+              </div>
+              <div className="ml-2 mt-6">
+                <div>Gothenberg</div>
+                <div>120 properties found</div>
+                <div>
+                  <div>
+                    travel professionals dedicated to simplifying your travel
+                    experience by curating flight and accommodation services on
+                    a user-friendly platform. Committed to quality and
+                    assurance. Find More Here ...
+                  </div>
+                  <div>Find out more </div>
+                </div>
+              </div>
+              </div>
+            
+            </div>
           </div>
         </div>
         <div className="flex">

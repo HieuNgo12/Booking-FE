@@ -11,7 +11,9 @@
 .product-tags :hover{
     background-color: #07689f;
 }
-
+.product-tags div{
+  padding: 5px !important;
+}
 .classic-image {
   width: 36px;
   height: 36px;
