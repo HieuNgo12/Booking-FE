@@ -33,15 +33,16 @@ import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
 import FilterPage from "./pages/AccountPage/FilterPage";
 import RankPage from "./pages/AccountPage/RankPage";
 import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
- import 'react-toastify/dist/ReactToastify.css';
- import "slick-carousel/slick/slick.css";
- import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
 
 function App() {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState("customer");
 
+  console.log("check");
   const adminRouter = createBrowserRouter([
     {
       path: "/",
@@ -198,10 +199,10 @@ function App() {
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
-    
+
     {
       path: "/hotel-favorite-page",
-      element: <HotelFavoriteListPage/>,
+      element: <HotelFavoriteListPage />,
     },
   ]);
 
