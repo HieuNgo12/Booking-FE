@@ -41,8 +41,7 @@ import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteLi
 function App() {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState("customer");
-
-  console.log("check");
+  
   const adminRouter = createBrowserRouter([
     {
       path: "/",
