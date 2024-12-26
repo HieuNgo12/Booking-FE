@@ -38,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-export default function hotelDetailTabs({ hotel, ...props }) {
+export default function hotelDetailTabs({ hotel, disable, ...props }) {
   const [value, setValue] = React.useState(0);
   React.useEffect(() => {
     console.log(hotel);
@@ -63,6 +63,12 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    const checkoutTime = {
+      passengers: "",
+      checkIn: "",
+      checkOut: "",
+    };
+
     navigate(`/payment-detail/${hotel[0].roomId[0]._id}`);
   };
   const onFav = () => {
@@ -123,7 +129,6 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       <CustomTabPanel value={value} index={0}>
         {hotel.length
           ? hotel?.map((ht) => {
-              console.log(ht);
               return (
                 <div>
                   <div className="flex">
@@ -186,16 +191,16 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                         </button>
                       </div>
                       <div>
-                        <button className="book-now-button">
-                          <a
-                            href=""
-                            onClick={(e) => {
-                              onBook(e);
-                            }}
-                          >
-                            Book Now
-                          </a>
-                        </button>
+                        {disable ? (
+                          <button className="book-now-button">
+                            <a
+                              className="book-now-button"
+                              href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                            >
+                              Book Now
+                            </a>
+                          </button>
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -208,7 +213,9 @@ export default function hotelDetailTabs({ hotel, ...props }) {
         <HotelInfo hotel={hotel} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {hotel[0]?.roomId?.length ? <RoomsAndBed hotel={hotel} /> : null}
+        {hotel[0]?.roomId?.length ? (
+          <RoomsAndBed disable={disable} hotel={hotel} />
+        ) : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <PlaceRules />

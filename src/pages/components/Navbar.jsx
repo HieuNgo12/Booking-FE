@@ -34,7 +34,7 @@ function Navbar() {
         <div className="middle">
           <a >Deals</a>
         </div>
-        <div className="middle">
+        <div className="middle hotel-highlight">
           <a >Hotel</a>
         </div>
         <div className="middle">Flight</div>

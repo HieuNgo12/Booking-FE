@@ -11,7 +11,7 @@ function ExploreStayCard({ hotel, ...props }) {
       <img
         className="profile-image"
         onError={(ev) =>  addDefaultSrc(ev) }
-        src={hotel?.imgHotel || "https://example.com/hotel1.jpg"}
+        src={hotel?.imgHotel?.avatar || "https://example.com/hotel1.jpg"}
 
       />
       <div className="title-explore-stay">{hotel?.hotelName}</div>

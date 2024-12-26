@@ -3,13 +3,13 @@ import "./RoomsAndBed.css";
 import { addDefaultSrc } from "../../Services/defaultImage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-function RoomsAndBed({ hotel, ...props }) {
+function RoomsAndBed({ disable, hotel, ...props }) {
   useEffect(() => {
     console.log(hotel);
   }, []);
   let navigate = useNavigate();
 
-  const onBook = (e,id) => {
+  const onBook = (e, id) => { 
     // alert("Book Success")
     e.preventDefault();
 
@@ -60,16 +60,16 @@ function RoomsAndBed({ hotel, ...props }) {
                   <button>{room.pricePerNight} $</button>
                 </td>
                 <td>
-                  <button className="book-now-button">
-                    <a
-                      href=""
-                      onClick={(e) => {
-                        onBook(e,room._id);
-                      }}
-                    >
-                      Book Now
-                    </a>
-                  </button>
+                  {disable ? (
+                    <button className="book-now-button">
+                      <a
+                        className="book-now-button"
+                        href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                      >
+                        Book Now
+                      </a>
+                    </button>
+                  ) : null}
                 </td>
               </tr>
             );

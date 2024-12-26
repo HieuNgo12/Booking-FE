@@ -8,12 +8,12 @@ import { useFormik } from "formik";
 
 function HomePageBody() {
   const SignupSchema = Yup.object().shape({
-    place: Yup.string()
-      .min(2, "Required at least 2 letters")
-      .max(50, "Required maximum 50 letters")
-      .required("Place Is Required"),
-    passengers: Yup.string().required("Passengers is Required"),
-    checkin: Yup.string().required("Check In is Required"),
+    // place: Yup.string()
+    //   .min(2, "Required at least 2 letters")
+    //   .max(50, "Required maximum 50 letters")
+    //   .required("Place Is Required"),
+    // passengers: Yup.string().required("Passengers is Required"),
+    // checkin: Yup.string().required("Check In is Required"),
 
   });
   const [hotelList, setHotelList] = useState([]);
@@ -107,7 +107,7 @@ function HomePageBody() {
         {/* Radio */}
         <div className="mb-6">
           <div className="head-titles mb-6">Special Offers</div>
-          <div className="flex">
+          {/* <div className="flex">
             <div class="flex items-center mb-4">
               <input
                 id="all-1"
@@ -171,7 +171,7 @@ function HomePageBody() {
                 Multi
               </label>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Image Grid  */}

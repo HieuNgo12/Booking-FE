@@ -8,22 +8,10 @@ import ReactPaginate from "react-paginate";
 import { services } from "../../Services/services";
 import PassengerModal from "./PassengerModal";
 import RadioGroup from "../../components/RadioGroup";
-const SignupSchema = Yup.object().shape({
-  place: Yup.string()
-    .min(2, "Required at least 2 letters")
-    .max(50, "Required maximum 50 letters")
-    .required("First Name Is Required"),
-  vip: Yup.string()
-    .min(2, "Company must be at least 2 letters")
-    .max(50, "Company name must be maximum 50 letters")
-    .required("VIP is Required"),
-  passengers: Yup.string().required("Passengers is Required"),
-  checkin: Yup.string().required("Check In is Required"),
+import SearchPlaceInput from "../../components/SearchPlaceInput";
+import Loading from "../../components/Loading";
+import ReactGoogleMap from "../../components/ReactGoogleMap";
 
-  checkout: Yup.string()
-    // .moreThan(Yup.ref("checkin"), "Cannot Exceed Checkin Date")
-    .required("Check Out Is Required"),
-});
 const popularFilters = [
   {
     id: "breakfastIncluded",
@@ -143,43 +131,77 @@ function HotelSearchBody() {
   const [hotelList, setHotelList] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [orgList, setOrgList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [sliderValue, setSliderValue] = useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handlePageClick = ({ selected }) => {
+    setLoading(true);
     console.log(selected);
     // setLoading(true);
     setCurrentPage(selected);
   };
-
-  const itemsPerPage = 5;
-  const getRooms = async () => {
-    const data = await services.getHotelListSearch(itemsPerPage, currentPage);
-
-    console.log(data.data.data);
-    setHotelList(data.data.data);
-  };
   useEffect(() => {
-    getRooms();
-  }, [currentPage]);
+    const timeId = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [loading]);
+
+  const SignupSchema = Yup.object().shape({
+    place: Yup.string()
+      .min(2, "Required at least 2 letters")
+      .max(50, "Required maximum 50 letters")
+      .required("First Name Is Required"),
+    vip: Yup.string()
+      .min(2, "Company must be at least 2 letters")
+      .max(50, "Company name must be maximum 50 letters"),
+  });
   const formik = useFormik({
     initialValues: {
       place: "",
+
       vip: "",
-      passengers: "",
-      checkout: "",
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
       console.log(values);
-      alert("Hello");
-      const data = await services.postRoomSearch(values);
-      console.log(data);
+      setLoading(true);
+      getRooms(values.place);
     },
     // return redirect("");
 
     // setSuccess(true);
   });
+  const getRooms = async (place) => {
+    try{
+
+      const itemsPerPage = 5;
+      const data = await services.getHotelListSearch();
+      const dataByPage = await services.getHotelListSearchByQuery(
+        {
+          place,
+        },
+        itemsPerPage,
+        currentPage
+      );
+      console.log(dataByPage, data);
+      const list = data?.data?.data;
+      setOrgList(list);
+  
+      const listByPage = dataByPage?.data?.data;
+      setPageCount(Math.ceil(list.length / itemsPerPage));
+      setHotelList(listByPage);
+    }catch(e){
+    }
+  };
+  useEffect(() => {
+    getRooms();
+  }, [currentPage]);
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -191,142 +213,36 @@ function HotelSearchBody() {
           </div>
         </div>
         <div>
-          <div className="flex">
-            <div>
-              <div className="title">Place</div>
-              <input
-                className="search-input"
-                id="place"
-                name="place"
-                type="place"
-                onChange={formik.handleChange}
-                value={formik.values.place}
-              />
-
-              <div className="flex">
-                <div className="error-field ">
-                  {" "}
-                  {formik.errors.place && <div>{formik.errors.place}</div>}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="title">VIP</div>
-              <input
-                id="vip"
-                className="small-input"
-                name="vip"
-                type="vip"
-                onChange={formik.handleChange}
-                value={formik.values.vip}
-              />
-
-              <div className="flex">
-                <div className="error-field ">
-                  {" "}
-                  {formik.errors.vip && <div>{formik.errors.vip}</div>}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="title">Passengers - Room Condition</div>
-              <input
-                onClick={(ev) => setOpen(true)}
-                className="search-input"
-                id="passengers"
-                name="passengers"
-                type="passengers"
-                onChange={formik.handleChange}
-                value={formik.values.passengers}
-              />
-
-              <div className="flex">
-                <div className="error-field ">
-                  {" "}
-                  {formik.errors.passengers && (
-                    <div>{formik.errors.passengers}</div>
-                  )}
-                </div>
-              </div>
-              <PassengerModal
-                open={open}
-                setOpen={setOpen}
-                handleClose={handleClose}
-                handleOpen={handleOpen}
-              />
-            </div>
-            <div>
-              <div className="title">Check In</div>
-              <input
-                className="search-input"
-                id="checkin"
-                name="checkin"
-                type="date"
-                onChange={formik.handleChange}
-                value={formik.values.checkin}
-              />
-
-              <div className="flex">
-                <div className="error-field ">
-                  {" "}
-                  {formik.errors.checkin && <div>{formik.errors.checkin}</div>}
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="title">Check Out</div>
-              <input
-                className="search-input"
-                id="checkout"
-                name="checkout"
-                type="date"
-                onChange={formik.handleChange}
-                value={formik.values.checkout}
-              />
-
-              <div className="flex">
-                <div className="error-field ">
-                  {" "}
-                  {formik.errors.checkout && (
-                    <div>{formik.errors.checkout}</div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div>
-              <button type="submit" className="search-button  mt-5">
-                Search
-              </button>
-            </div>
-          </div>
+          <SearchPlaceInput formik={formik} />
           <div>
             <div className="flex mt-6">
               <div>
-                <img src="/listpage/map.png" />
+                <ReactGoogleMap />{" "}
               </div>
               <div></div>
               <div>
-              <div>
-                <input
-                  className="sort-by-input"
-                  placeholder="Sort By - Our Top Pick for Family"
-                />
-              </div>
-              <div className="ml-2 mt-6">
-                <div>Gothenberg</div>
-                <div>120 properties found</div>
                 <div>
-                  <div>
-                    travel professionals dedicated to simplifying your travel
-                    experience by curating flight and accommodation services on
-                    a user-friendly platform. Committed to quality and
-                    assurance. Find More Here ...
+                  <input
+                    className="sort-by-input"
+                    placeholder="Sort By - Our Top Pick for Family"
+                  />
+                </div>
+                <div className="ml-2 mt-6">
+                  <div className="gothenberg">{formik.values.place}</div>
+                  <div className="properties-found">
+                    {orgList.length + " "} properties found
                   </div>
-                  <div>Find out more </div>
+                  <div>
+                    <div>
+                      travel professionals dedicated to simplifying your travel
+                      experience by curating flight and accommodation services
+                      on a user-friendly platform. Committed to quality and
+                      assurance. Find More Here ...
+                    </div>
+                    <div>Find out more </div>
+                  </div>
                 </div>
               </div>
-              </div>
-            
             </div>
           </div>
         </div>
@@ -338,17 +254,32 @@ function HotelSearchBody() {
                 <div>
                   <Slider
                     size="small"
-                    defaultValue={70}
+                    value={sliderValue}
                     aria-label="Small"
                     valueLabelDisplay="auto"
                   />
                 </div>
                 <div className="flex">
                   <div>
-                    <button className="min-price">Min Price $</button>
+                    <button
+                      className="min-price"
+                      onClick={() => {
+                        setSliderValue(0);
+                        formik.values.place = "";
+                      }}
+                    >
+                      Min Price $
+                    </button>
                   </div>
                   <div>
-                    <button className="min-price">Max Price $</button>
+                    <button
+                      className="min-price"
+                      onClick={() => {
+                        setSliderValue(120);
+                      }}
+                    >
+                      Max Price $
+                    </button>
                   </div>
                 </div>
               </div>
@@ -356,7 +287,7 @@ function HotelSearchBody() {
             <div>
               <div className="head-sidebar-title">Popular Rating</div>
               <div>
-                {guestRatings.map((rating) => {
+                {popularFilters.map((rating) => {
                   return (
                     <div className="flex">
                       <input type="checkbox" />
@@ -381,29 +312,11 @@ function HotelSearchBody() {
             </div>
             <div>
               <div className="head-sidebar-title">Guests Rating</div>
-              <div>
-                {roomFacilities.map((facility) => {
-                  return (
-                    <div className="flex">
-                      <input type="radio" />
-                      <div className="ml-2">{facility.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
+              <div>{<RadioGroup object={guestRatings} />}</div>
             </div>
             <div>
               <div className="head-sidebar-title">Bed Type</div>
-              <div>
-                {roomFacilities.map((facility) => {
-                  return (
-                    <div className="flex">
-                      <input type="radio" />
-                      <div className="ml-2">{facility.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
+              <div>{<RadioGroup object={roomFacilities} />}</div>
             </div>
             <div>
               <div className="head-sidebar-title">Leisure Activities</div>
@@ -476,13 +389,22 @@ function HotelSearchBody() {
           </div>
           {/* Card */}
           <div style={{ width: "1000px" }}>
-            {hotelList.length
-              ? hotelList.map((hotel) => {
-                  return <HotelListingCard hotel={hotel} />;
-                })
-              : null}
+            {!loading  ? hotelList.length ?(
+              hotelList.map((hotel) => {
+                return <HotelListingCard hotel={hotel} />;
+              })
+            ): "No Property Found" : (
+              <Loading />
+            )}
             <div className="mt-10">
-              <button className="white-button-classic">
+              <button
+                className="white-button-classic"
+                onClick={() => {
+                  const favplaces = JSON.parse(localStorage.getItem("favList"));
+                  setHotelList(favplaces);
+                  setLoading(true);
+                }}
+              >
                 List Your Favorite Places
               </button>
               <button className="button-classic" style={{ marginLeft: "45%" }}>

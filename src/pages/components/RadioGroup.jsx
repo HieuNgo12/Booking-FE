@@ -6,7 +6,7 @@ function RadioGroup({ flex, object, ...props }) {
       {object.length
         ? object.map((obj) => {
             return (
-              <div class="flex items-center mb-4">
+              <div class="flex items-center mb-4 mt-4">
                 <input
                   id="default-radio-1"
                   type="radio"
@@ -16,7 +16,7 @@ function RadioGroup({ flex, object, ...props }) {
                 />
                 <label
                   for="default-radio-1"
-                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  class="ms-2 text-sm"
                 >
                   {obj.label}
                 </label>

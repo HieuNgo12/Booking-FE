@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./PaymentPageBody.css";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -9,6 +9,7 @@ import { services } from "../../Services/services";
 import { useNavigate } from "react-router-dom";
 
 function PaymentPageBody({ room, ...props }) {
+  const [disablePromo, setDisablePromo] = useState(false);
   const SignupSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, "Required at least 2 letters")
@@ -26,6 +27,7 @@ function PaymentPageBody({ room, ...props }) {
 
     cardExpDate: Yup.string().required("Card Date Is Required"),
     cardCvc: Yup.string().required("Card CVC Is Required"),
+    promoCode: Yup.string(),
   });
   let navigate = useNavigate();
   const formik = useFormik({
@@ -40,6 +42,7 @@ function PaymentPageBody({ room, ...props }) {
       cardNumber: "",
       fullNameOnCard: "",
       needAFlight: false,
+      promoCode: "",
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
@@ -54,16 +57,39 @@ function PaymentPageBody({ room, ...props }) {
         theme: "light",
         // onClose: () => setModal(false),
       });
-      console.log(room);
-      const bodySubmit = {
-        ...values,
-        bookingStartDate: moment().format("MMMM Do YYYY"),
-        bookingEndDate: moment().add(1, "days").format("MMMM Do YYYY"),
-        totalAmount: room[0].pricePerNight,
+      console.log({
+        userId: "6751570cbd20ef4184e7b5e8",
+        objectId: "674b530cfa3469716c80aeef",
+        bookingStartDate: JSON.parse(localStorage.getItem("checkoutTime"))
+          .checkin,
+        bookingEndDate: JSON.parse(localStorage.getItem("checkoutTime"))
+          .checkout,
+        objectType: "hotel",
         totalPersons: room[0].maxOccupancy,
+        totalAmount: room[0].pricePerNight,
+        bookingReference: "ABD",
+        status: "confirmed",
+      });
+      const bodySubmit = {
+        userId: "6751570cbd20ef4184e7b5e8",
+        objectId: "674b530cfa3469716c80aeef",
+        bookingStartDate: JSON.parse(localStorage.getItem("checkoutTime"))
+          .checkin,
+        bookingEndDate: JSON.parse(localStorage.getItem("checkoutTime"))
+          .checkout,
+        objectType: "hotel",
+        totalPersons: room[0].maxOccupancy,
+        totalAmount: room[0].pricePerNight,
+        bookingReference: "ABD",
+        status: "confirmed",
       };
-      await services.createBooking(values);
-      navigate("/confirm-page")
+      await services.createBooking(bodySubmit).then((data) => {
+        console.log(data);
+        navigate(`/confirm-page/${data.data.data._id}`, {
+          replace: true,
+        });
+      });
+
       // alert("Hello World")
     },
     // return redirect("");
@@ -74,7 +100,7 @@ function PaymentPageBody({ room, ...props }) {
     console.log(room);
   }, []);
   const handlePageClick = ({ selected }) => {
-    console.log(selected)
+    console.log(selected);
     // setLoading(true);
     setCurrentPage(selected);
   };
@@ -161,11 +187,18 @@ function PaymentPageBody({ room, ...props }) {
               <div className="flex mb-6">
                 <div className="check-in-border">
                   <div className="head-title check-in">Check-in</div>
-                  <div>{moment().format("MMMM Do YYYY")}</div>
+                  <div>
+                    {JSON.parse(localStorage.getItem("checkoutTime")).checkin ||
+                      moment().format("MMMM Do YYYY")}
+                  </div>
                 </div>
                 <div className="check-in-border">
                   <div className="head-title check-in">Check-out</div>
-                  <div>{moment().add(1, "days").format("MMMM Do YYYY")}</div>
+                  <div>
+                    {" "}
+                    {JSON.parse(localStorage.getItem("checkoutTime"))
+                      .checkout || moment().format("MMMM Do YYYY")}
+                  </div>
                 </div>
               </div>
               <div>
@@ -689,6 +722,59 @@ function PaymentPageBody({ room, ...props }) {
                           <div>{formik.errors.cardCvc}</div>
                         )}
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex mt-6">
+                <div>
+                  <div>Promo Code</div>
+                  <div className="flex">
+                    <div>
+                      <input
+                        placeholder="mindx"
+                        id="promoCode"
+                        name="promoCode"
+                        type="promoCode"
+                        className="classic-input pl-4 "
+                        onChange={formik.handleChange}
+                        value={formik.values.promoCode}
+                        disabled={disablePromo ? true : false}
+                      />
+                    </div>
+                    <div>
+                      <button
+                        className="payment-button ml-6"
+                        onClick={() => {
+                          console.log(formik.values.promoCode);
+                          toast.success("Successfully apply promocode", {
+                            position: "top-center",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                          });
+                          setDisablePromo(true);
+                          localStorage.setItem(
+                            "promoCode",
+                            formik.values.promoCode
+                          );
+                        }}
+                      >
+                        {" "}
+                        Apply Code
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex">
+                    <div className="error-field ">
+                      {" "}
+                      {formik.errors.cardCvc && (
+                        <div>{formik.errors.cardCvc}</div>
+                      )}
                     </div>
                   </div>
                 </div>

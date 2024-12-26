@@ -48,13 +48,13 @@ function ConfirmPage() {
         </div>
         <div className="flex mt-6 mb-6 confirm-page-container">
           <div style={{ width: "50%" }} className="sub-title">
-            Adults {booking[0]?.totalPersons}
+            Adults:  {booking[0]?.totalPersons}
           </div>
           <div style={{ width: "50%" }} className="sub-title">
             Additional Services Quantity: {booking[0]?.specialRequests}
           </div>
           <div style={{ width: "50%" }} className="sub-title">
-            Meal Plan Allergic
+            Meal Plan Allergic:
           </div>
         </div>
         <div className="">

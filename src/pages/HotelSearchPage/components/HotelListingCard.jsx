@@ -73,7 +73,7 @@ function HotelListingCard({ hotel, ...props }) {
         <div>
           <div className="flex">
             <div className="discount">10% off</div>
-            <div className="ml-6 money black-price">${hotel.pricePerNight}</div>
+            <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight}</div>
           </div>
           <div className="mt-2">Included taxes and charges</div>
           <div className="sustainable-level flex mt-2">

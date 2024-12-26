@@ -57,17 +57,17 @@ function ConfirmTable({ booking, ...props }) {
             <tbody>
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td scope="row" class="">
-                  {diff}
+                  {diff + " "}
                   Nights
                 </td>
                 {booking.length ? (
                   <td class="px-6 py-4">
-                    {moment(booking[0].bookingStartDate).format("MMMM do YYYY")}
+                    {booking[0].bookingStartDate.slice(0,10)}
                   </td>
                 ) : null}
                 {booking.length ? (
                   <td class="px-6 py-4">
-                    {moment(booking[0].bookingEndDate).format("MMMM do YYYY")}
+                    {booking[0].bookingEndDate.slice(0,10)}
                   </td>
                 ) : null}{" "}
                 <td class="px-6 py-4">2 Rooms</td>
