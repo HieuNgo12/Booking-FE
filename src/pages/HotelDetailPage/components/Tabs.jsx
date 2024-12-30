@@ -133,9 +133,7 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                           })}
                           <div style={{ width: "50%" }}></div>
                         </div>
-                        <div></div>
                       </div>
-
                       <div style={{ width: "50%" }} className="">
                         <div className="family">
                           2 Adults, 3 Children, 4 Nights | Two room , Double Bed

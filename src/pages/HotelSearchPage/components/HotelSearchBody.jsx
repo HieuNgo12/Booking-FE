@@ -11,9 +11,7 @@ import RadioGroup from "../../components/RadioGroup";
 import SearchPlaceInput from "../../components/SearchPlaceInput";
 import Loading from "../../components/Loading";
 import ReactGoogleMap from "../../components/ReactGoogleMap";
-import GoogleMapReact from "google-map-react";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const popularFilters = [
   {
     id: "breakfastIncluded",
@@ -136,8 +134,6 @@ function HotelSearchBody() {
   const [orgList, setOrgList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
-  const [clickSearch, setClickSearch] = useState(false);
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handlePageClick = ({ selected }) => {
@@ -156,8 +152,13 @@ function HotelSearchBody() {
   }, [loading]);
 
   const SignupSchema = Yup.object().shape({
-    place: Yup.string(),
-    vip: Yup.string(),
+    place: Yup.string()
+      .min(2, "Required at least 2 letters")
+      .max(50, "Required maximum 50 letters")
+      .required("First Name Is Required"),
+    vip: Yup.string()
+      .min(2, "Company must be at least 2 letters")
+      .max(50, "Company name must be maximum 50 letters"),
   });
   const formik = useFormik({
     initialValues: {
@@ -170,14 +171,14 @@ function HotelSearchBody() {
       console.log(values);
       setLoading(true);
       getRooms(values.place);
-      setClickSearch(true);
     },
     // return redirect("");
 
     // setSuccess(true);
   });
   const getRooms = async (place) => {
-    try {
+    try{
+
       const itemsPerPage = 5;
       const data = await services.getHotelListSearch();
       const dataByPage = await services.getHotelListSearchByQuery(
@@ -190,22 +191,17 @@ function HotelSearchBody() {
       console.log(dataByPage, data);
       const list = data?.data?.data;
       setOrgList(list);
-
+  
       const listByPage = dataByPage?.data?.data;
       setPageCount(Math.ceil(list.length / itemsPerPage));
       setHotelList(listByPage);
-    } catch (e) {}
+    }catch(e){
+    }
   };
   useEffect(() => {
     getRooms();
   }, [currentPage]);
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -219,8 +215,12 @@ function HotelSearchBody() {
           </div>
         </div>
         <div>
+          <SearchPlaceInput formik={formik} />
           <div>
             <div className="flex mt-6">
+              <div>
+                <ReactGoogleMap />{" "}
+              </div>
               <div></div>
               <div>
                 <div>
@@ -248,7 +248,7 @@ function HotelSearchBody() {
             </div>
           </div>
         </div>
-        <div className="flex mt-6">
+        <div className="flex">
           <div style={{ width: "30%" }}>
             <div>
               <div>
@@ -259,9 +259,6 @@ function HotelSearchBody() {
                     value={sliderValue}
                     aria-label="Small"
                     valueLabelDisplay="auto"
-                    onChange={(e) => {
-                      setSliderValue(e.target.value);
-                    }}
                   />
                 </div>
                 <div className="flex">
@@ -351,19 +348,15 @@ function HotelSearchBody() {
             </div>
           </div>
           {/* Card */}
-          <div style={{ width: "1000px" }} className="ml-6">
-            {!loading ? (
-              hotelList.length ? (
-                hotelList.map((hotel) => {
-                  return <HotelListingCard hotel={hotel} />;
-                })
-              ) : (
-                "No Property Found"
-              )
-            ) : (
+          <div style={{ width: "1000px" }}>
+            {!loading  ? hotelList.length ?(
+              hotelList.map((hotel) => {
+                return <HotelListingCard hotel={hotel} />;
+              })
+            ): "No Property Found" : (
               <Loading />
             )}
-            <div className="mt-10 ml-3 flex">
+            <div className="mt-10">
               <button
                 className="white-button-classic"
                 onClick={() => {
@@ -374,24 +367,23 @@ function HotelSearchBody() {
               >
                 List Your Favorite Places
               </button>
-              {clickSearch && formik.values.place ? null : (
-              <ReactPaginate
-                previousLabel={"previous"}
-                nextLabel={"next"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-             
-              />
-            )}
+              <button className="button-classic" style={{ marginLeft: "45%" }}>
+                See More Search Results
+              </button>
             </div>
-          
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
           </div>
         </div>
         

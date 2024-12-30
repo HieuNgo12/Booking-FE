@@ -3,10 +3,10 @@ import "./Card.css";
 function Card({ person, ...props }) {
   return (
     <div className="card p-2">
-      <div style={{marginLeft: "25%"}}>
-        <img style={{width: "50px", height:"50px"}} className="mb-6" src={review.userId.avatar} />
+      <div>
+        <img style={{width: "50px", height:"50px"}} src={review.userId.avatar} />
       </div>
-      <div className="flex mb-6 ">
+      <div className="flex ">
         <div className="mr-2">
           <img src={"/public/detailPage/de.png"} />
         </div>

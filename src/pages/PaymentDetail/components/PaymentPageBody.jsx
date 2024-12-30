@@ -22,11 +22,11 @@ function PaymentPageBody({ room, ...props }) {
     lastName: Yup.string().required("Last Name Is Required"),
     emailAddress: Yup.string().required("Email Is Required"),
     phoneNumber: Yup.string().required("Phone Number Is Required"),
-    fullNameOnCard: Yup.string(),
-    cardNumber: Yup.string(),
+    fullNameOnCard: Yup.string().required("Card Name Number Is Required"),
+    cardNumber: Yup.string().required("Card Number Is Required"),
 
-    cardExpDate: Yup.string(),
-    cardCvc: Yup.string(),
+    cardExpDate: Yup.string().required("Card Date Is Required"),
+    cardCvc: Yup.string().required("Card CVC Is Required"),
     promoCode: Yup.string(),
   });
   let navigate = useNavigate();
@@ -83,17 +83,14 @@ function PaymentPageBody({ room, ...props }) {
         bookingReference: "ABD",
         status: "confirmed",
       };
-      // await services.createBooking(bodySubmit).then((data) => {
-      //   console.log(data);
-      //   navigate(`/confirm-page/${data.data.data._id}`, {
-      //     replace: true,
-      //   });
-      // });
-      const vnPayResponse = await services.createVNPay();
-      console.log(vnPayResponse);
-      window.location.href = vnPayResponse.data.data.orderurl,
- 
-      alert("Hello World")
+      await services.createBooking(bodySubmit).then((data) => {
+        console.log(data);
+        navigate(`/confirm-page/${data.data.data._id}`, {
+          replace: true,
+        });
+      });
+
+      // alert("Hello World")
     },
     // return redirect("");
 
@@ -238,7 +235,7 @@ function PaymentPageBody({ room, ...props }) {
                 </div>
               </div>
 
-              <div className=" room-characters mb-6 pb-6 flex">
+              <div className=" room-characters mb-6 pb-6">
                 <div> 18 m2</div>
                 <div>City Center</div>
                 <div>Next to Forest</div>
@@ -251,10 +248,10 @@ function PaymentPageBody({ room, ...props }) {
               className="bg-white pl-6"
             >
               <div className="head-title ">Payment Information</div>
-              <div className=" pr-6">
+              <div className=" ">
                 <div className="price-summary mb-6"> Your Price Summary</div>
                 <hr />
-                <div className="flex  mt-6 mb-6 ">
+                <div className="flex  mt-6 mb-6">
                   <div className="original-price ">Original Price</div>
                   <div className="flex" style={{ marginLeft: "auto" }}>
                     <div className="price-and-nights mr-2">
@@ -600,7 +597,7 @@ function PaymentPageBody({ room, ...props }) {
                 <div className="mb-6">
                   <textarea className="text-area-message" />
                 </div>
-                <div className="section-width flex mb-6">
+                <div className="flex mb-6">
                   <input type="checkbox" className="mr-2" />
                   <div>I would like to Rooms Close to each other</div>
                 </div>
@@ -636,12 +633,152 @@ function PaymentPageBody({ room, ...props }) {
                 </div>{" "}
               </div>
             </div>
-            <div
-              className="section-width bg-white m-6 p-6 "
-              style={{ marginTop: "95px" }}
-            >
+            <div className="bg-white m-6 p-6">
               <div className="head-title">Bank Card Information</div>
-
+              <div className="flex mt-6 ">
+                <div style={{ width: "30%" }} className="">
+                  <div className="plain-text">Full Name On The Card</div>
+                  <div>
+                    <input
+                      id="fullNameOnCard"
+                      name="fullNameOnCard"
+                      type="fullNameOnCard"
+                      className="classic-input pl-4 "
+                      placeholder="Anna Carina"
+                      onChange={formik.handleChange}
+                      value={formik.values.fullNameOnCard}
+                    />
+                    <div className="flex">
+                      <div className="error-field ">
+                        {" "}
+                        {formik.errors.fullNameOnCard && (
+                          <div>{formik.errors.fullNameOnCard}</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ width: "30%" }} className="">
+                  <div className="plain-text">Card Number</div>
+                  <div>
+                    <input
+                      id="cardNumber"
+                      name="cardNumber"
+                      type="cardNumber"
+                      style={{ width: "150px" }}
+                      className="classic-input pl-4 ml-4 mr-4"
+                      placeholder="........................."
+                      onChange={formik.handleChange}
+                      value={formik.values.cardNumber}
+                    />
+                    <div className="flex">
+                      <div className="error-field ">
+                        {" "}
+                        {formik.errors.cardNumber && (
+                          <div>{formik.errors.cardNumber}</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style={{ width: "15%" }} className="">
+                  <div className="plain-text">Exp Date</div>
+                  <div>
+                    <input
+                      id="cardExpDate"
+                      name="cardExpDate"
+                      type="cardExpDate"
+                      className="short-input pl-4 "
+                      placeholder="**/**"
+                      onChange={formik.handleChange}
+                      value={formik.values.cardExpDate}
+                    />
+                  </div>
+                  <div className="flex">
+                    <div className="error-field ">
+                      {" "}
+                      {formik.errors.cardExpDate && (
+                        <div>{formik.errors.cardExpDate}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ width: "15%" }} className="">
+                  <div className="plain-text">CVC</div>
+                  <div>
+                    <input
+                      id="cardCvc"
+                      name="cardCvc"
+                      type="cardCvc"
+                      placeholder="***"
+                      className="short-input pl-4 "
+                      onChange={formik.handleChange}
+                      value={formik.values.cardCvc}
+                    />
+                    <div className="flex">
+                      <div className="error-field ">
+                        {" "}
+                        {formik.errors.cardCvc && (
+                          <div>{formik.errors.cardCvc}</div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex mt-6">
+                <div>
+                  <div>Promo Code</div>
+                  <div className="flex">
+                    <div>
+                      <input
+                        placeholder="mindx"
+                        id="promoCode"
+                        name="promoCode"
+                        type="promoCode"
+                        className="classic-input pl-4 "
+                        onChange={formik.handleChange}
+                        value={formik.values.promoCode}
+                        disabled={disablePromo ? true : false}
+                      />
+                    </div>
+                    <div>
+                      <button
+                        className="payment-button ml-6"
+                        onClick={() => {
+                          console.log(formik.values.promoCode);
+                          toast.success("Successfully apply promocode", {
+                            position: "top-center",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                          });
+                          setDisablePromo(true);
+                          localStorage.setItem(
+                            "promoCode",
+                            formik.values.promoCode
+                          );
+                        }}
+                      >
+                        {" "}
+                        Apply Code
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex">
+                    <div className="error-field ">
+                      {" "}
+                      {formik.errors.cardCvc && (
+                        <div>{formik.errors.cardCvc}</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="flex mt-6">
                 <div>
                   <button className="save-in-shortcut ">

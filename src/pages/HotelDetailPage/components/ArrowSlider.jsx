@@ -34,7 +34,7 @@ function ArrowSlider({ people, ...props }) {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <Slider {...settings} className="mt-6 mb-6">
+    <Slider {...settings} className="">
       {/* {people?.length &&
           people.map((person, index) => {
             return (

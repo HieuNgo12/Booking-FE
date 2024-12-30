@@ -4,12 +4,12 @@ import ReactPaginate from "react-paginate";
 
 function HotelListingCard({ hotel, ...props }) {
   return (
-    <div style={{ width: "820px" }} className="card flex mb-2 pt-2">
+    <div style={{ width: "820px" }} className="card flex">
       <div style={{ width: "30%", padding: "4px" }}>
         <img src={hotel.imgHotel.avatar} />
       </div>
-      <div style={{ width: "40%",marginLeft: "10px" }}>
-        <div className="head-card-title ml-2">{hotel.hotelName}</div>
+      <div style={{ width: "40%" }}>
+        <div className="head-card-title">{hotel.hotelName}</div>
         <div className="flex mt-2">
           <div>
             <img src="/detailPage/loc.png" className="mr-2 ml-2" />
