@@ -147,7 +147,10 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                         <div className="">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
                             return (
-                              <div className="flex mt-3" style={{ width: "50%" }}>
+                              <div
+                                className="flex mt-3"
+                                style={{ width: "50%" }}
+                              >
                                 <div>
                                   <img src="/detailPage/wifi.png" />
                                 </div>
@@ -163,8 +166,8 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                         <div className="family">
                           2 Adults, 3 Children, 4 Nights | Two room , Double Bed
                         </div>
-                        <div className="flex">
-                          <div>
+                        <div className="flex mt-3 mb-3">
+                          <div className="mr-3">
                             <img src="/homepage/location_on.png" />
                           </div>
                           <div>
@@ -176,29 +179,18 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                           </div>
                         </div>
                         <div className="flex">
-                      <div className="price">
-                        {hotel[0].roomId[0].pricePerNight}$
-                      </div>{" "}
-                      <div className="per-night ml-4">per night</div>
-                    </div>
-                      </div>
-                      
-                    </div>
-                
-                    <div
-                      className="flex"
-                      style={{ marginLeft: "70%", marginTop: "20px" }}
-                    >
-                      <div>
-                        <button
-                          onClick={() => {
-                            onFav();
-                          }}
-                        >
-                          <img src={"/detailPage/fav.png"} />
-                        </button>
-                      </div>
-                      <div>
+                          <div className="price">
+                            {hotel[0].roomId[0].pricePerNight}$
+                          </div>{" "}
+                          <div className="per-night ml-4">per night</div>
+                          <button
+                            onClick={() => {
+                              onFav();
+                            }}
+                          >
+                            <img src={"/detailPage/fav.png"} />
+                          </button>
+                          <div>
                         {disable ? (
                           <button className="book-now-button">
                             <a
@@ -210,6 +202,16 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                           </button>
                         ) : null}
                       </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="flex"
+                      style={{ marginLeft: "70%", marginTop: "20px" }}
+                    >
+                      <div></div>
+                 
                     </div>
                   </div>
                 </div>
