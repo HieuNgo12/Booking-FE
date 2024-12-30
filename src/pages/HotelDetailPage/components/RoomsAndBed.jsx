@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./RoomsAndBed.css";
 import { addDefaultSrc } from "../../Services/defaultImage";
 import { toast } from "react-toastify";
@@ -30,23 +30,28 @@ function RoomsAndBed({ disable, hotel, ...props }) {
     <table class="table-auto">
       <thead>
         <tr>
-          <th>Room Type</th>
+          <th></th>
+
+          <th>Room Name</th>
           <th>Number Of Guest</th>
+          <th>Room Type</th>
+          <th>Room Detail</th>
           <th>Today's Price</th>
-          <th>Your Choices</th>
-          <th>Select Room</th>
-          <th>Today's Price</th>
+          <th>Book Now</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>
-            <input type="select" />
-          </td>
+      <tbody className="content-center	">
+        {hotel[0].roomId?.length ? (
+          hotel[0].roomId.map((room) => {
+            console.log(room);
+            return (
+              <tr>
+                <td>
+                  <img src={room.imgRoom} onError={(ev) => addDefaultSrc(ev)} />
+                </td>
+                <td>{room.roomName}</td>
 
-          <td>
-            <input type="select" />
-          </td>
+                <td className="">{room.maxOccupancy}</td>
 
                 <td>{room.roomType}</td>
 
