@@ -11,3 +11,15 @@
 .product-tags :hover{
     background-color: #07689f;
 }
+.product-tags div{
+  padding: 10px !important;
+}
+.classic-image {
+  width: 36px;
+  height: 36px;
+}
+
+ .hotel-highlight{
+  background-color: #07689f;
+  color: white !important;
+}

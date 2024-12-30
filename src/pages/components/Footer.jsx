@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer ">
-      <div className="flex mb-12">
+      <div className="flex mb-12 ml-6">
         <div>
           <div className="go-further">Go Further With The EasySet24 App</div>
           <div className="enjoy-savings">
