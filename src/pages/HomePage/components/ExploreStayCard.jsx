@@ -1,11 +1,6 @@
-import React from "react";
-import "./ExploreStayCard.css";
-import { redirect, useNavigate } from "react-router-dom";
-import { addDefaultSrc } from "../../Services/defaultImage";
-function ExploreStayCard({ hotel, ...props }) {
-  let navigate = useNavigate();
+import React from 'react'
 
-
+function ExploreStayCard() {
   return (
     <div className="explore-stay-card m-2 p-2">
       <img
@@ -28,7 +23,7 @@ function ExploreStayCard({ hotel, ...props }) {
         Check for more detail
       </button>
     </div>
-  );
+  )
 }
 
-export default ExploreStayCard;
+export default ExploreStayCard

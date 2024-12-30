@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import FavoriteCard from "./components/FavoriteCard";
-import "./HotelFavoriteListPage.css";
-function HotelFavoriteListPage() {
-  const [list, setList] = useState([]);
-  const savedList = JSON?.parse(localStorage?.getItem("favList")) || [];
+import React from 'react'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
-  useEffect(() => {}, []);
+function HotelFavoriteListPage() {
   return (
     <div className="center-gov">
       <Navbar />
@@ -23,7 +18,7 @@ function HotelFavoriteListPage() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default HotelFavoriteListPage;
+export default HotelFavoriteListPage

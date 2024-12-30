@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./HotelSearchBody.css";
@@ -209,7 +209,9 @@ function HotelSearchBody() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <div></div>
+        <div>
+          
+        </div>
         <div className="mt-10 mb-10">
           <div className="blue-title ">What is your Next Dream Place?</div>
           <div className="sub-title ">
@@ -288,13 +290,13 @@ function HotelSearchBody() {
               </div>
             </div>
             <div>
-              <div className="head-sidebar-title">Popular Rating</div>
+              <div className="head-sidebar-title">Guests Rating</div>
               <div>
                 {popularFilters.map((rating) => {
                   return (
                     <div className="flex">
                       <input type="checkbox" />
-                      <div className="ml-2">{rating.label}</div>
+                      <div>{rating.label}</div>
                     </div>
                   );
                 })}
@@ -307,7 +309,7 @@ function HotelSearchBody() {
                   return (
                     <div className="flex">
                       <input type="checkbox" />
-                      <div className="ml-2">{facility.label}</div>
+                      <div>{facility.label}</div>
                     </div>
                   );
                 })}
@@ -322,71 +324,29 @@ function HotelSearchBody() {
               <div>{<RadioGroup object={roomFacilities} />}</div>
             </div>
             <div>
-              <div className="head-sidebar-title">Leisure Activities</div>
-              <div>{<RadioGroup object={leisureActivities} />}</div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Travel Sustainability</div>
+              <div>Guests Rating</div>
               <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "level2AndAbove1",
-                      label: "Level 2 and Above 1",
-                    },
-                    {
-                      value: "level2AndAbove2",
-                      label: "Level  and Above 2",
-                    },
-                  ]}
-                />
+                {guestRatings.map((rating) => {
+                  return (
+                    <div className="flex">
+                      <input type="radio" />
+                      <div>{rating.label}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div>
-              <div className="head-sidebar-title">
-                Accommodation Classification
-              </div>
+              <div>Leisure Activities</div>
               <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "5stars",
-                      label: "5 Stars",
-                    },
-                    {
-                      value: "4stars",
-                      label: "4 Stars",
-                    },
-                    {
-                      value: "3stars",
-                      label: "3 Stars",
-                    },
-                  ]}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Distance From the Centre</div>
-              <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "lessThan1KM",
-                      label: "Less Than 1 KM",
-                    },
-                    {
-                      value: "lessThan5KM",
-                      label: "Less Than 5 KM",
-                    },
-                    {
-                      value: "lessThan15KM",
-                      label: "Less Than 15KM",
-                    },
-                  ]}
-                />
+                {leisureActivities.map((activity) => {
+                  return (
+                    <div className="flex">
+                      <input type="radio" />
+                      <div>{activity.label}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -434,6 +394,8 @@ function HotelSearchBody() {
           
           </div>
         </div>
+        
+      
       </form>
     </div>
   );

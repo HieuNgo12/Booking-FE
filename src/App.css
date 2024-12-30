@@ -42,8 +42,6 @@
 }
 
 .product-tags div {
-  position: relative;
-
   color: #a6a6a6;
   width: 121.67px;
   height: 40px;
@@ -51,11 +49,9 @@
   border: 1px solid #a6a6a6;
   text-align: center;
   margin-right: 10px;
-  vertical-align: middle;
+  padding-top: 5px;
 }
-.middle {
-  padding-top: 10px;
-}
+
 .button-classic {
   background-color: #07689f;
   color: white;

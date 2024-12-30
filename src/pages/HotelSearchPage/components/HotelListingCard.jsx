@@ -40,20 +40,20 @@ function HotelListingCard({ hotel, ...props }) {
           );
         })}
         </div>
-   
+        <div className="breakfast">Breakfast included</div>
         <div>
-          <div className="flex  mt-2 mr-2 ml-2">
+          <div className="flex">
             <div className="flex">
               <div>
                 <img src="/listpage/people-right.png" />
               </div>
               <div className="ml-2">{hotel.maxOccupancy} Adult, 2 Children,</div>
             </div>
-            <div className="flex ">
+            <div className="flex">
               <div>
-                <img className="ml-2" src="/listpage/time.png" />
+                <img src="/listpage/time.png" />
               </div>
-              <div className="ml-2 ">4 nights</div>
+              <div>4 nights</div>
             </div>
           </div>
           <div className="experience mr-2 ml-2">
@@ -75,16 +75,14 @@ function HotelListingCard({ hotel, ...props }) {
             <div className="discount">10% off</div>
             <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight}</div>
           </div>
-          <div className="mt-2">Included taxes and charges</div>
-          <div className="sustainable-level flex mt-2">
+          <div>Included taxes and charges</div>
+          <div className="sustainable-level flex">
             <div>
               <img src="/listpage/leaves-2.png" />
             </div>
-            <div className="trip-sustainable ml-2">
-              Trip Sustainable level 5
-            </div>
+            <div>Trip Sustainable level 5</div>
           </div>
-          <div className="available flex mt-2">
+          <div className="available flex">
             {" "}
             <div>
               <img src="/listpage/attention.png" />
@@ -99,6 +97,7 @@ function HotelListingCard({ hotel, ...props }) {
               See availability {">"}
             </a>
           </div>
+          <div className="see-availability">See availability {">"}</div>
         </div>
         <div></div>
       </div>
