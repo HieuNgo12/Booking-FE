@@ -38,11 +38,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
 import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
-import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
-import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
-import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
-import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
-import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 
 function App() {
   const [count, setCount] = useState(0);

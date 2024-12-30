@@ -33,7 +33,7 @@ function ConfirmPage() {
             Your Bookings now.
           </div>
           <div className="mt-6">
-            <div className="booking-no">Booking ID: {booking[0]?.bookedRoomId} Details</div>
+            <div className="booking-no">Booking ID: {booking[0]?.bookedRoomId[0]} Details</div>
             <div className="check-your mt-6">Check your information here !</div>
             <div className="hotel-roles mt-6 mb-6">Hotel Roles</div>
             <div className="flex">
