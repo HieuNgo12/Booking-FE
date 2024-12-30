@@ -37,6 +37,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
+import DetailBookingHotelPage from "./pages/DetailBookingPage/DetailBookingHotelPage";
+import DetailBookingFlightPage from "./pages/DetailBookingPage/DetailBookingFlightPage";
+import DetailBookingTourPage from "./pages/DetailBookingPage/DetailBookingTourPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -195,10 +198,17 @@ function App() {
       element: <HotelDetailPage />,
     },
     {
-      path: "/booking-detail/:bookingId",
-      element: <DetailBookingPage />,
+      path: "/booking-hotel-detail/:bookingId",
+      element: <DetailBookingHotelPage />,
     },
-
+    {
+      path: "/booking-flight-detail/:bookingId",
+      element: <DetailBookingFlightPage />,
+    },
+    {
+      path: "/booking-tour-detail/:bookingId",
+      element: <DetailBookingTourPage />,
+    },
     {
       path: "/hotel-favorite-page",
       element: <HotelFavoriteListPage />,

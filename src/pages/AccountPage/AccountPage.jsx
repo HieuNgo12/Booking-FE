@@ -19,6 +19,7 @@ import EditIDCardPage from "./EditIDCardPage";
 import SupportChatPage from "./SupportChatPage";
 import SupportEmailPage from "./SupportEmailPage";
 import RankPage from "./RankPage";
+import { useDispatch, useSelector } from "react-redux";
 
 const listRoutes = [
   { namePage: ProfilePage, namePath: "/profile" },
@@ -40,6 +41,13 @@ const listRoutes = [
 
 const AccountPage = () => {
   const [dataUser, setdDataUser] = useState(null);
+
+  // const dispatch = useDispatch();
+  // const { user, status, error } = useSelector((state) => state.user?.user);
+  
+  
+
+  // console.log(status);
 
   const callApi = async () => {
     try {
@@ -132,7 +140,7 @@ const AccountPage = () => {
           display: "flex",
           flexDirection: "row",
           maxWidth: "1200px",
-          height: "90vh",
+          // height: "90vh",
           margin: "0 auto",
           padding: "20px",
           backgroundColor: "#f9f9f9",
