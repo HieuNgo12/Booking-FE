@@ -40,11 +40,17 @@ import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteLi
 import DetailBookingHotelPage from "./pages/DetailBookingPage/DetailBookingHotelPage";
 import DetailBookingFlightPage from "./pages/DetailBookingPage/DetailBookingFlightPage";
 import DetailBookingTourPage from "./pages/DetailBookingPage/DetailBookingTourPage";
+import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
+import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
+import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
+import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
+import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
+import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 
 function App() {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState("customer");
-  
+
   const adminRouter = createBrowserRouter([
     {
       path: "/",
@@ -212,6 +218,30 @@ function App() {
     {
       path: "/hotel-favorite-page",
       element: <HotelFavoriteListPage />,
+    },
+    {
+      path: "/confirm-page/:bookingId",
+      element: <ConfirmPage />,
+    },
+    {
+      path: "/hotel-is-booked",
+      element: <HotelIsBookedPage />,
+    },
+    {
+      path: "/flight-home-page",
+      element: <FlightHomePage />,
+    },
+    {
+      path: "/flight-search-page",
+      element: <FlightSearchPage />,
+    },
+    {
+      path: "/flight-detail-page",
+      element: <FlightDetailPage />,
+    },
+    {
+      path: "/flight-payment-page",
+      element: <FlightPaymentPage />,
     },
   ]);
 

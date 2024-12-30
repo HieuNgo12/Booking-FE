@@ -1,0 +1,133 @@
+.flight-detail-body {
+  padding-left: 20%;
+  padding-right: 20%;
+  border-radius: 4px;
+}
+
+.flight-detail-card {
+  width: 658px;
+  height: 1211px;
+  border: 1px solid #d9d9d980;
+}
+
+.top-head-card {
+  background-color: #07689f;
+  color: white;
+  height: 84px;
+  border-radius: 4px;
+  width: 658px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.duration-flight {
+  margin-left: auto;
+}
+
+.head-line {
+  color: #000000;
+  font-weight: 700;
+}
+
+.blue-title {
+}
+
+.middle-section {
+  width: 500px !important;
+}
+
+.gate {
+  font-weight: 400;
+  color: #565656;
+}
+
+.big-grey-text {
+  color: #565656;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.medium-text-grey {
+  color: #565656;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22.4px;
+}
+
+.left-box-grey {
+  background-color: #d9d9d9;
+  width: 314px;
+  height: 63px;
+  margin: 12px;
+  padding: 15px;
+}
+
+.number-plus {
+  color: #565656;
+  margin-left: auto;
+}
+
+.left-box-container {
+  padding: 6px;
+}
+
+.right-box-container {
+  padding: 12px;
+}
+
+.right-box-grey {
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #d9d9d9cc;
+  width: 280px;
+  height: 63px;
+  padding-left: 2px;
+  padding-top: 4px;
+}
+
+.number {
+  margin-left: auto;
+}
+.purchase-the-flight {
+  background-color: #07689f;
+  color: #ffffff;
+  width: 302px;
+  height: 56px;
+  border-radius: 4px;
+  margin-left: 10%;
+  padding: 16px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.text-help {
+  font-weight: 700;
+  color: white;
+}
+
+.bottom-footer {
+  background-color: #565656;
+  width: 658px;
+  height: 90px;
+  border-radius: 4px;
+}
+
+.header-box {
+  width: 658px;
+  height: 340px;
+}
+
+.flight-section {
+  margin-bottom: auto;
+  
+  padding-top:16px;
+  padding-bottom: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.airline-label{
+    font-weight: 700;
+    font-size: 20px;
+    margin-left: auto;
+    height: 56px;
+}

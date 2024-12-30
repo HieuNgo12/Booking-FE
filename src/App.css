@@ -69,6 +69,8 @@
   padding-left: 16px;
   border-radius: 4px;
   border: 1px solid #07689f;
+  margin-top: 12px;
+  height: 20%;
 }
 
 .blue-title {
@@ -97,4 +99,21 @@
   font-size: 12px;
   color: #000000 !important;
   padding-left: 10px;
+}
+
+body {
+  overflow-x: hidden; /* Hide scrollbars */
+}
+
+.error-field {
+  color: #e5062e;
+  font-size: 12px;
+}
+
+.center-gov{
+  padding-left: 130px;
+}
+
+div {
+  font-size: 12px;
 }

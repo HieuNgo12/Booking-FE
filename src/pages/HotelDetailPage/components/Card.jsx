@@ -3,16 +3,16 @@ import "./Card.css";
 function Card({ person, ...props }) {
   return (
     <div className="card p-2">
-      <div>
-        <img src={"/public/detailPage/pho.png"} />
+      <div style={{marginLeft: "25%"}}>
+        <img style={{width: "50px", height:"50px"}} className="mb-6" src={review.userId.avatar} />
       </div>
-      <div className="flex ">
+      <div className="flex mb-6 ">
         <div className="mr-2">
           <img src={"/public/detailPage/de.png"} />
         </div>
-        <div>Sofia</div>
+        <div>{review.userId.firstName}</div>
       </div>
-      <div className="mr-2">Our time at this hotel was marked by contemporary elegance and thoughtful amenities.</div>
+      <div className="mr-2">{review.comment}</div>
       <div>
         <a>Read now </a>
       </div>

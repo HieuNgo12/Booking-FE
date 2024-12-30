@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import RoomsAndBed from "./RoomsAndBed";
 import PlaceRules from "./PlaceRules";
 import HotelInfo from "./HotelInfo";
+import { useNavigate } from "react-router-dom";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,7 +38,7 @@ function a11yProps(index) {
   };
 }
 
-export default function hotelDetailTabs({ hotel, ...props }) {
+export default function hotelDetailTabs({ hotel, disable, ...props }) {
   const [value, setValue] = React.useState(0);
   React.useEffect(() => {
     console.log(hotel);
@@ -59,6 +60,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    navigate(`/payment-detail/${hotel[0].roomId[0]._id}`);
   };
   const onFav = () => {
     toast.success("Favorite Success", {
@@ -90,7 +92,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
     },
   };
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box className="p-6" sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
         sx={tabSx }
@@ -106,8 +108,8 @@ export default function hotelDetailTabs({ hotel, ...props }) {
       </Box>
       <CustomTabPanel value={value} index={0}>
         {hotel.length
-          ? hotel.map((ht) => {
-            console.log(ht);
+          ? hotel?.map((ht) => {
+              console.log(ht);
               return (
                 <div>
                   <div className="flex">
@@ -116,28 +118,31 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "50%" }} >
+                      <div style={{ width: "50%" }}>
                         <div className="head-title">Amenities</div>
-                        <div className="flex">
-
-                          <div className="flex" style={{ width: "50%" }}>
-                            <div>
-                              <img src="/detailPage/wifi.png"/>
-                            </div>
-                            <div className="amenity ml-6">Free Wifi</div>
-                          </div>
-                          <div style={{ width: "50%" }}>
-
-                          </div>
+                        <div className="">
+                          {hotel[0].roomId[0].amenities?.map((amenity) => {
+                            return (
+                              <div className="flex" style={{ width: "50%" }}>
+                                <div>
+                                  <img src="/detailPage/wifi.png" />
+                                </div>
+                                <div className="amenity ml-6">{amenity}</div>
+                              </div>
+                            );
+                          })}
+                          <div style={{ width: "50%" }}></div>
                         </div>
+                        <div></div>
                       </div>
+
                       <div style={{ width: "50%" }} className="">
                         <div className="family">
                           2 Adults, 3 Children, 4 Nights | Two room , Double Bed
                         </div>
                         <div className="flex">
                           <div>
-                            <img src="/homepage/location_on.png"/>
+                            <img src="/homepage/location_on.png" />
                           </div>
                           <div>{ht?.address?.number   + " " + ht?.address?.district  + " " +   " " + ht?.address?.ward + ht?.address?.city}</div>
 
@@ -145,7 +150,9 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                       </div>
                     </div>
                     <div style={{ marginLeft: "70%" }} className="flex">
-                      <div className="price">240$</div>{" "}
+                      <div className="price">
+                        {hotel[0].roomId[0].pricePerNight}$
+                      </div>{" "}
                       <div className="per-night ml-4">per night</div>
                     </div>
                     <div
@@ -174,6 +181,14 @@ export default function hotelDetailTabs({ hotel, ...props }) {
                         </button>
                       </div>
                     </div>
+
+                    <div
+                      className="flex"
+                      style={{ marginLeft: "70%", marginTop: "20px" }}
+                    >
+                      <div></div>
+                 
+                    </div>
                   </div>
                 </div>
               );
@@ -184,7 +199,7 @@ export default function hotelDetailTabs({ hotel, ...props }) {
         <HotelInfo />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <RoomsAndBed />
+        {hotel[0]?.roomId?.length ? <RoomsAndBed hotel={hotel} /> : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <PlaceRules />
