@@ -175,14 +175,16 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                               "No Location"}
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div style={{ marginLeft: "70%" }} className="flex">
+                        <div className="flex">
                       <div className="price">
                         {hotel[0].roomId[0].pricePerNight}$
                       </div>{" "}
                       <div className="per-night ml-4">per night</div>
                     </div>
+                      </div>
+                      
+                    </div>
+                
                     <div
                       className="flex"
                       style={{ marginLeft: "70%", marginTop: "20px" }}
