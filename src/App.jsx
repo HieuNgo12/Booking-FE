@@ -33,9 +33,9 @@ import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
 import FilterPage from "./pages/AccountPage/FilterPage";
 import RankPage from "./pages/AccountPage/RankPage";
 import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
- import 'react-toastify/dist/ReactToastify.css';
- import "slick-carousel/slick/slick.css";
- import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
 import DetailBookingHotelPage from "./pages/DetailBookingPage/DetailBookingHotelPage";
 import DetailBookingFlightPage from "./pages/DetailBookingPage/DetailBookingFlightPage";
@@ -217,15 +217,17 @@ function App() {
     },
     {
       path: "/hotel-favorite-page",
-      element: <HotelFavoriteListPage/>,
+      element: <HotelFavoriteListPage />,
     },
     {
       path: "/confirm-page/:bookingId",
-      element: <ConfirmPage/>,
-    },  {
+      element: <ConfirmPage />,
+    },
+    {
       path: "/hotel-is-booked",
       element: <HotelIsBookedPage />,
-    }, {
+    },
+    {
       path: "/flight-home-page",
       element: <FlightHomePage />,
     },

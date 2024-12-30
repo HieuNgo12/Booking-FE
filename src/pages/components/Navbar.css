@@ -2,24 +2,31 @@
   width: 189px !important;
   height: 40px !important;
   color: #07689f;
-  padding: 8px;
   border: 1px solid #07689f;
   border-radius: 6px;
   text-align: center;
+  cursor: pointer;
 }
 
-.product-tags :hover{
-    background-color: #07689f;
-}
-.product-tags div{
-  padding: 10px !important;
-}
 .classic-image {
   width: 36px;
   height: 36px;
 }
 
- .hotel-highlight{
-  background-color: #07689f;
-  color: white !important;
+.middle{
+  background-color: white;
 }
+
+.middle.active {
+  background-color: #07689f;
+  color: white;
+  border-radius: 30px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.middle:hover {
+  background-color: #05486c;
+  border-radius: 30px;
+  color: white;
+}
+

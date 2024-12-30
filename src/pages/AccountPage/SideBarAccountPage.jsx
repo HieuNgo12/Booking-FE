@@ -33,7 +33,6 @@ const SideBarAccountPage = () => {
   const Logout = () => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
-    Cookies.remove("refreshToken");
     navigate("/login");
   };
   return (
