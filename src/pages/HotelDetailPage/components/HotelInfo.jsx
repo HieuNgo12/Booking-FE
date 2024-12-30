@@ -1,28 +1,48 @@
 import React from "react";
 import "./HotelInfo.css";
-function HotelInfo() {
+import { addDefaultSrc } from "../../Services/defaultImage";
+function HotelInfo({ hotel, ...props }) {
   return (
-    <div className="flex">
-      <div className="section">
-        <div className="head-line">What's Nearby</div>
-        <div></div>
-      </div>
-      <div className="section">
-        <div className="head-line">Top Attraction</div>
-      </div>
-      <div className="section">
-        <div className="head-line">Public Transit</div>
-      </div>
-      <div className="section">
-        <div className="head-line">Closest Airport</div>
-      </div>
-      <div className="section">
-        <div className="head-line">Restaurant & Cafes</div>
-      </div>
-      <div className="section">
-        <div className="head-line">Natural Beauty</div>
-      </div>
-    </div>
+    <table class="table-auto">
+      <thead>
+        <tr>
+          <th></th>
+
+          <th>Room Name</th>
+          <th>Number Of Guest</th>
+          <th>Room Type</th>
+          <th>Room Detail</th>
+          <th>Today's Price</th>
+        </tr>
+      </thead>
+      <tbody className="content-center	">
+        {hotel[0].roomId?.length ? (
+          hotel[0].roomId.map((room) => {
+            console.log(room);
+            return (
+              <tr>
+                <td>
+                  <img src={room.imgRoom}          onError={(ev) =>  addDefaultSrc(ev) }
+/>
+                </td>
+                <td>{room.roomName}</td>
+
+                <td className="">{room.maxOccupancy}</td>
+
+                <td>{room.roomType}</td>
+             
+                <td>{room.detailRoom}</td>
+                <td>
+                  <button>{room.pricePerNight} $</button>
+                </td>
+              </tr>
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </tbody>
+    </table>
   );
 }
 

@@ -1,14 +1,13 @@
 .side-card-payment {
-    width: 519px;
-    height:576px;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid black;
+  width: 519px;
+  height: 576px;
+  border-radius: 8px;
+  border: 1px solid white;
 }
 
-.ancilaries{
-    color:#565656;
-    font-weight: 400;
+.ancilaries {
+  color: #565656;
+  font-weight: 400;
 }
 
 .description div {

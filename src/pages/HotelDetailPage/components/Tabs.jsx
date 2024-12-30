@@ -8,6 +8,7 @@ import RoomsAndBed from "./RoomsAndBed";
 import PlaceRules from "./PlaceRules";
 import HotelInfo from "./HotelInfo";
 import { useNavigate } from "react-router-dom";
+import ReactGoogleMap from "../../components/ReactGoogleMap";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,9 +47,12 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  let navigate = useNavigate();
+
   const onBook = (e) => {
     // alert("Book Success")
     e.preventDefault();
+
     toast.success("Book Success", {
       position: "top-center",
       autoClose: 3000,
@@ -60,6 +64,12 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    const checkoutTime = {
+      passengers: "",
+      checkIn: "",
+      checkOut: "",
+    };
+
     navigate(`/payment-detail/${hotel[0].roomId[0]._id}`);
   };
   const onFav = () => {
@@ -74,28 +84,39 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
       theme: "light",
       // onClose: () => setModal(false),
     });
+    const savedList = JSON?.parse(localStorage?.getItem("favList")) || [];
+    const filterList = savedList.filter((ht) => ht._id === hotel[0]._id);
+    console.log(savedList);
+    savedList.push(hotel[0]);
+    if (!filterList.length) {
+      localStorage.setItem("favList", JSON.stringify(savedList));
+    }
   };
-   const tabSx = {
-    '& .MuiTabs-indicator': {
-      backgroundColor: '#07689F',
+  const tabSx = {
+    "& .MuiTabs-indicator": {
+      backgroundColor: "#07689F",
       color: "#07689F",
+      width: "250px",
     },
-    '& .MuiButtonBase-root.MuiTab-root': {
-      color: 'black',
-      transition: 'color 0.2s ease-in-out',
-      '&:hover': {
-        color: '#07689F)',
+    "& .MuiButtonBase-root.MuiTab-root": {
+      fontWeight: "700",
+      color: "#07689F",
+      transition: "color 0.2s ease-in-out",
+      width: "250px",
+
+      "&:hover": {
+        color: "#07689F",
       },
-      '&.Mui-selected': {
-        color: '#07689F',
+      "&.Mui-selected": {
+        color: "#07689F",
       },
     },
   };
   return (
-    <Box className="p-6" sx={{ width: "100%" }}>
+    <Box className="p-6" sx={{ width: "1250px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-        sx={tabSx }
+          sx={tabSx}
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
@@ -109,7 +130,6 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
       <CustomTabPanel value={value} index={0}>
         {hotel.length
           ? hotel?.map((ht) => {
-              console.log(ht);
               return (
                 <div>
                   <div className="flex">
@@ -118,12 +138,19 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "30%" }}>
+                        {" "}
+                        <ReactGoogleMap />
+                      </div>
+                      <div style={{ width: "20%" }}>
                         <div className="head-title">Amenities</div>
                         <div className="">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
                             return (
-                              <div className="flex" style={{ width: "50%" }}>
+                              <div
+                                className="flex mt-3"
+                                style={{ width: "50%" }}
+                              >
                                 <div>
                                   <img src="/detailPage/wifi.png" />
                                 </div>
@@ -131,7 +158,6 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                               </div>
                             );
                           })}
-                          <div style={{ width: "50%" }}></div>
                         </div>
                         <div></div>
                       </div>
@@ -140,45 +166,43 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                         <div className="family">
                           2 Adults, 3 Children, 4 Nights | Two room , Double Bed
                         </div>
-                        <div className="flex">
-                          <div>
+                        <div className="flex mt-3 mb-3">
+                          <div className="mr-3">
                             <img src="/homepage/location_on.png" />
                           </div>
-                          <div>{ht?.address?.number   + " " + ht?.address?.district  + " " +   " " + ht?.address?.ward + ht?.address?.city}</div>
-
+                          <div>
+                            {ht?.address?.number ||
+                              "No Number" + " " + ht?.address?.district ||
+                              "No District" + " " + " " + ht?.address?.ward ||
+                              "No Ward" + ht?.address?.city ||
+                              "No Location"}
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div style={{ marginLeft: "70%" }} className="flex">
-                      <div className="price">
-                        {hotel[0].roomId[0].pricePerNight}$
-                      </div>{" "}
-                      <div className="per-night ml-4">per night</div>
-                    </div>
-                    <div
-                      className="flex"
-                      style={{ marginLeft: "70%", marginTop: "20px" }}
-                    >
-                      <div>
-                        <button
-                          onClick={() => {
-                            onFav();
-                          }}
-                        >
-                          <img src={"/detailPage/fav.png"} />
-                        </button>
-                      </div>
-                      <div>
-                        <button className="book-now-button">
-                          <a
-                            href=""
-                            onClick={(e) => {
-                              onBook(e);
+                        <div className="flex">
+                          <div className="price">
+                            {hotel[0].roomId[0].pricePerNight}$
+                          </div>{" "}
+                          <div className="per-night ml-4">per night</div>
+                          <button
+                            onClick={() => {
+                              onFav();
                             }}
                           >
-                            Book Now
-                          </a>
-                        </button>
+                            <img src={"/detailPage/fav.png"} />
+                          </button>
+                          <div>
+                        {disable ? (
+                          <button className="book-now-button">
+                            <a
+                              className="book-now-button"
+                              href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                            >
+                              Book Now
+                            </a>
+                          </button>
+                        ) : null}
+                      </div>
+                        </div>
                       </div>
                     </div>
 
@@ -196,10 +220,12 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
           : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <HotelInfo />
+        <HotelInfo hotel={hotel} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {hotel[0]?.roomId?.length ? <RoomsAndBed hotel={hotel} /> : null}
+        {hotel[0]?.roomId?.length ? (
+          <RoomsAndBed disable={disable} hotel={hotel} />
+        ) : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <PlaceRules />

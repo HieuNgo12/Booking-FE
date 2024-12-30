@@ -21,7 +21,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-function ArrowSlider({ people, ...props }) {
+function ArrowSlider({ people, hotel, ...props }) {
   var settings = {
     dots: true,
     infinite: false,
