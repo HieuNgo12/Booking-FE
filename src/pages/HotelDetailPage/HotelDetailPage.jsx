@@ -163,7 +163,7 @@ function HotelDetailPage({ hotels, ...props }) {
           <div>
             <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
             <div className="flex ml-6">
-              <div style={{ width: "20%" }}>
+              <div style={{ width: "18.5%" }}>
                 <div className="flex">
                   <div className="review-rating-text ">Staff Politeness</div>
                   <div className="review-number">8.5</div>
@@ -173,7 +173,7 @@ function HotelDetailPage({ hotels, ...props }) {
                   <img src="/detailPage/Line.png" />
                 </div>
               </div>
-              <div style={{ width: "20%" }}>
+              <div style={{ width: "18.5%" }}>
                 <div className="flex">
                   <div className="review-rating-text">VIP Options</div>
                   <div className="review-number">8</div>
@@ -184,7 +184,7 @@ function HotelDetailPage({ hotels, ...props }) {
                 </div>
               </div>
 
-              <div style={{ width: "20%" }}>
+              <div style={{ width: "18.5%" }}>
                 <div className="flex">
                   <div className="review-rating-text">Free Wi-fi Speed</div>
                   <div className="review-number"> 8</div>
@@ -195,7 +195,7 @@ function HotelDetailPage({ hotels, ...props }) {
                 </div>
               </div>
 
-              <div style={{ width: "20%" }}>
+              <div style={{ width: "18.5%" }}>
                 <div className="flex">
                   <div className="review-rating-text">Cleanliness</div>
                   <div className="review-number">6</div>
