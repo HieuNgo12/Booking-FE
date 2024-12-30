@@ -45,65 +45,8 @@ function HomePageBody() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="discover-your-trip">Discover your trip Worldwide!</div>
-        <div className="flex mb-6">
-          <div>
-            {" "}
-            <input
-              id="place"
-              name="place"
-              type="place"
-              placeholder="Where are you going to"
-              className="search-input-style"
-              onChange={formik.handleChange}
-              value={formik.values.place}
-            />
-            <div className="flex">
-              <div className="error-field ">
-                {" "}
-                {formik.errors.place && <div>{formik.errors.place}</div>}
-              </div>
-            </div>
-          </div>
-          <div>
-            <input
-              id="checkin"
-              name="checkin"
-              type="date"
-              placeholder="Checkin Date Checkout Date"
-              className="search-input-style"
-              onChange={formik.handleChange}
-              value={formik.values.checkin}
-            />
-            <div className="flex">
-              <div className="error-field ">
-                {" "}
-                {formik.errors.checkin && <div>{formik.errors.checkin}</div>}
-              </div>
-            </div>
-          </div>
-          <div>
-            <input
-              id="passengers"
-              name="passengers"
-              type="passengers"
-              placeholder="Adults Children Room"
-              className="search-input-style"
-              onChange={formik.handleChange}
-              value={formik.values.passengers}
-            />
-            <div className="flex">
-              <div className="error-field ">
-                {" "}
-                {formik.errors.passengers && <div>{formik.errors.passengers}</div>}
-              </div>
-            </div>
-          </div>
-
-          <button className="search-hotel" type="submit">
-            Search
-          </button>
-        </div>
+        {/* <div className="discover-your-trip">Discover your trip Worldwide!</div> */}
+       
         {/* Radio */}
         <div className="mb-6">
           <div className="head-titles mb-6">Special Offers</div>

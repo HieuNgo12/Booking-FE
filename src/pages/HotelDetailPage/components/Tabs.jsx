@@ -8,6 +8,7 @@ import RoomsAndBed from "./RoomsAndBed";
 import PlaceRules from "./PlaceRules";
 import HotelInfo from "./HotelInfo";
 import { useNavigate } from "react-router-dom";
+import ReactGoogleMap from "../../components/ReactGoogleMap";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -137,12 +138,16 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "30%" }}>
+                        {" "}
+                        <ReactGoogleMap />
+                      </div>
+                      <div style={{ width: "20%" }}>
                         <div className="head-title">Amenities</div>
                         <div className="">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
                             return (
-                              <div className="flex" style={{ width: "50%" }}>
+                              <div className="flex mt-3" style={{ width: "50%" }}>
                                 <div>
                                   <img src="/detailPage/wifi.png" />
                                 </div>
@@ -150,9 +155,10 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                               </div>
                             );
                           })}
-                          <div style={{ width: "50%" }}></div>
                         </div>
+                        <div></div>
                       </div>
+
                       <div style={{ width: "50%" }} className="">
                         <div className="family">
                           2 Adults, 3 Children, 4 Nights | Two room , Double Bed

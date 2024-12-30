@@ -56,4 +56,10 @@ export const services = {
     const data = await axios.post(dataUrl, body);
     return data;
   },
+  createVNPay: async (body) => {
+    console.log(body);
+    const dataUrl = `${url}/api/v1/create-payment-vnpay`;
+    const data = await axios.post(dataUrl, body);
+    return data;
+  },
 };

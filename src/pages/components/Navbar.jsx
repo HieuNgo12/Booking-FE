@@ -13,9 +13,14 @@ function Navbar() {
             navigate("/");
           }}
         />
-        <div >
+        <div>
           <a href="/hotel-favorite-page">
-          {"<3"}</a>
+            <img className="classic-image" src={"/detailPage/fav.png"} />
+          </a>
+        </div>
+        <div>
+          <a href="/hotel-search">            <img className="classic-image" src={"/homepage/hotel.png"} />
+</a>
         </div>
         <img src="/homepage/England.png" className="classic-image" />
         <img src="/homepage/Help.png" className="classic-image" />
@@ -27,15 +32,18 @@ function Navbar() {
           <a href="/signup">Register</a>
         </div>
       </nav>
-      <div style={{ marginLeft: "20%", marginBottom: "30px" }} className="flex product-tags ">
-        <div className="middle" >
-          <a >Trip</a>
+      <div
+        style={{ marginLeft: "20%", marginBottom: "30px" }}
+        className="flex product-tags "
+      >
+        <div className="middle">
+          <a>Trip</a>
         </div>
         <div className="middle">
-          <a >Deals</a>
+          <a>Deals</a>
         </div>
         <div className="middle hotel-highlight">
-          <a >Hotel</a>
+          <a>Hotel</a>
         </div>
         <div className="middle">Flight</div>
         <div className="middle">Apartment</div>

@@ -19,6 +19,7 @@ function SearchPlaceInput({ formik, ...props }) {
         <div className="title">Place</div>
         <input
           className="search-input  p-2"
+          style={{width: "500px"}}
           id="place"
           name="place"
           type="place"
@@ -37,10 +38,8 @@ function SearchPlaceInput({ formik, ...props }) {
         <div className="title">VIP</div>
         <input
           id="vip"
-          className="small-input p-2"
-          style={{
-            width: "200px",
-          }}
+          className="search-input  p-2"
+          style={{width: "500px"}}
           name="vip"
           type="vip"
           onChange={formik.handleChange}

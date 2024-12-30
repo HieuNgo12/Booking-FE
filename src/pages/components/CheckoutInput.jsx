@@ -14,7 +14,7 @@ function CheckoutInput({ formik, disable, ...props }) {
     setCurrentPage(selected);
   };
   return (
-    <div className="flex">
+    <div className="flex ml-6">
       <div>
         <div className="title">Passengers - Room Condition</div>
         <input
