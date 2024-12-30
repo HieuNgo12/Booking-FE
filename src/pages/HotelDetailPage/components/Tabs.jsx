@@ -113,7 +113,7 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
     },
   };
   return (
-    <Box className="p-6" sx={{ width: "100%" }}>
+    <Box className="p-6" sx={{ width: "1250px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           sx={tabSx}

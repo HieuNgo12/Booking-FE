@@ -146,11 +146,7 @@ function HotelDetailPage({ hotels, ...props }) {
             <Questions />
           </div>
 
-          <div className="black-card">
-            Since This option is a non-refundable reservation And there is no
-            cancellation opportunity, payment is usually processed at the time
-            of booking or shortly thereafter.
-          </div>
+ 
           <div className="black-card">Is there Anti-Allergic Meal?</div>
           <div className="black-card">Does The Hotel Have A pool?</div>
           <div className="black-card">
