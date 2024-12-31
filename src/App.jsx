@@ -11,6 +11,12 @@ import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
+
+import TourList from "./pages/Tour/TourList";
+
+import TourDetailPage from "./pages/Tour/TourDetailPage";
+import SearchPage from "./pages/Tour/SearchPage.jsx";
+
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ProfilePage from "./pages/AccountPage/ProfilePage";
@@ -43,6 +49,7 @@ import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
 import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -201,6 +208,20 @@ function App() {
       element: <HotelDetailPage />,
     },
     {
+
+      path: "/tour-list",
+      element: <TourList/>,
+    },
+    {
+      path: "/tour/:tourId",
+      element: <TourDetailPage />,
+    },
+    {
+      path: "/search-tour",
+      element: <SearchPage/>,
+    }
+
+
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
@@ -231,6 +252,7 @@ function App() {
       path: "/flight-payment-page",
       element: <FlightPaymentPage />,
     },
+
   ]);
 
   return (

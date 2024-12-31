@@ -1,6 +1,10 @@
 import React from "react";
+
+import { NavLink } from 'react-router-dom';
+
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+
 function Navbar() {
   let navigate = useNavigate();
 
@@ -45,9 +49,15 @@ function Navbar() {
         <div className="middle hotel-highlight">
           <a>Hotel</a>
         </div>
+     
+        <div>
+        <a href="/tour-list">Tour</a>
+        </div>
+
         <div className="middle">Flight</div>
         <div className="middle">Apartment</div>
         <div className="middle">Camper</div>
+
       </div>
     </div>
   );
