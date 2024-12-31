@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from 'react-router-dom';
 import "./Navbar.css"
 function Navbar() {
   return (
@@ -24,6 +25,9 @@ function Navbar() {
           <a href="/">Hotel</a>
         </div>
         <div>Flight</div>
+        <div>
+        <a href="/tour-list">Tour</a>
+        </div>
         <div>Apartment</div>
         <div>Camper</div>
       </div>

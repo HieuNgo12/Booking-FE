@@ -11,6 +11,12 @@ import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/SignUp/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
+import TourList from "./pages/Tour/TourList";
+
+import TourDetailPage from "./pages/Tour/TourDetailPage";
+import SearchPage from "./pages/Tour/SearchPage.jsx";
+
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -60,6 +66,19 @@ function App() {
       path: "/hotel-detail/:hotelId",
       element: <HotelDetailPage />,
     },
+    {
+      path: "/tour-list",
+      element: <TourList/>,
+    },
+    {
+      path: "/tour/:tourId",
+      element: <TourDetailPage />,
+    },
+    {
+      path: "/search-tour",
+      element: <SearchPage/>,
+    }
+
   ]);
 
   return (
