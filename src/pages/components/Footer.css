@@ -44,7 +44,7 @@ li {
   color: #f9f9f9;
 }
 
-footer li {
+.footer li {
   cursor: pointer;
 }
 
@@ -90,4 +90,13 @@ footer li:hover {
   padding-right: 16px;
   padding-left: 16px;
 
+}
+
+.bottom-footer{
+  background-color: #F8F8F8 !important;
+  width:1224px !important;
+  height:22px;
+  padding:19px;
+  padding-left: 108px;
+  font-size: 10px !important;
 }

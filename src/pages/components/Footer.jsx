@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <div className="footer ">
-        <div className="flex mb-12">
+      <div className="flex mb-12 ml-6">
         <div>
           <div className="go-further">Go Further With The EasySet24 App</div>
           <div className="enjoy-savings">
@@ -18,7 +18,7 @@ function Footer() {
         </div>
       </div>
       <hr />
-      <div className=" flex" style={{ width: "1600px" }}>
+      <div className=" flex" style={{ width: "1400px" }}>
         <div className="footer-text">
           <ul>
             <li className="footer-title">About Us</li>
@@ -74,7 +74,7 @@ function Footer() {
         </div>
       </div>
       <div className="flex">
-        <div className="copy-right  text-gray-400 flex mt-12 flex">
+        <div className="copy-right  text-gray-400 flex mt-12 flex mb-12">
           <img src="/homepage/visacard.png" />
           <img src="/homepage/ameexpress.png" />
           <img src="/homepage/mastercard.png" />
@@ -94,14 +94,31 @@ function Footer() {
             <button className="subscribe">Subscribe</button>
           </div>
         </div>
-        <div>
-        <img src="/homepage/linkedin.png" />
-          <img src="/homepage/telegram.png" />
-          <img src="/homepage/twitter.png" />
-          <img src="/homepage/Facebook.png" />
-          <img src="/homepage/insta.png" />
+        <div></div>
+      </div>
+      <div className="flex bottom-footer ">
+        <div className="  flex justify-center mr-6 ">
+          <div>
+            <img src="/homepage/R.png" />
+          </div>
+          <div className="ml-2">Copyright Rimel EasySet</div>
         </div>
-        
+        <div className=" flex justify-center mr-6 ">
+          <div>
+            <img src="/homepage/mail.png" />{" "}
+            <div className="   flex justify-center ">
+              123 Oxford Street. London Kingdom
+            </div>
+          </div>
+          <div className="ml-2">Easyset@gmail.com</div>
+        </div>
+        <div className="  flex justify-center mr-6 ">
+          Easyset24: Seamless Journeys. Unrivalled Travel Wisdom
+        </div>
+        <div className="   flex justify-center ">
+          123 Oxford Street. London Kingdom
+        </div>
+        <div className="   flex justify-center ml-10">446699</div>
       </div>
     </div>
   );

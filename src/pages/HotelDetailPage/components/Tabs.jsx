@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
+import RoomsAndBed from "./RoomsAndBed";
+import PlaceRules from "./PlaceRules";
+import HotelInfo from "./HotelInfo";
+import { useNavigate } from "react-router-dom";
+import ReactGoogleMap from "../../components/ReactGoogleMap";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -33,17 +39,84 @@ function a11yProps(index) {
   };
 }
 
-export default function HotelDetailTabs() {
+export default function hotelDetailTabs({ hotel, disable, ...props }) {
   const [value, setValue] = React.useState(0);
-
+  React.useEffect(() => {
+    console.log(hotel);
+  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  let navigate = useNavigate();
 
+  const onBook = (e) => {
+    // alert("Book Success")
+    e.preventDefault();
+
+    toast.success("Book Success", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // onClose: () => setModal(false),
+    });
+    const checkoutTime = {
+      passengers: "",
+      checkIn: "",
+      checkOut: "",
+    };
+
+    navigate(`/payment-detail/${hotel[0].roomId[0]._id}`);
+  };
+  const onFav = () => {
+    toast.success("Favorite Success", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      // onClose: () => setModal(false),
+    });
+    const savedList = JSON?.parse(localStorage?.getItem("favList")) || [];
+    const filterList = savedList.filter((ht) => ht._id === hotel[0]._id);
+    console.log(savedList);
+    savedList.push(hotel[0]);
+    if (!filterList.length) {
+      localStorage.setItem("favList", JSON.stringify(savedList));
+    }
+  };
+  const tabSx = {
+    "& .MuiTabs-indicator": {
+      backgroundColor: "#07689F",
+      color: "#07689F",
+      width: "250px",
+    },
+    "& .MuiButtonBase-root.MuiTab-root": {
+      fontWeight: "700",
+      color: "#07689F",
+      transition: "color 0.2s ease-in-out",
+      width: "250px",
+
+      "&:hover": {
+        color: "#07689F",
+      },
+      "&.Mui-selected": {
+        color: "#07689F",
+      },
+    },
+  };
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box className="p-6" sx={{ width: "1250px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
+          sx={tabSx}
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
@@ -55,56 +128,107 @@ export default function HotelDetailTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className="flex">
-          <div style={{ width: "50%" }}>
-            This stylish and roomy family home is nestled in Stockholm's Kista
-            district, just 14 km away from the Royal Swedish Opera, Museum of
-            Medieval Stockholm, and Stureplan. Offering the convenience of free
-            private parking, it's also a short 9 km drive from Friends Arena and
-            14 km from Sergels Torg Square.
-          </div>
-          <div style={{ width: "50%" }}>
-            Your stay at our hotel includes a complimentary breakfast to
-            kickstart your day, and our rooms offer a cosy and comfortable
-            retreat. Select rooms feature a relaxing bath tub for added luxury.
-            Our dedicated staff is at your service, ensuring a seamless and
-            enjoyable experience throughout your stay. In addition to the
-            inviting accommodations, indulge in extra leisure activities such as
-            our fitness centre or pool. We've thoughtfully curated every aspect
-            to make your stay special, promising a combination of comfort,
-            convenience, and delightful extras.
-          </div>
-      
-          <div style={{ width: "50%" }}>
-            Your stay at our hotel includes a complimentary breakfast to
-            kickstart your day, and our rooms offer a cosy and comfortable
-            retreat. Select rooms feature a relaxing bath tub for added luxury.
-            Our dedicated staff is at your service, ensuring a seamless and
-            enjoyable experience throughout your stay. In addition to the
-            inviting accommodations, indulge in extra leisure activities such as
-            our fitness centre or pool. We've thoughtfully curated every aspect
-            to make your stay special, promising a combination of comfort,
-            convenience, and delightful extras.
-          </div>
-          <div style={{ width: "50%" }}>
-            <div>Amenities</div>
-            <div>
-              <div style={{ width: "50%" }}>
+        {hotel.length
+          ? hotel?.map((ht) => {
+              return (
+                <div>
+                  <div className="flex">
+                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
+                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
+                  </div>
+                  <div>
+                    <div className="flex mt-10">
+                      <div style={{ width: "30%" }}>
+                        {" "}
+                        <ReactGoogleMap />
+                      </div>
+                      <div style={{ width: "20%" }}>
+                        <div className="head-title">Amenities</div>
+                        <div className="">
+                          {hotel[0].roomId[0].amenities?.map((amenity) => {
+                            return (
+                              <div
+                                className="flex mt-3"
+                                style={{ width: "50%" }}
+                              >
+                                <div>
+                                  <img src="/detailPage/wifi.png" />
+                                </div>
+                                <div className="amenity ml-6">{amenity}</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div></div>
+                      </div>
 
-                <ul>
-                  <li>Free Wifis</li>  
-                </ul>
-              </div>
-              <div style={{ width: "50%" }}></div>
-            </div>
-          </div>
-        </div>
+                      <div style={{ width: "50%" }} className="">
+                        <div className="family">
+                          2 Adults, 3 Children, 4 Nights | Two room , Double Bed
+                        </div>
+                        <div className="flex mt-3 mb-3">
+                          <div className="mr-3">
+                            <img src="/homepage/location_on.png" />
+                          </div>
+                          <div>
+                            {ht?.address?.number ||
+                              "No Number" + " " + ht?.address?.district ||
+                              "No District" + " " + " " + ht?.address?.ward ||
+                              "No Ward" + ht?.address?.city ||
+                              "No Location"}
+                          </div>
+                        </div>
+                        <div className="flex">
+                          <div className="price">
+                            {hotel[0].roomId[0].pricePerNight}$
+                          </div>{" "}
+                          <div className="per-night ml-4">per night</div>
+                          <button
+                            onClick={() => {
+                              onFav();
+                            }}
+                          >
+                            <img src={"/detailPage/fav.png"} />
+                          </button>
+                          <div>
+                        {disable ? (
+                          <button className="book-now-button">
+                            <a
+                              className="book-now-button"
+                              href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                            >
+                              Book Now
+                            </a>
+                          </button>
+                        ) : null}
+                      </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="flex"
+                      style={{ marginLeft: "70%", marginTop: "20px" }}
+                    >
+                      <div></div>
+                 
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : null}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <HotelInfo hotel={hotel} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        {hotel[0]?.roomId?.length ? (
+          <RoomsAndBed disable={disable} hotel={hotel} />
+        ) : null}
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <PlaceRules />
       </CustomTabPanel>
     </Box>
   );

@@ -1,0 +1,42 @@
+.card-body{
+    width: 1224px;
+    height: 737px;
+    background-color: white;
+    border: 1px solid grey
+}
+
+.passengers-are-divided{
+    font-size: 18px;
+    font-weight: 400;
+    border-radius: 4px;
+}
+
+.please-check-category{
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+.airway{
+    margin-left: auto;
+}
+
+.sustainability-level{
+    font-weight: 400;
+    font-size: 14px;
+    margin-left: 3px;
+}
+
+.card-section{
+    width: 50%;
+}
+
+.sub-small-title{
+    font-size: 16px;
+    color: #000000;
+    font-weight: 700
+}
+
+.payment-method{
+    margin-left: auto;
+}

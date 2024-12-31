@@ -1,35 +1,63 @@
 import React from "react";
+
 import { NavLink } from 'react-router-dom';
-import "./Navbar.css"
+
+import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
+  let navigate = useNavigate();
+
   return (
     <div>
       <nav className="flex w-full relative top-0 left-0">
-        <img src="/log.png" />
+        <img
+          src="/log.png"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <div>
+          <a href="/hotel-favorite-page">
+            <img className="classic-image" src={"/detailPage/fav.png"} />
+          </a>
+        </div>
+        <div>
+          <a href="/hotel-search">            <img className="classic-image" src={"/homepage/hotel.png"} />
+</a>
+        </div>
+        <img src="/homepage/England.png" className="classic-image" />
+        <img src="/homepage/Help.png" className="classic-image" />
         <input className="nav-search" />
-        <div className="ath-button ml-6" >
-          <a href="/login" >Sign In</a>
+        <div className="ath-button ml-6">
+          <a href="/login">Sign In</a>
         </div>
         <div className="ath-button ml-6">
-          <a href="/signup" >Register</a>
+          <a href="/signup">Register</a>
         </div>
       </nav>
-      <div className="flex product-tags">
-        <div>
-          <a href="/hotel-search">Trip</a>
+      <div
+        style={{ marginLeft: "20%", marginBottom: "30px" }}
+        className="flex product-tags "
+      >
+        <div className="middle">
+          <a>Trip</a>
         </div>
-        <div>
-          <a href="/payment-detail">Deals</a>
+        <div className="middle">
+          <a>Deals</a>
         </div>
-        <div>
-          <a href="/">Hotel</a>
+        <div className="middle hotel-highlight">
+          <a>Hotel</a>
         </div>
-        <div>Flight</div>
+     
         <div>
         <a href="/tour-list">Tour</a>
         </div>
-        <div>Apartment</div>
-        <div>Camper</div>
+
+        <div className="middle">Flight</div>
+        <div className="middle">Apartment</div>
+        <div className="middle">Camper</div>
+
       </div>
     </div>
   );
