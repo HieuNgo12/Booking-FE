@@ -8,43 +8,15 @@ import {
   QuestionCircleOutlined,
   GlobalOutlined,
   DownOutlined,
+  UserOutlined,
+  RightOutlined,
+  CreditCardOutlined,
+  SettingOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserInfo } from "../../Redux/Slide/infoUserSlice";
 
-const items = [
-  {
-    label: (
-      <a
-        href="https://www.antgroup.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        1st menu item
-      </a>
-    ),
-    key: "0",
-  },
-  {
-    label: (
-      <a
-        href="https://www.aliyun.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        2nd menu item
-      </a>
-    ),
-    key: "1",
-  },
-  {
-    type: "divider",
-  },
-  {
-    label: "3rd menu item",
-    key: "3",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserInfo, logout } from "../../Redux/Slide/infoUserSlice";
 
 function Navbar() {
   let navigate = useNavigate();
@@ -54,12 +26,55 @@ function Navbar() {
 
   const { infor, status, error } = useSelector((state) => state.inforUser);
 
-  console.log(infor);
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchUserInfo());
     }
   }, []);
+
+  if (status === "loading") return <div>Loading...</div>;
+
+  const items = [
+    {
+      label: "My Account",
+      key: "0",
+      icon: <UserOutlined />,
+      onClick: () => navigate("/account"),
+      children: null,
+    },
+    {
+      label: "My Payment",
+      key: "1",
+      icon: <CreditCardOutlined />,
+      onClick: () => navigate("/account/payment"),
+      children: null,
+    },
+    {
+      label: "My Setting",
+      key: "2",
+      icon: <SettingOutlined />,
+      onClick: () => navigate("/account/setting"),
+      children: null,
+    },
+    {
+      label: "My Support",
+      key: "3",
+      icon: <QuestionCircleOutlined />,
+      onClick: () => navigate("/account/support"),
+      children: null,
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: "Log Out",
+      key: "4",
+      icon: <LogoutOutlined />,
+      onClick: () => dispatch(logout()) && navigate("/"),
+      danger: true,
+      children: null,
+    },
+  ];
 
   return (
     <div className="max-w-[1224px] w-full flex flex-col mt-3 justify-between items-center">
@@ -145,9 +160,20 @@ function Navbar() {
               }}
               trigger={["click"]}
             >
-              <a onClick={(e) => e.preventDefault()}>
-                <Space style={{ fontWeight: 700 }}>
-                  {infor?.firstName}{infor?.lastName}
+              <a
+                onClick={(e) => e.preventDefault()}
+                style={{ cursor: "pointer" }}
+              >
+                <Space>
+                  <div
+                    style={{
+                      fontWeight: 700,
+                      color: "#05486C",
+                      fontSize: "15px",
+                    }}
+                  >
+                    {infor?.firstName} {infor?.lastName}
+                  </div>
                   <DownOutlined />
                 </Space>
               </a>
@@ -172,6 +198,7 @@ function Navbar() {
           <a>Deals</a>
         </div>
         <div
+          onClick={() => navigate("/")}
           className={`middle ${
             pathname === "/" || pathname === "/" ? "active" : ""
           }  cursor-pointer`}
@@ -179,8 +206,9 @@ function Navbar() {
           <a>Hotel</a>
         </div>
         <div
+          onClick={() => navigate("/flight-home-page")}
           className={`middle ${
-            pathname === "/flight" ? "active" : ""
+            pathname === "/flight-home-page" ? "active" : ""
           }  cursor-pointer`}
         >
           <a>Flight</a>

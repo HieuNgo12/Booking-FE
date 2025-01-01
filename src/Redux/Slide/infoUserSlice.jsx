@@ -14,13 +14,20 @@ export const refreshAccessToken = createAsyncThunk(
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_URL_API}/refresh-token-admin`,
+        `${import.meta.env.VITE_URL_API}/refresh-token`,
         { method: "GET", credentials: "include" }
       );
 
-      const { accessToken } = await response.json();
+      const data = await response.json();
 
-      return jwtDecode(accessToken);
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to refresh access token");
+      }
+
+      return {
+        accessToken: data.accessToken,
+        decodedToken: jwtDecode(data.accessToken),
+      };
     } catch (error) {
       console.error("Failed to refresh access token:", error);
       return rejectWithValue("Failed to refresh access token");
@@ -28,19 +35,23 @@ export const refreshAccessToken = createAsyncThunk(
   }
 );
 
-
 export const fetchUserInfo = createAsyncThunk(
   "user/getInfo",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
-      const token = Cookies.get("accessToken");
-      if (token) {
-        return jwtDecode(token);
+      let token = Cookies.get("accessToken");
+
+      if (!token) {
+        console.warn("No access token, attempting to refresh...");
+        const refreshResponse = await dispatch(refreshAccessToken()).unwrap();
+
+        token = refreshResponse.accessToken;
       }
-      throw new Error("No access token found");
+
+      return jwtDecode(token);
     } catch (error) {
-      console.error("Failed to decode token:", error);
-      return rejectWithValue("Failed to decode token");
+      console.error("Failed to fetch user info:", error);
+      return rejectWithValue("Failed to fetch user info");
     }
   }
 );
