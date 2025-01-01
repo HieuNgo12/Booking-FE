@@ -14,7 +14,6 @@ function HomePageBody() {
     //   .required("Place Is Required"),
     // passengers: Yup.string().required("Passengers is Required"),
     // checkin: Yup.string().required("Check In is Required"),
-
   });
   const [hotelList, setHotelList] = useState([]);
   const formik = useFormik({
@@ -35,7 +34,6 @@ function HomePageBody() {
   useEffect(() => {
     const getHotel = async () => {
       const data = await services.getHotelList();
-      console.log(data);
       setHotelList(data.data.data);
     };
     getHotel();
@@ -46,7 +44,7 @@ function HomePageBody() {
     <div>
       <form onSubmit={formik.handleSubmit}>
         {/* <div className="discover-your-trip">Discover your trip Worldwide!</div> */}
-       
+
         {/* Radio */}
         <div className="mb-6">
           <div className="head-titles mb-6">Special Offers</div>

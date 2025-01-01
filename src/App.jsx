@@ -39,17 +39,19 @@ import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
 import FilterPage from "./pages/AccountPage/FilterPage";
 import RankPage from "./pages/AccountPage/RankPage";
 import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
- import 'react-toastify/dist/ReactToastify.css';
- import "slick-carousel/slick/slick.css";
- import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
+import DetailBookingHotelPage from "./pages/DetailBookingPage/DetailBookingHotelPage";
+import DetailBookingFlightPage from "./pages/DetailBookingPage/DetailBookingFlightPage";
+import DetailBookingTourPage from "./pages/DetailBookingPage/DetailBookingTourPage";
 import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
 import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
 import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
-
 
 function App() {
   const [count, setCount] = useState(0);
@@ -208,9 +210,8 @@ function App() {
       element: <HotelDetailPage />,
     },
     {
-
       path: "/tour-list",
-      element: <TourList/>,
+      element: <TourList />,
     },
     {
       path: "/tour/:tourId",
@@ -218,25 +219,37 @@ function App() {
     },
     {
       path: "/search-tour",
-      element: <SearchPage/>,
-    }
-
-
+      element: <SearchPage />,
+    },
+    {
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
-    
+    {
+      path: "/booking-hotel-detail/:bookingId",
+      element: <DetailBookingHotelPage />,
+    },
+    {
+      path: "/booking-flight-detail/:bookingId",
+      element: <DetailBookingFlightPage />,
+    },
+    {
+      path: "/booking-tour-detail/:bookingId",
+      element: <DetailBookingTourPage />,
+    },
     {
       path: "/hotel-favorite-page",
-      element: <HotelFavoriteListPage/>,
+      element: <HotelFavoriteListPage />,
     },
     {
       path: "/confirm-page/:bookingId",
-      element: <ConfirmPage/>,
-    },  {
+      element: <ConfirmPage />,
+    },
+    {
       path: "/hotel-is-booked",
       element: <HotelIsBookedPage />,
-    }, {
+    },
+    {
       path: "/flight-home-page",
       element: <FlightHomePage />,
     },
@@ -252,7 +265,6 @@ function App() {
       path: "/flight-payment-page",
       element: <FlightPaymentPage />,
     },
-
   ]);
 
   return (

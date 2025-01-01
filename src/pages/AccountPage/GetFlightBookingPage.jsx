@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { List, Avatar, Tabs } from "antd"; // Import useNavigate
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
-import { apiGetAll, apiPost } from "../../API/APIService";
+import { apiGetAll } from "../../API/APIService";
+import VNA from "../../img/logo-vna.svg";
+import VJ from "../../img/logo-vietjet.svg";
+import JS from "../../img/logo-jetstar.svg";
+import BAA from "../../img/logo-bamboo-airways.svg";
 
-const GetHotelBookingPage = () => {
+const GetFlightBookingPage = () => {
   const [dataBooking, setdDataBooking] = useState(null);
 
   const callApi = async () => {
     try {
-      const response = await apiGetAll(`get-booking-by-userId/hotel`);
+      const response = await apiGetAll(`get-booking-by-userId/flight`);
       setdDataBooking(response.data);
     } catch (error) {
       console.log(error);
@@ -19,6 +23,19 @@ const GetHotelBookingPage = () => {
   useEffect(() => {
     callApi();
   }, []);
+
+  const getLogo = (xxx) => {
+    switch (xxx) {
+      case "Vietnam Airlines":
+        return VNA;
+      case "VietJet":
+        return VJ;
+      case "Jetstar Pacific":
+        return JS;
+      case "Bamboo Airways":
+        return BAA;
+    }
+  };
 
   return dataBooking ? (
     <div className="bg-white rounded-lg shadow-md">
@@ -32,18 +49,18 @@ const GetHotelBookingPage = () => {
           <List.Item
             className="flex justify-between items-center bg-white p-4 shadow-md rounded-lg hover:shadow-lg cursor-pointer"
             onClick={() =>
-              window.open(`/booking-hotel-detail/${item._id}`, "_blank")
+              window.open(`/booking-flight-detail/${item._id}`, "_blank")
             } // Mở tab mới
           >
             <div className="flex items-center gap-4 m-2">
               <Avatar
-                src={item?.objectId?.imgHotel?.avatar}
+                src={getLogo(item?.objectId?.airlineName)}
                 size={64}
                 className="rounded-md"
               />
               <div>
                 <h4 className="text-lg font-semibold text-gray-900">
-                  {item.objectId.hotelName}
+                  {item.objectId.airlineName}
                 </h4>
                 <p className="text-sm text-gray-500">
                   {item.bookingStartDate.slice(0, 10)} -{" "}
@@ -64,4 +81,4 @@ const GetHotelBookingPage = () => {
   );
 };
 
-export default GetHotelBookingPage;
+export default GetFlightBookingPage;
