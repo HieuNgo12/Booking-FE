@@ -222,6 +222,7 @@ function App() {
       element: <SearchPage />,
     },
     {
+
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
