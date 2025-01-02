@@ -219,8 +219,9 @@ function App() {
     {
       path: "/search-tour",
       element: <SearchPage/>,
-    }
+    },
 
+    {
 
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
