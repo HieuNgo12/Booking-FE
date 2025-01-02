@@ -1,255 +1,259 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FlightCard from "./FlightCard";
 import { Slider } from "@mui/material";
-import ResponsiveDrawer from "../../HotelSearchPage/components/HotelDrawer";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import { useFormik } from "formik";
-import SearchPlaceInput from "../../components/SearchPlaceInput";
-import * as Yup from "yup";
-import ReactPaginate from "react-paginate";
-import RadioGroup from "../../components/RadioGroup";
+import { Button } from "antd";
+import { Checkbox, Divider, List } from "antd";
+import {
+  SearchOutlined,
+  HeartOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+
+const CheckboxGroup = Checkbox.Group;
+const passengerRatingArr = [
+  "Outstanding 9+",
+  "Very good 8+",
+  "Good 7+",
+  "Excellent",
+  "Poor",
+];
+const airPlaneNameArr = [
+  "Vietnam Airlines",
+  "VietJet",
+  "Jetstar Pacific",
+  "Bamboo Airways",
+];
+
+const popularFiltersArr = [
+  "Drink Included",
+  "Taxes Included",
+  "VIP",
+  "Child Friendly",
+  "Pet friendly",
+];
 
 function FlightSearchBody() {
   const [sliderValue, setSliderValue] = useState(0);
-  const [pageCount, setPageCount] = useState(1);
-  const [hotelList, setHotelList] = useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [orgList, setOrgList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [clickSearch, setClickSearch] = useState(false);
-  const SignupSchema = Yup.object().shape({
-    place: Yup.string(),
-    vip: Yup.string(),
-  });
+  const [checkedListPLane, setCheckedListPlane] = useState([]);
+  const [checkedListPassenger, setCheckedListPassenger] = useState([]);
+  const [checkedListPopular, setCheckedListPopular] = useState([]);
+  const [dataResult, setDataResult] = useState(["1", "2"]);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handlePageClick = ({ selected }) => {
-    setLoading(true);
-    console.log(selected);
-    // setLoading(true);
-    setCurrentPage(selected);
+  //Air Plane
+  const checkAllPLane = airPlaneNameArr.length === checkedListPLane.length;
+  const indeterminatePlane =
+    checkedListPLane.length > 0 &&
+    checkedListPLane.length < airPlaneNameArr.length;
+  const onChangePLane = (list) => {
+    setCheckedListPlane(list);
   };
-  useEffect(() => {
-    const timeId = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => {
-      clearTimeout(timeId);
-    };
-  }, [loading]);
-  const formik = useFormik({
-    initialValues: {
-      place: "",
 
-      vip: "",
-    },
-    validationSchema: SignupSchema,
-    onSubmit: async (values) => {
-      console.log(values);
-      setLoading(true);
-      getRooms(values.place);
-      setClickSearch(true);
-    },
-    // return redirect("");
+  const onCheckAllChangePLane = (e) => {
+    setCheckedListPlane(e.target.checked ? airPlaneNameArr : []);
+  };
 
-    // setSuccess(true);
-  });
+  // Passenger Rating
+  const checkAllPassenger =
+    passengerRatingArr.length === checkedListPassenger.length;
+  const indeterminatePassenger =
+    checkedListPassenger.length > 0 &&
+    checkedListPassenger.length < passengerRatingArr.length;
+  const onChangePassenger = (list) => {
+    setCheckedListPassenger(list);
+  };
 
-  const airlines = [
-    {
-      label: "Austrian Airlines",
-      value: "austrianAirlines",
-    },
-    {
-      label: "Lufthansa",
-      value: "lufthansa",
-    },
-    {
-      label: "Brussel Airlines",
-      value: "brusselAirlines",
-    },
-    {
-      label: "ITA Airways",
-      value: "itaAirways",
-    },
-  ];
-  const passengerRatings = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Outstanding 8+",
-      value: "outstanding",
-    },
-    {
-      label: "Very Good 8+",
-      value: "veryGood8+",
-    },
-    {
-      label: "Good7+",
-      value: "good7+",
-    },
-    {
-      label: "Excellent",
-      value: "excellent",
-    },
-    {
-      label: "Poor",
-      value: "poor",
-    },
-  ];  const popularFilters = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Drink Included",
-      value: "drinkIncluded",
-    },
-    {
-      label: "Taxes Included",
-      value: "taxesIncluded",
-    },
-    {
-      label: "VIP",
-      value: "vip",
-    },
-    {
-      label: "Child Friendly",
-      value: "childFriendly",
-    },
-    {
-      label: "Pet Friendly",
-      value: "petFriendly",
-    },
-  ];
-  const leftBar = () => {
-    return (
-      <div className="flex pl-3">
-        <div>
+  const onCheckAllChangePassenger = (e) => {
+    setCheckedListPassenger(e.target.checked ? passengerRatingArr : []);
+  };
+
+  // Popular Filters
+  const checkAllPopular =
+    popularFiltersArr.length === checkedListPopular.length;
+  const indeterminatePopular =
+    checkedListPopular.length > 0 &&
+    checkedListPopular.length < popularFiltersArr.length;
+  const onChangePopular = (list) => {
+    setCheckedListPopular(list);
+  };
+
+  const onCheckAllChangePopular = (e) => {
+    setCheckedListPopular(e.target.checked ? popularFiltersArr : []);
+  };
+
+  const onChange = (e) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between gap-5">
+        <div className="flex flex-col gap-5 max-w-64">
           <div>
-            <div>Departure Time</div>
+            <div className="head-title">Departure Time</div>
             <Slider
               size="small"
               value={sliderValue}
               aria-label="Small"
               valueLabelDisplay="auto"
             />
-            <div>
-              <button className="time-button">From 12:00</button>
-              <button className="time-button">Up to 16:45</button>
+            <div className="flex">
+              <Button className="time-button">From 12:00</Button>
+              <Button className="time-button">Up to 16:45</Button>
             </div>
           </div>
-          <div>Trip Duration</div>
-          <Slider
-            size="small"
-            value={sliderValue}
-            aria-label="Small"
-            valueLabelDisplay="auto"
-          />
+
           <div>
-            <button className="time-button">From: 7h to 12h</button>
-            <button className="time-button">One Stop</button>
+            <div className="head-title">Trip Duration</div>
+            <Slider
+              size="small"
+              value={sliderValue}
+              aria-label="Small"
+              valueLabelDisplay="auto"
+            />
+            <div className="flex">
+              <Button className="time-button">From: 7h to 12h</Button>
+              <Button className="time-button">One Stop</Button>
+            </div>
           </div>
+
+          {/*Airline Name*/}
           <div>
-            <div className="head-title mt-10">Airline</div>
-
-            {airlines.length
-              ? airlines.map((airline) => {
-                  return (
-                    <div className="flex">
-                      <div>
-                        <input type="checkbox"  value={airline.value} />
-                      </div>
-                      <div className="ml-2">{airline.label}</div>
-                    </div>
-                  );
-                })
-              : null}
-            <div className="head-title mt-3">Passengers Rating</div>
-
-            {
-              <div>
-                <div></div>
-                <div>
-                  <RadioGroup object={passengerRatings} />
-                </div>
-              </div>
-            }
-
-            <div className="head-title mt-10">Popular Filters</div>
-
-            {popularFilters.length
-              ? popularFilters.map((popularFilter) => {
-                  return (
-                    <div className="flex">
-                      <div>
-                        <input type="checkbox" value={popularFilter.value} />
-                      </div>
-                      <div className="ml-2">{popularFilter.label}</div>
-                    </div>
-                  );
-                })
-              : null}
-          </div>
-        </div>
-      </div>
-    );
-  };
-  const rightBar = () => {
-    return (
-      <div>
-        <Navbar />
-        <div>
-          <SearchPlaceInput formik={formik} />
-        </div>
-
-        <div>
-          <div className="mt-6">
-            <FlightCard />
-          </div>
-          <div className="flex mt-10">
-            <div className="white-button-classic">
-              <button
-                onClick={() => {
-                  const favplaces = JSON.parse(localStorage.getItem("favList"));
-                  setHotelList(favplaces);
-                  setLoading(true);
-                }}
+            <div className="head-title">Airline</div>
+            <div className="flex flex-col gap-2">
+              <Checkbox
+                indeterminate={indeterminatePlane}
+                onChange={onCheckAllChangePLane}
+                checked={checkAllPLane}
               >
-                List Your Favorite Places
-              </button>
+                All
+              </Checkbox>
+              <CheckboxGroup
+                options={airPlaneNameArr}
+                value={checkedListPLane}
+                onChange={onChangePLane}
+                className="flex flex-col gap-2"
+              />
             </div>
-            <div>
-              {clickSearch && formik.values.place ? null : (
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={handlePageClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              )}
+          </div>
+
+          {/* Passenger Rating */}
+          <div>
+            <div className="head-title">Passenger Rating</div>
+            <div className="flex flex-col gap-2">
+              <Checkbox
+                indeterminate={indeterminatePassenger}
+                onChange={onCheckAllChangePassenger}
+                checked={checkAllPassenger}
+              >
+                All
+              </Checkbox>
+              <CheckboxGroup
+                options={passengerRatingArr}
+                value={checkedListPassenger}
+                onChange={onChangePassenger}
+                className="flex flex-col gap-2"
+              />
+            </div>
+          </div>
+
+          {/* Popular Filters */}
+          <div>
+            <div className="head-title">Popular Filters</div>
+            <div className="flex flex-col gap-2">
+              <Checkbox
+                indeterminate={indeterminatePopular}
+                onChange={onCheckAllChangePopular}
+                checked={checkAllPopular}
+              >
+                All
+              </Checkbox>
+              <CheckboxGroup
+                options={popularFiltersArr}
+                value={checkedListPopular}
+                onChange={onChangePopular}
+                className="flex flex-col gap-2"
+              />
+            </div>
+          </div>
+
+          <div className="flex">
+            <Checkbox
+              onChange={onChange}
+              style={{
+                transform: "scale(1.5)",
+                transformOrigin: "center",
+              }}
+            />
+            <div className="flex flex-col  ml-5">
+              <div className="font-bold text-base">
+                Filter With the Help Of AI.
+              </div>
+              <span className="font-semibold text-sm text-[#07689F] cursor-pointer">
+                See the results here !
+              </span>
+            </div>
+          </div>
+
+          <div className="flex">
+            <Checkbox
+              onChange={onChange}
+              style={{
+                transform: "scale(1.5)",
+                transformOrigin: "center",
+              }}
+            />
+            <div className="flex flex-col  ml-5">
+              <div className="font-bold text-base">Filter Randomly</div>
+              <span className="font-semibold text-sm text-[#07689F] cursor-pointer">
+                See the results here !
+              </span>
             </div>
           </div>
         </div>
-        <Footer />
+
+        <div className="border-[#F9F9F9] border-solid border"></div>
+
+        <div className="">
+          <List
+            itemLayout="horizontal"
+            dataSource={dataResult}
+            pagination={{
+              pageSize: 5,
+            }}
+            renderItem={(item) => (
+              <List.Item>
+                <FlightCard />
+              </List.Item>
+            )}
+          />
+
+          <div className="flex justify-between mt-10">
+            <Button
+              className="text-[#07689F] border-[#07689F] h-10"
+              icon={<HeartOutlined />}
+              onClick={() => {
+                const favplaces = JSON.parse(localStorage.getItem("favList"));
+                setHotelList(favplaces);
+                setLoading(true);
+              }}
+              // prefix={}
+            >
+              List Your Favorite Places
+            </Button>
+            <Button
+              type="primary"
+              className="text-white bg-[#07689F] h-10"
+              onClick={() => {
+                const favplaces = JSON.parse(localStorage.getItem("favList"));
+                setHotelList(favplaces);
+                setLoading(true);
+              }}
+            >
+              See More Search Results <RightOutlined />
+            </Button>
+          </div>
+        </div>
       </div>
-    );
-  };
-  return (
-    <div>
-      <ResponsiveDrawer leftBar={leftBar} rightBar={rightBar} />
     </div>
   );
 }

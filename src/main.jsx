@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { TourSearchContextProvider } from "../src/context/TourSearchContext.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // Tạo một instance của QueryClient
 const queryClient = new QueryClient();
