@@ -1,16 +1,16 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import FlightPaymentBody from "./components/FlightPaymentBody";
+import FlightFavoritePageBody from "./components/FlightFavoritePageBody";
 
-function FlightPaymentPage() {
+function FlightFavoritePage() {
   return (
     <div className="center-gov content-center">
       <Navbar />
-      <FlightPaymentBody />
+      <FlightFavoritePageBody />
       <Footer />
     </div>
   );
 }
 
-export default FlightPaymentPage;
+export default FlightFavoritePage;

@@ -71,3 +71,16 @@
   margin-right: 6px;
   color: #A6A6A6;
 }
+
+
+.country{
+  color: #07689F;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.o-clock{
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+}

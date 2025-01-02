@@ -5,10 +5,8 @@ import HotelSearchBody from './components/HotelSearchBody'
 
 function HotelSearchPage() {
   return (
-    <div className='center-gov'>
-    <Navbar />
+    <div className='content-center'>
     <HotelSearchBody />
-    <Footer />
   </div>
   )
 }

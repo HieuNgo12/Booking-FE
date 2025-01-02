@@ -5,7 +5,7 @@ import HomePageBody from './components/HomePageBody'
 
 function HomePage() {
   return (
-    <div className='center-gov'>
+    <div className='center-gov content-center content-center'>
       <Navbar />
       <HomePageBody />
       <Footer />

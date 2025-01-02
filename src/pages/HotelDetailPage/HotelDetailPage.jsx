@@ -69,7 +69,7 @@ function HotelDetailPage({ hotels, ...props }) {
     console.log({ values, customParam });
   };
   return (
-    <div className="center-gov ">
+    <div className="center-gov content-center ">
       <form onSubmit={formik.handleSubmit}>
         {" "}
         <Navbar />

@@ -5,7 +5,7 @@ import FlightHomePageBody from "./components/FlightHomePageBody";
 
 function FlightHomePage() {
   return (
-    <div className="center-gov">
+    <div className="center-gov content-center">
       <Navbar />
       <FlightHomePageBody />
       <Footer />

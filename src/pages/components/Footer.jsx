@@ -87,13 +87,13 @@ function Footer() {
           <img src="/homepage/Facebook.png" />
           <img src="/homepage/insta.png" />
         </div>
-        <div>
+        {/* <div>
           <div>Email</div>
           <div>
             <input placeholder="Enter Your Email" className="email-input" />
             <button className="subscribe">Subscribe</button>
           </div>
-        </div>
+        </div> */}
         <div></div>
       </div>
       <div className="flex bottom-footer ">

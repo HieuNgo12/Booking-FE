@@ -19,8 +19,16 @@ function Navbar() {
           </a>
         </div>
         <div>
-          <a href="/hotel-search">            <img className="classic-image" src={"/homepage/hotel.png"} />
-</a>
+          <a href="/hotel-search">
+            {" "}
+            <img className="classic-image" src={"/homepage/hotel.png"} />
+          </a>
+        </div>
+        <div>
+          <a href="/flight-search-page">
+            {" "}
+            <img className="classic-image" src={"/flight-list/flight-search.jpg"} />
+          </a>
         </div>
         <img src="/homepage/England.png" className="classic-image" />
         <img src="/homepage/Help.png" className="classic-image" />

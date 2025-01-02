@@ -21,7 +21,10 @@ function FlightDetailBody() {
             </div>
             <hr />
             <div className="flex flight-section">
-              <div>Second Flight No. From Stockholm C650</div>
+              <div>
+                <div>Second Flight No. From Stockholm </div>
+                <div className="ml-3">C650</div>{" "}
+              </div>
               <div className="airline-label flex">
                 <div className="mr-3">
                   <img src="/flight-detail-page/turkairline.png" />

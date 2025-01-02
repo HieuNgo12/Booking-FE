@@ -130,7 +130,10 @@ function HomePageBody() {
             <img />
           </div>
         </div>
-        <img src="/special-offers.png" />
+        <div>
+        <img src="/special-offers.png"  />
+
+        </div>
         {/* Explore stay */}
         <div>
           <div className="head-titles mt-6 mb-6">

@@ -5,10 +5,8 @@ import FlightSearchBody from "./components/FlightSearchBody";
 
 function FlightSearchPage() {
   return (
-    <div className="center-gov">
-      <Navbar />
+    <div className=" content-center">
     <FlightSearchBody />
-      <Footer />
     </div>
   );
 }

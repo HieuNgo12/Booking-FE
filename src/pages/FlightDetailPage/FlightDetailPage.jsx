@@ -5,7 +5,7 @@ import FlightDetailBody from "./components/FlightDetailBody";
 
 function FlightDetailPage() {
   return (
-    <div className="center-gov">
+    <div className="center-gov content-center">
       <Navbar />
       <FlightDetailBody />
       <Footer />
