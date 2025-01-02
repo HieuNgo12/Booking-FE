@@ -11,6 +11,12 @@ import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
+
+import TourList from "./pages/Tour/TourList";
+
+import TourDetailPage from "./pages/Tour/TourDetailPage";
+import SearchPage from "./pages/Tour/SearchPage.jsx";
+
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ProfilePage from "./pages/AccountPage/ProfilePage";
@@ -33,10 +39,13 @@ import SupportEmailPage from "./pages/AccountPage/SupportEmailPage";
 import FilterPage from "./pages/AccountPage/FilterPage";
 import RankPage from "./pages/AccountPage/RankPage";
 import ConfirmPage from "./pages/ConfirmPage/ConfirmPage";
- import 'react-toastify/dist/ReactToastify.css';
- import "slick-carousel/slick/slick.css";
- import "slick-carousel/slick/slick-theme.css";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import HotelFavoriteListPage from "./pages/HotelFavoriteListPage/HotelFavoriteListPage";
+import DetailBookingHotelPage from "./pages/DetailBookingPage/DetailBookingHotelPage";
+import DetailBookingFlightPage from "./pages/DetailBookingPage/DetailBookingFlightPage";
+import DetailBookingTourPage from "./pages/DetailBookingPage/DetailBookingTourPage";
 import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
 import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
@@ -203,21 +212,47 @@ function App() {
       element: <HotelDetailPage />,
     },
     {
+      path: "/tour-list",
+      element: <TourList />,
+    },
+    {
+      path: "/tour/:tourId",
+      element: <TourDetailPage />,
+    },
+    {
+      path: "/search-tour",
+      element: <SearchPage />,
+    },
+    {
+
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
-    
+    {
+      path: "/booking-hotel-detail/:bookingId",
+      element: <DetailBookingHotelPage />,
+    },
+    {
+      path: "/booking-flight-detail/:bookingId",
+      element: <DetailBookingFlightPage />,
+    },
+    {
+      path: "/booking-tour-detail/:bookingId",
+      element: <DetailBookingTourPage />,
+    },
     {
       path: "/hotel-favorite-page",
-      element: <HotelFavoriteListPage/>,
+      element: <HotelFavoriteListPage />,
     },
     {
       path: "/confirm-page/:bookingId",
-      element: <ConfirmPage/>,
-    },  {
+      element: <ConfirmPage />,
+    },
+    {
       path: "/hotel-is-booked",
       element: <HotelIsBookedPage />,
-    }, {
+    },
+    {
       path: "/flight-home-page",
       element: <FlightHomePage />,
     },

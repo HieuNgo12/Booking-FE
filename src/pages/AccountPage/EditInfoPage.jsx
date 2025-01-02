@@ -79,16 +79,16 @@ const EditInfoPage = ({ dataUser, callApi }) => {
   useEffect(() => {
     if (dataUser) {
       const selectedCityData = cities.find(
-        (city) => city.Id === dataUser.address.city
+        (city) => city.Name === dataUser.address.city
       );
 
       if (selectedCityData) {
         const selectedDistrictsData = selectedCityData.Districts.find(
-          (district) => district.Id === dataUser.address.district
+          (district) => district.Name === dataUser.address.district
         );
         if (selectedDistrictsData) {
           const selectedWardData = selectedDistrictsData.Wards.find(
-            (ward) => ward.Id === dataUser.address.ward
+            (ward) => ward.Name === dataUser.address.ward
           );
           if (selectedCityData && selectedDistrictsData && selectedWardData) {
             form.setFieldsValue({
@@ -96,9 +96,9 @@ const EditInfoPage = ({ dataUser, callApi }) => {
               district: selectedDistrictsData.Name,
               ward: selectedWardData.Name,
             });
-            setSelectedCity(selectedCityData.Id);
-            setSelectedDistrict(selectedDistrictsData.Id);
-            setSelectedWard(selectedWardData.Id);
+            setSelectedCity(selectedCityData.Name);
+            setSelectedDistrict(selectedDistrictsData.Name);
+            setSelectedWard(selectedWardData.Name);
           }
         }
       }
@@ -111,7 +111,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
     setWards([]); // Reset wards
 
     if (cityId) {
-      const selectedCityData = cities.find((city) => city.Id === cityId);
+      const selectedCityData = cities.find((city) => city.Name === cityId);
       setDistricts(selectedCityData.Districts);
     } else {
       setDistricts([]);
@@ -123,7 +123,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
 
     if (districtId) {
       const selectedDistrictData = districts.find(
-        (district) => district.Id === districtId
+        (district) => district.Name === districtId
       );
       setWards(selectedDistrictData.Wards);
     } else {
@@ -418,7 +418,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
                 >
                   <Option value="">Select City</Option>
                   {cities.map((city, index) => (
-                    <Option key={index} value={city.Id}>
+                    <Option key={index} value={city.Name}>
                       {city.Name}
                     </Option>
                   ))}
@@ -437,7 +437,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
                   onChange={handleDistrictChange}
                 >
                   {districts.map((district, index) => (
-                    <Option key={index} value={district.Id}>
+                    <Option key={index} value={district.Name}>
                       {district.Name}
                     </Option>
                   ))}
@@ -458,7 +458,7 @@ const EditInfoPage = ({ dataUser, callApi }) => {
                   onChange={(value) => handleWardChange(value)}
                 >
                   {wards.map((ward, index) => (
-                    <Option key={index} value={ward.Id}>
+                    <Option key={index} value={ward.Name}>
                       {ward.Name}
                     </Option>
                   ))}

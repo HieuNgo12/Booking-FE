@@ -2,21 +2,42 @@ import React, { useEffect, useState } from "react";
 import { List, Avatar, Tabs } from "antd"; // Import useNavigate
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
+import { apiGetAll, apiPost } from "../../API/APIService";
 
-const GetHotelBookingPage = ({ dataBooking }) => {
-  return (
+const GetHotelBookingPage = () => {
+  const [dataBooking, setdDataBooking] = useState(null);
+
+  const callApi = async () => {
+    try {
+      const response = await apiGetAll(`get-booking-by-userId/hotel`);
+      setdDataBooking(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    callApi();
+  }, []);
+
+  return dataBooking ? (
     <div className="bg-white rounded-lg shadow-md">
       <List
         itemLayout="horizontal"
         dataSource={dataBooking}
+        pagination={{
+          pageSize: 5,
+        }}
         renderItem={(item) => (
           <List.Item
             className="flex justify-between items-center bg-white p-4 shadow-md rounded-lg hover:shadow-lg cursor-pointer"
-            onClick={() => window.open(`/booking-detail/${item._id}`, "_blank")} // Mở tab mới
+            onClick={() =>
+              window.open(`/booking-hotel-detail/${item._id}`, "_blank")
+            } // Mở tab mới
           >
             <div className="flex items-center gap-4 m-2">
               <Avatar
-                src={item.objectId.imgHotel.avatar}
+                src={item?.objectId?.imgHotel?.avatar}
                 size={64}
                 className="rounded-md"
               />
@@ -38,6 +59,8 @@ const GetHotelBookingPage = ({ dataBooking }) => {
         )}
       />
     </div>
+  ) : (
+    <div>Loading</div>
   );
 };
 

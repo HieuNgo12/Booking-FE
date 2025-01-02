@@ -132,8 +132,6 @@ function FlightSearchBody() {
       <div className="flex pl-3">
         <div>
           <div>
-          <div className="grey-head-title">Filter By</div>
-
             <div>Departure Time</div>
             <Slider
               size="small"

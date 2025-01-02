@@ -127,10 +127,10 @@ const SignUpPage = () => {
           style={{
             border: "1px solid #e6e6e6",
             borderRadius: "10px",
-            overflow: "hidden",
-            maxWidth: "900px",
+            // overflow: "hidden",
+            maxWidth: "750px",
             width: "100%",
-            height: "720px",
+            // height: "720px",
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
