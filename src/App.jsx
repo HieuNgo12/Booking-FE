@@ -11,12 +11,9 @@ import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
-
 import TourList from "./pages/Tour/TourList";
-
 import TourDetailPage from "./pages/Tour/TourDetailPage";
 import SearchPage from "./pages/Tour/SearchPage.jsx";
-
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ProfilePage from "./pages/AccountPage/ProfilePage";
@@ -50,7 +47,6 @@ import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
 import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
-import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 import FlightConfirmPgae from "./pages/FlightConfirmPgae/FlightConfirmPgae.jsx";
 
@@ -268,7 +264,7 @@ function App() {
       element: <FlightPaymentPage />,
     },
     {
-      path: "/flight-confirm-page/",
+      path: "/flight-confirm-page/:bookingId",
       element: <FlightConfirmPgae />,
     },
   ]);

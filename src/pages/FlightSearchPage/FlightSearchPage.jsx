@@ -3,7 +3,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FlightSearchBody from "./components/FlightSearchBody";
 import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
-import HotelSearchPage from "../HotelSearchPage/HotelSearchPage";
 
 function FlightSearchPage() {
   return (

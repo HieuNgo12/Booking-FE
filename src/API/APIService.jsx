@@ -26,7 +26,7 @@ export const apiGet = async (endpoint, params = {}) => {
     });
 
     if (response.status === 401) {
-      const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+      const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const apiPost = async (endpoint, body = {}) => {
   });
 
   if (response.status === 401) {
-    const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+    const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ export const apiPostFormData = async (endpoint, body = {}) => {
     });
 
     if (response.status === 401) {
-      const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+      const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +185,7 @@ export const apiPatch = async (endpoint, body = {}) => {
   });
 
   if (response.status === 401) {
-    const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+    const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -221,7 +221,7 @@ export const apiPatchFormData = async (endpoint, body = {}) => {
   });
 
   if (response.status === 401) {
-    const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+    const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -256,7 +256,7 @@ export const apiDelete = async (endpoint) => {
   });
 
   if (response.status === 401) {
-    const refreshResponse = await fetch(`${BASE_URL}/refresh-token-admin`, {
+    const refreshResponse = await fetch(`${BASE_URL}/refresh-token`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -183,9 +183,6 @@ const EditPhonePage = ({ dataUser }) => {
       setPhone(dataUser.phone);
     }
   }, [dataUser]);
-  
-  console.log(dataUser);
-  console.log(phone);
 
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">
