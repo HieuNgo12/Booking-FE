@@ -8,21 +8,24 @@ import {
 } from "@ant-design/icons";
 import "./FlightPaymentBody.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { apiGet } from "../../../API/APIService";
+import { apiGet, apiPost } from "../../../API/APIService";
 import VNA from "../img/logo-vna.svg";
 import VJ from "../img/logo-vietjet.svg";
 import JS from "../img/logo-jetstar.svg";
 import BAA from "../img/logo-bamboo-airways.svg";
 import { useSelector } from "react-redux";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import validator from "validator";
 
 function FlightPaymentBody() {
   const [form] = Form.useForm();
   const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({});
+  const [handleMethod, setHandleMethod] = useState("ZaloPay");
 
   const { searchData } = useSelector((state) => state?.searchSlice);
-  console.log(searchData);
 
   const callApi = async () => {
     try {
@@ -49,8 +52,35 @@ function FlightPaymentBody() {
     }
   };
 
-  const onFinish = async () => {
+  const onFinish = async (values) => {
     try {
+      console.log(validator.isEmail(values.email));
+      if (searchData?.trip === "one") {
+        const handleData = {
+          ...values,
+          objectType: "flight",
+          objectId: data?._id,
+          totalPersons:
+            searchData?.passengers + (Number(searchData?.children) || 0),
+          totalAmount: handleTotalAmount(),
+          bookingStartDate: data?.departureDate,
+          bookingEndDate: data?.departureDate,
+        };
+        const responseBooking = await apiPost("create-booking", handleData);
+        console.log(responseBooking);
+        if (responseBooking) {
+          console.log(responseBooking.data._id);
+          const responsePayment = await apiPost(
+            `create-payment-zalo/${responseBooking.data._id}`,
+            { amount: handleTotalAmount() }
+          );
+
+          if (responsePayment) {
+            window.open(responsePayment.data.orderurl, "noopener,noreferrer");
+            navigate("/");
+          }
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -58,14 +88,18 @@ function FlightPaymentBody() {
 
   const handlePriceAdults = () => {
     const totalPriceAdults = data?.price * searchData?.passengers;
-
     return totalPriceAdults;
   };
 
   const handlePriceChildren = () => {
-    const totalPriceAdults = data?.price * searchData?.children;
-
+    const childrenCount = Number(searchData?.children) || 0;
+    const totalPriceAdults = (data?.price / 2) * childrenCount;
     return totalPriceAdults;
+  };
+
+  const handleTotalAmount = () => {
+    const total = handlePriceAdults() + handlePriceChildren();
+    return total;
   };
 
   return (
@@ -187,7 +221,7 @@ function FlightPaymentBody() {
           </div>
           <div className="flex justify-between border-t pt-2 font-bold text-lg">
             <span>Total (USD)</span>
-            <span className="text-green-600">$157</span>
+            <span className="text-green-600">$ {handleTotalAmount()}</span>
           </div>
         </div>
 
@@ -203,7 +237,7 @@ function FlightPaymentBody() {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 md:grid-cols-3 gap-2"
         >
           {/* First Name */}
           <Form.Item
@@ -231,30 +265,50 @@ function FlightPaymentBody() {
 
           {/* Phone Number */}
           <Form.Item
-            name="phoneNumber"
+            name="phone"
             label="Phone Number"
             rules={[
               { required: true, message: "Please enter your phone number!" },
             ]}
             className="col-span-1"
           >
-            <Input
-              placeholder="Phone Number"
-              className="h-10 rounded-none"
-              prefix={<PhoneOutlined />}
+            <PhoneInput
+              country={"vn"}
+              placeholder="phone number"
+              inputStyle={{
+                height: "40px",
+                borderRadius: "0px",
+                border: "1px solid #ccc",
+                width: "100%",
+              }}
+              buttonStyle={{
+                borderRadius: "0px",
+              }}
             />
+          </Form.Item>
+
+          {/* Email */}
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Please enter your phone number!" },
+            ]}
+            className="col-span-2"
+          >
+            <Input placeholder="Last Name" className="h-10 rounded-none" />
           </Form.Item>
 
           {/* Payment Method */}
           <Form.Item
             name="paymentMethod"
             label="Payment Method"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the expiration date!",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Please enter the expiration date!",
+            //   },
+            // ]}
             className="h-10 col-span-1"
           >
             <Select
@@ -266,6 +320,7 @@ function FlightPaymentBody() {
                 height: "40px",
                 width: "100%",
               }}
+              onChange={(value) => setHandleMethod(value)}
             >
               <Select.Option value="ZaloPay">ZaloPay</Select.Option>
               <Select.Option value="PayPal">PayPal</Select.Option>
@@ -278,7 +333,10 @@ function FlightPaymentBody() {
             name="cardNumber"
             label="Card Number *"
             rules={[
-              { required: true, message: "Please enter your card number!" },
+              {
+                required: handleMethod === "ZaloPay" ? false : true,
+                message: "Please enter your card number!",
+              },
             ]}
             className="md:col-span-2"
           >
@@ -286,6 +344,7 @@ function FlightPaymentBody() {
               placeholder="Card Number"
               className="h-10 rounded-none"
               prefix={<CreditCardOutlined />}
+              disabled={handleMethod === "ZaloPay" ? true : false}
             />
           </Form.Item>
 
@@ -293,13 +352,19 @@ function FlightPaymentBody() {
           <Form.Item
             name="cvc"
             label="CVC"
-            rules={[{ required: true, message: "Please enter your CVC!" }]}
+            rules={[
+              {
+                required: handleMethod === "ZaloPay" ? false : true,
+                message: "Please enter your CVC!",
+              },
+            ]}
             className="col-span-1"
           >
             <Input
               placeholder="CVC"
               className="h-10 rounded-none"
               prefix={<LockOutlined />}
+              disabled={handleMethod === "ZaloPay" ? true : false}
             />
           </Form.Item>
 
@@ -309,7 +374,7 @@ function FlightPaymentBody() {
             label="EXP Date"
             rules={[
               {
-                required: true,
+                required: handleMethod === "ZaloPay" ? false : true,
                 message: "Please enter the expiration date!",
               },
             ]}
@@ -319,6 +384,7 @@ function FlightPaymentBody() {
               placeholder="MM/YY"
               className="h-10 rounded-none"
               prefix={<CalendarOutlined />}
+              disabled={handleMethod === "ZaloPay" ? true : false}
             />
           </Form.Item>
 

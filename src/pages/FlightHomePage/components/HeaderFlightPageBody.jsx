@@ -32,10 +32,11 @@ const HeaderFlightPageBody = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  
+
   const [departureOptions, setDepartureOptions] = useState(suggestions);
   const [destinationOptions, setDestinationOptions] = useState(suggestions);
-  const [handleTrip, setHandleTrip] = useState();
+  const [handleTrip, setHandleTrip] = useState("one");
+
   const onFinish = async (values) => {
     try {
       console.log("Form Values:", values);
@@ -185,11 +186,6 @@ const HeaderFlightPageBody = () => {
           name="trip"
           label={<div className="font-bold text-base">Trip</div>}
           className="w-[100px] rounded-none"
-          style={{
-            border: "none",
-            outline: "none",
-            boxShadow: "none",
-          }}
           rules={[{ required: true, message: "Please select type!" }]}
         >
           <Select
@@ -200,6 +196,7 @@ const HeaderFlightPageBody = () => {
               boxShadow: "none",
             }}
             onChange={(value) => setHandleTrip(value)}
+            placeholder="Trip"
           >
             <Select.Option value="one">One Way</Select.Option>
             <Select.Option value="two">Two Way</Select.Option>
@@ -290,6 +287,7 @@ const HeaderFlightPageBody = () => {
           <InputNumber
             min={1}
             style={{ width: "120px", height: "40px", padding: "5px" }}
+            placeholder="Passengers"
           />
         </Form.Item>
 
@@ -302,6 +300,7 @@ const HeaderFlightPageBody = () => {
           <InputNumber
             min={0}
             style={{ height: "40px", padding: "5px", width: "100px" }}
+            placeholder="Children"
           />
         </Form.Item>
 
