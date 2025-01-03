@@ -52,6 +52,7 @@ import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
 import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
+import FlightConfirmPgae from "./pages/FlightConfirmPgae/FlightConfirmPgae.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -258,12 +259,16 @@ function App() {
       element: <FlightSearchPage />,
     },
     {
-      path: "/flight-detail-page",
+      path: "/flight-detail-page/:flightId",
       element: <FlightDetailPage />,
     },
     {
-      path: "/flight-payment-page",
+      path: "/flight-payment-page/:flightId",
       element: <FlightPaymentPage />,
+    },
+    {
+      path: "/flight-confirm-page/",
+      element: <FlightConfirmPgae />,
     },
   ]);
 
