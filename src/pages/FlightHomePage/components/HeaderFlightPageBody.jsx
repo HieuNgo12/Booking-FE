@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   Button,
@@ -12,6 +12,11 @@ import { SendOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlane } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { setSearchData } from "../../../Redux/Slide/searchSlice";
 
 const suggestions = [
   { value: "Da Nang International Airport" },
@@ -24,19 +29,76 @@ const suggestions = [
 
 const HeaderFlightPageBody = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const [departureOptions, setDepartureOptions] = useState(suggestions);
   const [destinationOptions, setDestinationOptions] = useState(suggestions);
-  const navigate = useNavigate();
+  const [handleTrip, setHandleTrip] = useState("one");
 
-  console.log(location);
-  const onFinish = (values) => {
-    if (location.pathname === "/flight-home-page") {
-      navigate("/flight-search-page", {
-        state: { findFlight: values },
-      });
+  const onFinish = async (values) => {
+    try {
+      console.log("Form Values:", values);
+
+      if (values.departureAirport === values.destinationAirport) {
+        return toast.warn(
+          "The destination must not be the same as the departure location",
+          {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+      }
+      if (values.returnDate) {
+        const departureDate = dayjs(values.departureDate);
+        const returnDate = dayjs(values.returnDate);
+
+        if (departureDate.isAfter(returnDate)) {
+          return toast.warn(
+            "The return date cannot be less than the departure date",
+            {
+              position: "top-center",
+              autoClose: 1500,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            }
+          );
+        }
+      }
+
+      const newValues = {
+        ...values,
+        departureDate: dayjs(values.departureDate).format("YYYY-MM-DD"),
+        returnDate: dayjs(values.returnDate).format("YYYY-MM-DD"),
+      };
+
+      dispatch(setSearchData(newValues));
+
+      if (location.pathname !== "/flight-search-page") {
+        navigate("/flight-search-page", {
+          state: { findFlight: newValues },
+        });
+      } else {
+        navigate("/flight-search-page", {
+          state: { findFlight: newValues },
+          replace: true,
+          key: Date.now(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-    console.log("Form Values:", values);
   };
 
   const handleDepartureSearch = (value) => {
@@ -124,11 +186,6 @@ const HeaderFlightPageBody = () => {
           name="trip"
           label={<div className="font-bold text-base">Trip</div>}
           className="w-[100px] rounded-none"
-          style={{
-            border: "none",
-            outline: "none",
-            boxShadow: "none",
-          }}
           rules={[{ required: true, message: "Please select type!" }]}
         >
           <Select
@@ -138,6 +195,8 @@ const HeaderFlightPageBody = () => {
               outline: "none",
               boxShadow: "none",
             }}
+            onChange={(value) => setHandleTrip(value)}
+            placeholder="Trip"
           >
             <Select.Option value="one">One Way</Select.Option>
             <Select.Option value="two">Two Way</Select.Option>
@@ -196,7 +255,7 @@ const HeaderFlightPageBody = () => {
 
         {/* Return  */}
         <Form.Item
-          name="destinationDate"
+          name="returnDate"
           label={<div className="font-bold text-base">Return</div>}
           style={{
             border: "none",
@@ -204,7 +263,9 @@ const HeaderFlightPageBody = () => {
             boxShadow: "none",
             width: "120px",
           }}
-          rules={[{ required: true, message: "Please select dates!" }]}
+          rules={[
+            { required: handleTrip === "two", message: "Please select dates!" },
+          ]}
         >
           <DatePicker
             className="w-full"
@@ -213,6 +274,7 @@ const HeaderFlightPageBody = () => {
               borderRadius: "4px",
               height: "40px",
             }}
+            disabled={handleTrip === "one"}
           />
         </Form.Item>
 
@@ -223,8 +285,9 @@ const HeaderFlightPageBody = () => {
           rules={[{ required: true, message: "Please fill Passengers!" }]}
         >
           <InputNumber
-            min={0}
+            min={1}
             style={{ width: "120px", height: "40px", padding: "5px" }}
+            placeholder="Passengers"
           />
         </Form.Item>
 
@@ -237,6 +300,7 @@ const HeaderFlightPageBody = () => {
           <InputNumber
             min={0}
             style={{ height: "40px", padding: "5px", width: "100px" }}
+            placeholder="Children"
           />
         </Form.Item>
 

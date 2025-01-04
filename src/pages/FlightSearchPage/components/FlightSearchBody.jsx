@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FlightCard from "./FlightCard";
 import { Slider } from "@mui/material";
 import { Button } from "antd";
@@ -8,6 +8,8 @@ import {
   HeartOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import { useLocation } from "react-router-dom";
+import { apiGet } from "../../../API/APIService";
 
 const CheckboxGroup = Checkbox.Group;
 const passengerRatingArr = [
@@ -37,7 +39,24 @@ function FlightSearchBody() {
   const [checkedListPLane, setCheckedListPlane] = useState([]);
   const [checkedListPassenger, setCheckedListPassenger] = useState([]);
   const [checkedListPopular, setCheckedListPopular] = useState([]);
-  const [dataResult, setDataResult] = useState(["1", "2"]);
+  const [dataResult, setDataResult] = useState([]);
+  const location = useLocation();
+
+  console.log(dataResult);
+  const callApi = async () => {
+    try {
+      const response = await apiGet("search-flight", location.state.findFlight);
+      setDataResult(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (location.state) {
+      callApi();
+    }
+  }, [location?.state?.findFlight]);
 
   //Air Plane
   const checkAllPLane = airPlaneNameArr.length === checkedListPLane.length;
@@ -85,7 +104,7 @@ function FlightSearchBody() {
   };
 
   return (
-    <div>
+    <div className="min-w-[1224px]">
       <div className="flex justify-between gap-5">
         <div className="flex flex-col gap-5 max-w-64">
           <div>
@@ -214,20 +233,24 @@ function FlightSearchBody() {
         <div className="border-[#F9F9F9] border-solid border"></div>
 
         <div className="">
-          <List
-            itemLayout="horizontal"
-            dataSource={dataResult}
-            pagination={{
-              pageSize: 5,
-            }}
-            renderItem={(item) => (
-              <List.Item>
-                <FlightCard />
-              </List.Item>
-            )}
-          />
+          {dataResult && dataResult.length > 0 ? (
+            <List
+              itemLayout="horizontal"
+              dataSource={dataResult}
+              pagination={{
+                pageSize: 5,
+              }}
+              renderItem={(item) => (
+                <List.Item>
+                  <FlightCard dataSource={item} />
+                </List.Item>
+              )}
+            />
+          ) : (
+            <div>Không tìm thấy kết quả phù hợp !</div>
+          )}
 
-          <div className="flex justify-between mt-10">
+          <div className="flex justify-between mt-10 mb-10">
             <Button
               className="text-[#07689F] border-[#07689F] h-10"
               icon={<HeartOutlined />}
