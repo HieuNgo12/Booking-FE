@@ -102,11 +102,11 @@ function FlightCard({ dataSource }) {
 
         {/* Price and More Info */}
         <div className="grid grid-cols-3 gap-4 items-center text-center">
-          <div className="flex justify-between">
-            <div className="text-green-600 text-2xl font-bold">
-              $ {dataSource.price}
+          <div className="flex flex-col justify-between">
+            <div className="text-green-600 text-2xl font-bold bg-[#E8F5E4]">
+              {dataSource.price} VND
             </div>
-            <div className="bg-[#E8F5E4] text-sm rounded text-[#4C9839] p-2">
+            <div className=" text-sm rounded text-[#4C9839] p-2">
               {dataSource.availableSeats} vacant seats
             </div>
           </div>

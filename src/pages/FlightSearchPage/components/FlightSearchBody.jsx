@@ -42,6 +42,7 @@ function FlightSearchBody() {
   const [dataResult, setDataResult] = useState([]);
   const location = useLocation();
 
+  console.log(dataResult);
   const callApi = async () => {
     try {
       const response = await apiGet("search-flight", location.state.findFlight);
@@ -57,7 +58,6 @@ function FlightSearchBody() {
     }
   }, [location?.state?.findFlight]);
 
-  console.log(location?.state?.findFlight);
   //Air Plane
   const checkAllPLane = airPlaneNameArr.length === checkedListPLane.length;
   const indeterminatePlane =

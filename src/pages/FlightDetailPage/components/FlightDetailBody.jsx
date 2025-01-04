@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./FlightDetailBody.css";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import backGround from "../img/background.jpg";
 import { apiGet } from "../../../API/APIService";
 import VNA from "../img/logo-vna.svg";
@@ -17,11 +17,16 @@ import {
   faShareAlt,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 function FlightDetailBody() {
   const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({});
+  const [dataPrice, setDataPrice] = useState("N/A");
+
+  const { searchData } = useSelector((state) => state?.searchSlice);
+
   const callApi = async () => {
     try {
       const response = await apiGet(`get-flight-by-id/${params.flightId}`);
@@ -45,6 +50,19 @@ function FlightDetailBody() {
     } else if (data?.airlineName === "VietJet") {
       return VJ;
     }
+  };
+
+  useEffect(() => {
+    if (data?.classFlight && searchData?.classFlight) {
+      setDataPrice(getPrice());
+    }
+  }, [data, searchData]);
+
+  const getPrice = () => {
+    const getPrice = data.classFlight.find(
+      (item) => item.type === searchData.classFlight
+    );
+    return getPrice ? getPrice.price : "Type not found";
   };
 
   return (
@@ -82,18 +100,21 @@ function FlightDetailBody() {
           <div className="flex justify-between items-center text-lg">
             <div>
               <span className="font-semibold text-gray-600">Flight No:</span>{" "}
-              <span className="font-bold text-[#07689F]">
+              <span className="font-bold text-lg text-[#07689F]">
                 {data?.flightNumber || "N/A"}
               </span>
             </div>
             <div>
-              <span className="font-semibold text-gray-600">Departure:</span>{" "}
-              <span className="font-bold">{data?.departurePlace || "N/A"}</span>
+              <span className="font-semibold text-gray-600">Class:</span>{" "}
+              <span className="font-bold text-lg text-[#07689F]">
+                {searchData?.classFlight}
+              </span>
+              <span className="font-bold"></span>
             </div>
             <div>
-              <span className="font-semibold text-gray-600">Arrival:</span>{" "}
-              <span className="font-bold">
-                {data?.destinationPlace || "N/A"}
+              <span className="font-semibold text-gray-600">Price:</span>{" "}
+              <span className="font-bold text-lg text-[#07689F]">
+                {dataPrice ? `${dataPrice} VND` : "N/A"}
               </span>
             </div>
           </div>
@@ -104,6 +125,9 @@ function FlightDetailBody() {
           {/* cột 1 */}
           <div className="max-w-36 bg-[#F9F9F9]">
             <div className="blue-title">{data?.departureAirport}</div>
+            <div className="text-base font-bold">
+              {data?.departurePlace || "N/A"}
+            </div>
             <div>CET : {data?.departureDate?.slice(11, 19)}</div>
             <div className="flex items-center">
               <div className="gate">GATE : </div>
@@ -137,10 +161,13 @@ function FlightDetailBody() {
           {/* cột 3  */}
           <div className="max-w-36">
             <div className="blue-title">{data?.destinationAirport}</div>
+            <div className="text-base font-bold">
+              {data?.destinationPlace || "N/A"}
+            </div>
             <div>CET : {data?.destinationDate?.slice(11, 19)}</div>
             <div className="flex items-center">
               <div className="gate">GATE : </div>
-              <div className="big-grey-text">{"23E"}</div>
+              <div className="big-grey-text">{"3L"}</div>
             </div>
           </div>
         </div>
@@ -164,11 +191,11 @@ function FlightDetailBody() {
 
           <div className="p-3 w-1/2 flex flex-col gap-3">
             <div className="flex justify-between items-center p-5 bg-[#D9D9D9]">
-              <div className="medium-text-grey ">No stop</div>
+              <div className="medium-text-grey ">{searchData?.trip} trip</div>
             </div>
 
             <div className="flex justify-between items-center p-5 bg-[#D9D9D9]">
-              <div className="medium-text-grey">SABIHA - Exit L</div>
+              <div className="medium-text-grey"> Exit - Gate 3 L</div>
             </div>
           </div>
         </div>
@@ -252,12 +279,12 @@ function FlightDetailBody() {
 
         {/* thông tin thanh toán */}
         <div className="flex mt-6 mb-6 w-full">
-          <div className="w-1/5 flex  flex-col justify-center items-center">
-            <div className="price">${data?.price}</div>
-            <div>Taxes Included</div>
+          <div className="w-1/3 flex  flex-col justify-center items-center">
+            <div className="price">{dataPrice} VND</div>
+            <div className="text-red-500 font-bold">Taxes Included</div>
           </div>
 
-          <div className="w-4/5 flex flex-col justify-center items-center">
+          <div className="w-2/3 flex flex-col justify-center items-center">
             <img src="/flight-detail-page/Icons.png" />
             <div>Transactions are encrypted By EsaySet24</div>
           </div>
