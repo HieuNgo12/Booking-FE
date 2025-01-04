@@ -17,12 +17,15 @@ import { useSelector } from "react-redux";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import validator from "validator";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FlightPaymentBody() {
   const [form] = Form.useForm();
   const params = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState({});
+  const [type, setType] = useState({});
   const [handleMethod, setHandleMethod] = useState("ZaloPay");
 
   const { searchData } = useSelector((state) => state?.searchSlice);
@@ -40,6 +43,19 @@ function FlightPaymentBody() {
     callApi();
   }, []);
 
+  useEffect(() => {
+    if (searchData && data?.classFlight) {
+      setType(getPrice());
+    }
+  });
+
+  const getPrice = () => {
+    const price = data?.classFlight?.find(
+      (item) => item.type === searchData.classFlight
+    );
+    return price ? price : "No type";
+  };
+
   const logoAirPlane = () => {
     if (data?.airlineName === "Bamboo Airways") {
       return BAA;
@@ -54,32 +70,46 @@ function FlightPaymentBody() {
 
   const onFinish = async (values) => {
     try {
-      console.log(validator.isEmail(values.email));
-      if (searchData?.trip === "one") {
-        const handleData = {
-          ...values,
-          objectType: "flight",
-          objectId: data?._id,
-          totalPersons:
-            searchData?.passengers + (Number(searchData?.children) || 0),
-          totalAmount: handleTotalAmount(),
-          bookingStartDate: data?.departureDate,
-          bookingEndDate: data?.departureDate,
-        };
-        const responseBooking = await apiPost("create-booking", handleData);
-        console.log(responseBooking);
-        if (responseBooking) {
-          console.log(responseBooking.data._id);
-          const responsePayment = await apiPost(
-            `create-payment-zalo/${responseBooking.data._id}`,
-            { amount: handleTotalAmount() }
-          );
+      if (!validator.isEmail(values.email)) {
+        return toast.warn("Email is not valid! Please check again!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
 
-          if (responsePayment) {
-            window.open(responsePayment.data.orderurl, "noopener,noreferrer");
-            navigate("/");
-          }
+      const handleData = {
+        ...values,
+        objectType: "flight",
+        objectId: data?._id,
+        totalPersons:
+          searchData?.passengers + (Number(searchData?.children) || 0),
+        totalAmount: handleTotalAmount(),
+        bookingStartDate: data?.departureDate,
+        bookingEndDate: data?.departureDate,
+      };
+
+      const responseBooking = await apiPost("create-booking", handleData);
+
+      if (responseBooking && values.paymentMethod === "ZaloPay") {
+        const responsePayment = await apiPost(
+          `create-payment-zalo/${responseBooking.data._id}`,
+          { paymentMethod: values.paymentMethod }
+        );
+
+        if (responsePayment) {
+          window.open(responsePayment.data.orderurl, "noopener,noreferrer");
+          navigate("/");
         }
+      } else if (responseBooking && values.paymentMethod === "VNPay") {
+        console.log("VNPay");
+      } else if (responseBooking && values.paymentMethod === "Momo") {
+        console.log("Momo");
       }
     } catch (error) {
       console.log(error);
@@ -87,13 +117,13 @@ function FlightPaymentBody() {
   };
 
   const handlePriceAdults = () => {
-    const totalPriceAdults = data?.price * searchData?.passengers;
+    const totalPriceAdults = type?.price * searchData?.passengers;
     return totalPriceAdults;
   };
 
   const handlePriceChildren = () => {
     const childrenCount = Number(searchData?.children) || 0;
-    const totalPriceAdults = (data?.price / 2) * childrenCount;
+    const totalPriceAdults = (type?.price / 2) * childrenCount;
     return totalPriceAdults;
   };
 
@@ -156,6 +186,9 @@ function FlightPaymentBody() {
                 Flight Code:{" "}
                 <span className="font-medium">{data?.flightNumber}</span>
               </p>
+              <p className="text-sm text-gray-600">
+                Flight Class: <span className="font-medium">{type?.type}</span>
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <img
@@ -202,7 +235,7 @@ function FlightPaymentBody() {
           <div className="flex justify-between text-gray-600">
             <div>
               <span className="text-lg font-bold text-red-500">
-                $ {handlePriceAdults() ? handlePriceAdults() : ""}
+                {handlePriceAdults() ? `${handlePriceAdults()} VND` : ""}
               </span>
               <span className="text-sm font-bold">
                 {" "}
@@ -212,16 +245,20 @@ function FlightPaymentBody() {
             </div>
             <div>
               <span className="text-lg font-bold text-red-500">
-                $ {handlePriceChildren()}
+                {handlePriceChildren() === 0
+                  ? ""
+                  : `${handlePriceChildren()} VND `}
               </span>
               <span className="text-sm">
-                {searchData?.children ? searchData?.children : "No"} Children
+                {searchData?.children
+                  ? `For ${searchData?.children} Children`
+                  : "No Children"}{" "}
               </span>
             </div>
           </div>
           <div className="flex justify-between border-t pt-2 font-bold text-lg">
-            <span>Total (USD)</span>
-            <span className="text-green-600">$ {handleTotalAmount()}</span>
+            <span>Total (VND)</span>
+            <span className="text-green-600">VND {handleTotalAmount()}</span>
           </div>
         </div>
 
@@ -235,6 +272,9 @@ function FlightPaymentBody() {
 
         <Form
           form={form}
+          initialValues={{
+            paymentMethod: "ZaloPay",
+          }}
           layout="vertical"
           onFinish={onFinish}
           className="grid grid-cols-1 md:grid-cols-3 gap-2"
@@ -303,12 +343,6 @@ function FlightPaymentBody() {
           <Form.Item
             name="paymentMethod"
             label="Payment Method"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please enter the expiration date!",
-            //   },
-            // ]}
             className="h-10 col-span-1"
           >
             <Select
@@ -323,6 +357,8 @@ function FlightPaymentBody() {
               onChange={(value) => setHandleMethod(value)}
             >
               <Select.Option value="ZaloPay">ZaloPay</Select.Option>
+              <Select.Option value="VNPay">VNPay</Select.Option>
+              <Select.Option value="Momo">Momo</Select.Option>
               <Select.Option value="PayPal">PayPal</Select.Option>
               <Select.Option value="CreditCard">Credit Card</Select.Option>
             </Select>
@@ -428,6 +464,7 @@ function FlightPaymentBody() {
           </Form.Item>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

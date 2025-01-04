@@ -17,9 +17,9 @@ function FlightConfirmBodyPage() {
 
   const callApi = async () => {
     try {
-      const response = await apiGet(`get-booking/${location.bookingId}`);
-      setBooking(response.data);
-      console.log(response);
+      const response1 = await apiGet(`create-payment/${location.bookingId}`);
+      const response2 = await apiGet(`get-booking/${location.bookingId}`);
+      setBooking(response2.data);
     } catch (error) {
       console.log(error);
     }
@@ -41,8 +41,6 @@ function FlightConfirmBodyPage() {
     }
   };
 
-  console.log(location);
-  console.log(test.search);
   return (
     <div className="max-w-5xl mx-auto p-5 bg-white shadow-lg rounded-lg overflow-hidden border-2 border-[#F9F9F9]">
       {/* Header */}
