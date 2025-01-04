@@ -54,6 +54,7 @@ import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymen
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 import FlightConfirmPage from "./pages/FlightConfirmPage/FlightConfirmPage";
 import FlightFavoritePage from "./pages/FlightFavoritePage/FlightFavoritePage";
+import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -275,6 +276,10 @@ function App() {
     {
       path: "/flight-favorite-page",
       element: <FlightFavoritePage />,
+    },
+    {
+      path: "/chat-page",
+      element: <ChatAppPage />,
     },
   ]);
 

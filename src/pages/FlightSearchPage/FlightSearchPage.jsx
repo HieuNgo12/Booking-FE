@@ -13,7 +13,7 @@ function FlightSearchPage() {
       </div>
       <div className="max-w-[1224px]">
         <HeaderFlightPageBody />
-        {/* <FlightSearchBody /> */}
+        <FlightSearchBody />
       </div>
       <Footer />
     </div>
