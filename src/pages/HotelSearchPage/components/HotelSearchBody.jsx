@@ -278,23 +278,25 @@ function HotelSearchBody() {
         <div>
           <div className="head-sidebar-title">Distance From the Centre</div>
           <div>
-            <RadioGroup
-              flex={false}
-              object={[
-                {
-                  value: "lessThan1KM",
-                  label: "Less Than 1 KM",
-                },
-                {
-                  value: "lessThan5KM",
-                  label: "Less Than 5 KM",
-                },
-                {
-                  value: "lessThan15KM",
-                  label: "Less Than 15KM",
-                },
-              ]}
-            />
+          {
+              <HotelFilterCheckboxes
+                options={[
+                  {
+                    value: "5stars",
+                    label: "5 Stars",
+                  },
+                  {
+                    value: "4stars",
+                    label: "4 Stars",
+                  },
+                  {
+                    value: "3stars",
+                    label: "3 Stars",
+                  },
+                ]}
+              />
+            }
+            
           </div>
         </div>
       </div>

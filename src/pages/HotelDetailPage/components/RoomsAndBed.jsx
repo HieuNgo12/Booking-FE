@@ -61,9 +61,7 @@ function RoomsAndBed({ disable, hotel, ...props }) {
                 </td>
                 <td>
                   {disable ? (
-                    <button className="book-now-button"     onClick={() => {
-              
-                    }}>
+                    <button className="book-now-button"  >
                       <a
                         className="book-now-button"
                         href={`/payment-detail/${hotel[0].roomId[0]._id}`}

@@ -26,24 +26,29 @@ export default function PromocodeModal({
   ...props
 }) {
   const applyPromoCode = async () => {
-    const body = {
-      code: formik.values.promoCode,
-    }
-    const data = await services.applyPromoCode(body);
-    console.log(data);
-    if(data.data.data.code){
-      toast.success("Apply Promo Code Successfully for This Booking", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        // onClose: () => setModal(false),
-      });
-    } else {
+    try{
+      const body = {
+        code: formik.values.promoCode,
+      }
+      const data = await services.applyPromoCode(body);
+      console.log(data);
+      const newPrice = Number(JSON.parse(localStorage?.getItem("currentPrice"))) - data.data.data.discountValue
+      localStorage.setItem("currentPrice", newPrice  > 0 ? newPrice : 0 );
+    
+      if(data.data.data.code){
+          toast.success("Apply Promo Code Successfully for This Booking", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          // onClose: () => setModal(false),
+        });
+      } 
+    }catch(e){
       toast.error("Code not available", {
         position: "top-center",
         autoClose: 3000,
@@ -56,7 +61,11 @@ export default function PromocodeModal({
         // onClose: () => setModal(false),
       });
     }
+  
+
    
+    
+
     localStorage.setItem(
       "promoCode",
       JSON.stringify({

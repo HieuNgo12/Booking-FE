@@ -12,7 +12,7 @@ import PromocodeModal from "./PromocodeModal";
 function PaymentPageBody({ room, ...props }) {
   const [disablePromo, setDisablePromo] = useState(false);
   const [open, setOpen] = React.useState(false);
-
+  const [price,setPrice] = useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const SignupSchema = Yup.object().shape({
@@ -98,15 +98,14 @@ function PaymentPageBody({ room, ...props }) {
       // });
       const vnPayResponse = await services.createVNPay();
       console.log(vnPayResponse);
-      (window.location.href = vnPayResponse.data.data.orderurl),
-        alert("Hello World");
+      window.location.href = vnPayResponse.data.data.orderurl;
     },
     // return redirect("");
 
     // setSuccess(true);
   });
   useEffect(() => {
-    localStorage.setItem("currentPrice", JSON.stringify(room[0].pricePerNight));
+  localStorage.setItem("currentPrice", JSON.stringify(room[0].pricePerNight));
     console.log(room);
   }, []);
   const handlePageClick = ({ selected }) => {
@@ -165,7 +164,7 @@ function PaymentPageBody({ room, ...props }) {
                     <img src="/paymentPage/scale.png" />
                   </div>
                   <div className="sub-title flex mt-6 mb-6">
-                    <div>
+                    <div className="mt-1">
                       <img src="/detailPage/loc.png" />
                     </div>
                     <div className="sub-title">Location Information</div>
@@ -271,17 +270,50 @@ function PaymentPageBody({ room, ...props }) {
                 </div>
               </div>
 
-              <div className=" room-characters mb-6 pb-6 flex">
-                <div> 18 m2</div>
-                <div>City Center</div>
-                <div>Next to Forest</div>
-                <div>En Suit Bath Room</div>
-                <div>Flat Screen TV</div>
+              <div className="  mb-6 pb-6 ">
+                <div className="flex">
+                  <div className="room-characters">
+                    <div>
+                      <img src="/paymentPage/hotel.png" />
+                    </div>
+                    <div> 18 m2</div>
+                  </div>
+                  <div className="room-characters">
+                    {" "}
+                    <div>
+                      <img src="/paymentPage/local-two.png" />
+                    </div>
+                    <div className="ml-2">City Center</div>
+                  </div>
+                  <div className="room-characters">
+                    <div>
+                      {" "}
+                      <img src="/paymentPage/tree.png" />
+                    </div>
+                    <div className="ml-2">Next to Forest</div>
+                  </div>
+                </div>
+                <div className="flex">
+                <div className="room-characters">
+                  <div>
+                    {" "}
+                    <img src="/paymentPage/shower-head.png" />
+                  </div>
+                  <div>En Suit Bath Room</div>
+                </div>
+                <div className="room-characters">
+                  {" "}
+                  <div>
+                    {" "}
+                    <img src="/paymentPage/tv-one.png" />
+                  </div>
+                  <div>Flat Screen TV</div>
+                </div></div>
               </div>
             </div>
             <div
-              style={{ marginBottom: "50px", paddingBottom: "20px" }}
-              className="bg-white pl-6"
+              style={{  paddingBottom: "20px" }}
+              className="bg-white pl-6 mb-2"
             >
               <div className="head-title ">Payment Information</div>
               <div className=" pr-6">
@@ -366,7 +398,7 @@ function PaymentPageBody({ room, ...props }) {
                     </select>
                   </form>
                 </div>
-                <div className="flex booking-for-work ml-3">
+                <div className="flex booking-for-work ">
                   <div className="sub-title p-2">Booking for Work</div>
                   <input className="ml-2" type="radio" />
                 </div>
@@ -550,7 +582,7 @@ function PaymentPageBody({ room, ...props }) {
                 <div className="flex">
                   <div>
                     <div className="">
-                      <div className="flex mb-2">
+                      <div className="flex mb-2 mt-2">
                         <input
                           type="checkbox"
                           id="needAFlight"
@@ -566,7 +598,7 @@ function PaymentPageBody({ room, ...props }) {
                         <div>
                           <img />
                         </div>
-                        <div className="flex mt-6 mb-6">
+                        <div className="flex mt-6 mb-6 ">
                           <div className="mr-2">
                             <img src="/paymentPage/flight-airflow.png" />
                           </div>
@@ -583,8 +615,8 @@ function PaymentPageBody({ room, ...props }) {
                       </div>
                     </div>
                     <div>
-                      <div className="flex">
-                        <div>
+                      <div className="flex ">
+                        <div className="mt-1">
                           <input
                             type="checkbox"
                             id="bookATaxi"

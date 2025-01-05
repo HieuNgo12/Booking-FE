@@ -132,8 +132,7 @@ function HomePageBody() {
           </div>
         </div>
         <div>
-        <img src="/special-offers.png"  />
-
+          <img src="/special-offers.png" />
         </div>
         {/* Explore stay */}
         <div>

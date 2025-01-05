@@ -138,11 +138,11 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "30%" }}>
+                      <div style={{ width: "300px" }}>
                         {" "}
                         <ReactGoogleMap />
                       </div>
-                      <div style={{ width: "100%" }} className="ml-3 mr-3">
+                      <div style={{ width: "300px" }} className="ml-3 mr-3">
                         <div className="head-title">Amenities</div>
                         <div className="flex">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
@@ -162,7 +162,7 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                         <div></div>
                       </div>
 
-                      <div style={{ width: "40%" }} className="">
+                      <div style={{ width: "50%" }} className="">
                         <div className="flex mt-3 mb-3">
                           <div className="mr-3">
                             <img src="/homepage/location_on.png" />
