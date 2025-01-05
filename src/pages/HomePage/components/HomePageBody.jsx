@@ -5,6 +5,8 @@ import { services } from "../../Services/services";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import HeaderHotelPage from "../../HotelSearchPage/components/HeaderHotelPage";
+import SearchPlaceInput from "../../components/SearchPlaceInput";
 
 function HomePageBody() {
   const SignupSchema = Yup.object().shape({
@@ -46,6 +48,7 @@ function HomePageBody() {
         {/* <div className="discover-your-trip">Discover your trip Worldwide!</div> */}
 
         {/* Radio */}
+        <SearchPlaceInput formik={formik} />
         <div className="mb-6">
           <div className="head-titles mb-6">Special Offers</div>
           {/* <div className="flex">
@@ -128,7 +131,9 @@ function HomePageBody() {
             <img />
           </div>
         </div>
-        <img src="/special-offers.png" />
+        <div>
+          <img src="/special-offers.png" />
+        </div>
         {/* Explore stay */}
         <div>
           <div className="head-titles mt-6 mb-6">
@@ -151,6 +156,12 @@ function HomePageBody() {
         </div>
         <div>
           <img src="/homepage/inspiration.png" />
+        </div>
+        <div className="mt-6">
+          <img src="/homepage/back-review-cards.png" />
+        </div>
+        <div className="mt-6">
+          <img src="/homepage/hotel-service.png" />
         </div>
       </form>
     </div>

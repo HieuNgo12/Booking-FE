@@ -9,7 +9,7 @@ function RoomsAndBed({ disable, hotel, ...props }) {
   }, []);
   let navigate = useNavigate();
 
-  const onBook = (e, id) => { 
+  const onBook = (e, id) => {
     // alert("Book Success")
     e.preventDefault();
 
@@ -57,14 +57,15 @@ function RoomsAndBed({ disable, hotel, ...props }) {
 
                 <td>{room.detailRoom}</td>
                 <td>
-                  <button>{room.pricePerNight} $</button>
+                  <button>{room.pricePerNight * 23000000}</button>
                 </td>
                 <td>
                   {disable ? (
-                    <button className="book-now-button">
+                    <button className="book-now-button"  >
                       <a
                         className="book-now-button"
                         href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                    
                       >
                         Book Now
                       </a>

@@ -4,130 +4,54 @@ import * as Yup from "yup";
 import "./HotelSearchBody.css";
 import { Slider } from "@mui/material";
 import HotelListingCard from "./HotelListingCard";
-import ReactPaginate from "react-paginate";
 import { services } from "../../Services/services";
-import PassengerModal from "./PassengerModal";
 import RadioGroup from "../../components/RadioGroup";
 import SearchPlaceInput from "../../components/SearchPlaceInput";
 import Loading from "../../components/Loading";
-import ReactGoogleMap from "../../components/ReactGoogleMap";
-import GoogleMapReact from "google-map-react";
-
+import { Checkbox, Divider, List } from "antd";
+import ReactPaginate from "react-paginate";
+import { HeartOutlined } from "@ant-design/icons";
+import HeaderHotelPage from "./HeaderHotelPage";
+import HotelFilterCheckboxes from "./HotelFilterCheckboxes";
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const popularFilters = [
-  {
-    id: "breakfastIncluded",
-    label: "Breakfast Included",
-  },
-  {
-    id: "allInclusive",
-    label: "All-Inclusive",
-  },
-  {
-    id: "freeCancellation",
-    label: "Free Cancellation",
-  },
-  {
-    id: "pool",
-    label: "Pool",
-  },
-  {
-    id: "petFriendly",
-    label: "Pet Friendly",
-  },
+  "Breakfast Included",
+  "All-Inclusive",
+  "Free Cancellation",
+  "Pool",
+  "Pet Friendly",
 ];
 const roomFacilities = [
-  {
-    id: "ownBathroom",
-    label: "Own Bathroom",
-  },
-  {
-    id: "kitchen",
-    label: "Kitchen",
-  },
-  {
-    id: "seeView",
-    label: "See View",
-  },
-  {
-    id: "babyBed",
-    label: "Baby Bed",
-  },
-  {
-    id: "petFriendly",
-    label: "Pet Friendly",
-  },
+  "Own Bathroom",
+  "Kitchen",
+  "See View",
+  "Baby Bed",
+  "Pet Friendly",
 ];
-const guestRatings = [
-  {
-    id: "all",
-    label: "All",
-  },
-  {
-    id: "outstanding9",
-    label: "Outstanding 9+",
-  },
-  {
-    id: "veryGood8",
-    label: "Very Good 8+",
-  },
-  {
-    id: "good7",
-    label: "Good 7+",
-  },
-  {
-    id: "excellent",
-    label: "Excellent",
-  },
-  {
-    id: "poor",
-    label: "Poor",
-  },
+const passengerRatingArr = [
+  "All",
+  "Outstanding 9+",
+  "Very Good 8+",
+  "Good 7+",
+  "Excellent",
+  "Poor",
 ];
 const leisureActivities = [
-  {
-    id: "sauna",
-    label: "Sauna",
-  },
-  {
-    id: "fitnessCentre",
-    label: "Fitness Centre",
-  },
-  {
-    id: "bar",
-    label: "Bar",
-  },
-  {
-    id: "steamBath",
-    label: "Steam Bath",
-  },
-  {
-    id: "yoga",
-    label: "Yoga",
-  },
+  "Sauna",
+  "Fitness Centre",
+  "Bar",
+  "Steam Bath",
+  "Yoga",
 ];
 const travelSustainability = [
-  {
-    id: "sauna",
-    label: "Sauna",
-  },
-  {
-    id: "fitnessCentre",
-    label: "Fitness Centre",
-  },
-  {
-    id: "bar",
-    label: "Bar",
-  },
-  {
-    id: "steamBath",
-    label: "Steam Bath",
-  },
-  {
-    id: "yoga",
-    label: "Yoga",
-  },
+  "Sauna",
+  "Fitness Centre",
+  "Bar",
+  "Steam Bath",
+  "Yoga",
 ];
+const CheckboxGroup = Checkbox.Group;
+
 function HotelSearchBody() {
   const [pageCount, setPageCount] = useState(1);
   const [hotelList, setHotelList] = useState([]);
@@ -137,6 +61,7 @@ function HotelSearchBody() {
   const [loading, setLoading] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
   const [clickSearch, setClickSearch] = useState(false);
+  const [checkedListPassenger, setCheckedListPassenger] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -185,7 +110,7 @@ function HotelSearchBody() {
           place,
         },
         itemsPerPage,
-        currentPage
+        formik.values.place ? 0 : currentPage
       );
       console.log(dataByPage, data);
       const list = data?.data?.data;
@@ -206,29 +131,193 @@ function HotelSearchBody() {
     },
     zoom: 11,
   };
-  return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <div></div>
-        <div className="mt-10 mb-10">
-          <div className="blue-title ">What is your Next Dream Place?</div>
-          <div className="sub-title ">
-            Find Exclusive Genius Rewards In Every Career Of The World
+  const onChangePLane = (list) => {
+    setCheckedListPlane(list);
+  };
+  const onCheckAllChangePassenger = (e) => {
+    setCheckedListPassenger(e.target.checked ? passengerRatingArr : []);
+  };
+  const onChangePassenger = (list) => {
+    setCheckedListPassenger(list);
+  };
+  const indeterminatePassenger =
+    checkedListPassenger.length > 0 &&
+    checkedListPassenger.length < passengerRatingArr.length;
+  const checkAllPassenger =
+    passengerRatingArr.length === checkedListPassenger.length;
+  const leftBar = () => {
+    return (
+      <div className="ml-4">
+        <div>
+          <div>
+            <div className="grey-head-title">Filter By</div>
+            <div>
+              <Slider
+                size="small"
+                value={sliderValue}
+                aria-label="Small"
+                valueLabelDisplay="auto"
+                onChange={(e) => {
+                  setSliderValue(e.target.value);
+                }}
+              />
+            </div>
+            <div className="flex">
+              <div>
+                <button
+                  className="min-price"
+                  onClick={() => {
+                    setSliderValue(0);
+                    formik.values.place = "";
+                  }}
+                >
+                  Min Price $
+                </button>
+              </div>
+              <div>
+                <button
+                  className="min-price"
+                  onClick={() => {
+                    setSliderValue(120);
+                  }}
+                >
+                  Max Price $
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div>
+          <div className="head-sidebar-title">Popular Rating</div>
           <div>
-            <div className="flex mt-6">
-              <div></div>
+            {
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <Checkbox
+                    indeterminate={indeterminatePassenger}
+                    onChange={onCheckAllChangePassenger}
+                    checked={checkAllPassenger}
+                  >
+                    All
+                  </Checkbox>
+                  <CheckboxGroup
+                    options={popularFilters}
+                    value={checkedListPassenger}
+                    onChange={onChangePassenger}
+                    className="flex flex-col gap-2"
+                  />
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Room Facilities</div>
+          <div>{<HotelFilterCheckboxes options={roomFacilities} />}</div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Guests Rating</div>
+          <div>{<HotelFilterCheckboxes options={passengerRatingArr} />}</div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Bed Type</div>
+          <div> {<HotelFilterCheckboxes options={roomFacilities} />}</div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Leisure Activities</div>
+          <div>
+            {" "}
+            <div className="flex flex-col gap-2">
+              {<HotelFilterCheckboxes options={leisureActivities} />}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Travel Sustainability</div>
+          <div>
+            {
+              <HotelFilterCheckboxes
+                options={[
+                  {
+                    value: "level2AndAbove1",
+                    label: "Level 2 and Above 1",
+                  },
+                  {
+                    value: "level2AndAbove2",
+                    label: "Level  and Above 2",
+                  },
+                ]}
+              />
+            }
+          </div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Accommodation Classification</div>
+          <div>
+            {
+              <HotelFilterCheckboxes
+                options={[
+                  {
+                    value: "5stars",
+                    label: "5 Stars",
+                  },
+                  {
+                    value: "4stars",
+                    label: "4 Stars",
+                  },
+                  {
+                    value: "3stars",
+                    label: "3 Stars",
+                  },
+                ]}
+              />
+            }
+            
+          </div>
+        </div>
+        <div>
+          <div className="head-sidebar-title">Distance From the Centre</div>
+          <div>
+          {
+              <HotelFilterCheckboxes
+                options={[
+                  {
+                    value: "5stars",
+                    label: "5 Stars",
+                  },
+                  {
+                    value: "4stars",
+                    label: "4 Stars",
+                  },
+                  {
+                    value: "3stars",
+                    label: "3 Stars",
+                  },
+                ]}
+              />
+            }
+            
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const rightBar = () => {
+    return (
+      <div className="pl-6">
+        <div >
+          <div>
+            <div></div>
+            <div className="flex mt-6 mb-6">
               <div>
                 <div>
                   <input
                     className="sort-by-input"
-                    placeholder="Sort By - Our Top Pick for Family"
+                    placeholder="Sort By - Our   Top Pick for Family"
                   />
                 </div>
-                <div className="ml-2 mt-6">
-                  <div className="gothenberg">{formik.values.place}</div>
+                <div className=" mt-6">
+                  {/* <div className="gothenberg">{formik.values.place}</div> */}
                   <div className="properties-found">
                     {orgList.length + " "} properties found
                   </div>
@@ -246,175 +335,31 @@ function HotelSearchBody() {
             </div>
           </div>
         </div>
-        <div className="flex mt-6">
-          <div style={{ width: "30%" }}>
-            <div>
-              <div>
-                <div className="grey-head-title">Filter By</div>
-                <div>
-                  <Slider
-                    size="small"
-                    value={sliderValue}
-                    aria-label="Small"
-                    valueLabelDisplay="auto"
-                    onChange={(e) => {
-                      setSliderValue(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="flex">
-                  <div>
-                    <button
-                      className="min-price"
-                      onClick={() => {
-                        setSliderValue(0);
-                        formik.values.place = "";
-                      }}
-                    >
-                      Min Price $
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      className="min-price"
-                      onClick={() => {
-                        setSliderValue(120);
-                      }}
-                    >
-                      Max Price $
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Popular Rating</div>
-              <div>
-                {popularFilters.map((rating) => {
-                  return (
-                    <div className="flex">
-                      <input type="checkbox" />
-                      <div className="ml-2">{rating.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Room Facilities</div>
-              <div>
-                {roomFacilities.map((facility) => {
-                  return (
-                    <div className="flex">
-                      <input type="checkbox" />
-                      <div className="ml-2">{facility.label}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Guests Rating</div>
-              <div>{<RadioGroup object={guestRatings} />}</div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Bed Type</div>
-              <div>{<RadioGroup object={roomFacilities} />}</div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Leisure Activities</div>
-              <div>{<RadioGroup object={leisureActivities} />}</div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Travel Sustainability</div>
-              <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "level2AndAbove1",
-                      label: "Level 2 and Above 1",
-                    },
-                    {
-                      value: "level2AndAbove2",
-                      label: "Level  and Above 2",
-                    },
-                  ]}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">
-                Accommodation Classification
-              </div>
-              <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "5stars",
-                      label: "5 Stars",
-                    },
-                    {
-                      value: "4stars",
-                      label: "4 Stars",
-                    },
-                    {
-                      value: "3stars",
-                      label: "3 Stars",
-                    },
-                  ]}
-                />
-              </div>
-            </div>
-            <div>
-              <div className="head-sidebar-title">Distance From the Centre</div>
-              <div>
-                <RadioGroup
-                  flex={false}
-                  object={[
-                    {
-                      value: "lessThan1KM",
-                      label: "Less Than 1 KM",
-                    },
-                    {
-                      value: "lessThan5KM",
-                      label: "Less Than 5 KM",
-                    },
-                    {
-                      value: "lessThan15KM",
-                      label: "Less Than 15KM",
-                    },
-                  ]}
-                />
-              </div>
-            </div>
-          </div>
-          {/* Card */}
-          <div style={{ width: "1000px" }} className="ml-6">
-            {!loading ? (
-              hotelList.length ? (
-                hotelList.map((hotel) => {
-                  return <HotelListingCard hotel={hotel} />;
-                })
-              ) : (
-                "No Property Found"
-              )
+
+        <div style={{ width: "1000px" }}>
+          {!loading ? (
+            hotelList.length ? (
+              hotelList.map((hotel) => {
+                return <HotelListingCard hotel={hotel} />;
+              })
             ) : (
-              <Loading />
-            )}
-            <div className="mt-10 ml-3 flex">
-              <button
-                className="white-button-classic"
-                onClick={() => {
-                  const favplaces = JSON.parse(localStorage.getItem("favList"));
-                  setHotelList(favplaces);
-                  setLoading(true);
-                }}
-              >
-                List Your Favorite Places
-              </button>
-              {clickSearch && formik.values.place ? null : (
+              "No Property Found"
+            )
+          ) : (
+            <Loading />
+          )}
+          <div className="flex justify-between mt-10 mb-10">
+            <button
+              className="white-button-classic ml-3"
+              onClick={() => {
+                const favplaces = JSON.parse(localStorage.getItem("favList"));
+                setHotelList(favplaces);
+                setLoading(true);
+              }}
+            >
+              List Your Favorite Places
+            </button>
+            {clickSearch && formik.values.place ? null : (
               <ReactPaginate
                 previousLabel={"previous"}
                 nextLabel={"next"}
@@ -427,12 +372,21 @@ function HotelSearchBody() {
                 containerClassName={"pagination"}
                 subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
-             
               />
             )}
-            </div>
-          
           </div>
+        </div>
+      </div>
+    );
+  };
+  return (
+    <div>
+      <form onSubmit={formik.handleSubmit}>
+        <SearchPlaceInput formik={formik} />
+
+        <div className="flex">
+          {leftBar()}
+          {rightBar()}
         </div>
       </form>
     </div>

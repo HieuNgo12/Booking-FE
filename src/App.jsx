@@ -48,6 +48,9 @@ import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
 import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
+import FlightConfirmPage from "./pages/FlightConfirmPage/FlightConfirmPage";
+import FlightFavoritePage from "./pages/FlightFavoritePage/FlightFavoritePage";
+import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
 import FlightConfirmPgae from "./pages/FlightConfirmPgae/FlightConfirmPgae.jsx";
 
 function App() {
@@ -264,8 +267,20 @@ function App() {
       element: <FlightPaymentPage />,
     },
     {
+      path: "/flight-confirm-page",
+      element: <FlightConfirmPage />,
+    },
+    {
+      path: "/flight-favorite-page",
+      element: <FlightFavoritePage />,
+    },
+    {
       path: "/flight-confirm-page/:bookingId",
       element: <FlightConfirmPgae />,
+    },
+    {
+      path: "/chat-page",
+      element: <ChatAppPage />,
     },
   ]);
 

@@ -6,7 +6,7 @@ function Card({ review, ...props }) {
   },[])
   return (
     <div className="card p-2">
-      <div style={{marginLeft: "25%"}}>
+      <div style={{marginLeft: "10%"}}>
         <img style={{width: "50px", height:"50px"}} className="mb-6" src={review.userId.avatar} />
       </div>
       <div className="flex mb-6 ">

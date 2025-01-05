@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckoutInput from "../components/CheckoutInput";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify"
 function HotelDetailPage({ hotels, ...props }) {
   const { hotelId } = useParams();
   const [hotel, setHotel] = useState([]);
@@ -24,11 +25,18 @@ function HotelDetailPage({ hotels, ...props }) {
 
   const SignupSchema = Yup.object().shape({
     passengers: Yup.string().required("Passengers is Required"),
-    checkin: Yup.string().required("Check In is Required"),
+    checkin: Yup.date().required("Check In is Required"),
 
-    checkout: Yup.string()
+    checkout: Yup.date()
+      .when(
+        "checkin",
+        (checkin, yup) =>
+          checkin && yup.min(checkin, "Checkout Date cannot be before Checkin")
+      )
       // .moreThan(Yup.ref("checkin"), "Cannot Exceed Checkin Date")
       .required("Check Out Is Required"),
+      children: Yup.string().required("Children is Required"),
+
   });
   const navigate = useNavigate();
 
@@ -37,17 +45,40 @@ function HotelDetailPage({ hotels, ...props }) {
       passengers: "",
       checkin: "",
       checkout: "",
+      children: "",
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
       // console.log(values);
       setDisable(true);
+      toast.success("Check In Checkout Date Confirmed", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChanegBtn(true),
+      });
       localStorage.setItem(
         "checkoutTime",
         JSON.stringify({
           checkin: values.checkin,
           checkout: values.checkout,
         })
+        
+  
+      );
+      localStorage.setItem(
+        "hotelPassengers",
+        JSON.stringify({
+          passengers: values.passengers,
+          children: values.children,
+        })
+        
+  
       );
       // navigate(`/payment-detail${JSON.parse(localStorage.getItem("roomId"))}`, { replace: true })
     },
@@ -59,7 +90,6 @@ function HotelDetailPage({ hotels, ...props }) {
     const getHotel = async () => {
       const dataUrl = `${url}/api/v1/hotel/${hotelId}`;
       const data = await axios.get(dataUrl);
-    
 
       setHotel([data.data.data]);
     };
@@ -69,7 +99,7 @@ function HotelDetailPage({ hotels, ...props }) {
     console.log({ values, customParam });
   };
   return (
-    <div className="center-gov ">
+    <div className="center-gov content-center ">
       <form onSubmit={formik.handleSubmit}>
         {" "}
         <Navbar />
@@ -146,7 +176,6 @@ function HotelDetailPage({ hotels, ...props }) {
             <Questions />
           </div>
 
- 
           <div className="black-card">Is there Anti-Allergic Meal?</div>
           <div className="black-card">Does The Hotel Have A pool?</div>
           <div className="black-card">
@@ -162,8 +191,8 @@ function HotelDetailPage({ hotels, ...props }) {
           <ArrowSlider hotel={hotel[0]} />
           <div>
             <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
-            <div className="flex ml-6">
-              <div style={{ width: "18.5%" }}>
+            <div className="flex ml-6 mb-6">
+              <div style={{ width: "20%" }}>
                 <div className="flex">
                   <div className="review-rating-text ">Staff Politeness</div>
                   <div className="review-number">8.5</div>
@@ -173,7 +202,7 @@ function HotelDetailPage({ hotels, ...props }) {
                   <img src="/detailPage/Line.png" />
                 </div>
               </div>
-              <div style={{ width: "18.5%" }}>
+              <div style={{ width: "20%" }}>
                 <div className="flex">
                   <div className="review-rating-text">VIP Options</div>
                   <div className="review-number">8</div>
@@ -184,7 +213,7 @@ function HotelDetailPage({ hotels, ...props }) {
                 </div>
               </div>
 
-              <div style={{ width: "18.5%" }}>
+              <div style={{ width: "20%" }}>
                 <div className="flex">
                   <div className="review-rating-text">Free Wi-fi Speed</div>
                   <div className="review-number"> 8</div>
@@ -195,7 +224,7 @@ function HotelDetailPage({ hotels, ...props }) {
                 </div>
               </div>
 
-              <div style={{ width: "18.5%" }}>
+              <div style={{ width: "20%" }}>
                 <div className="flex">
                   <div className="review-rating-text">Cleanliness</div>
                   <div className="review-number">6</div>
