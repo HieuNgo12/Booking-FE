@@ -13,6 +13,10 @@ import ReactPaginate from "react-paginate";
 import { HeartOutlined } from "@ant-design/icons";
 import HeaderHotelPage from "./HeaderHotelPage";
 import HotelFilterCheckboxes from "./HotelFilterCheckboxes";
+
+import { toast } from "react-toastify";
+import HomePageBody from "../../HomePage/components/HomePageBody";
+
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const popularFilters = [
   "Breakfast Included",
@@ -53,6 +57,8 @@ const travelSustainability = [
 const CheckboxGroup = Checkbox.Group;
 
 function HotelSearchBody() {
+  const [disable, setDisable] = useState(false);
+
   const [pageCount, setPageCount] = useState(1);
   const [hotelList, setHotelList] = useState([]);
   const [open, setOpen] = React.useState(false);
@@ -62,6 +68,7 @@ function HotelSearchBody() {
   const [sliderValue, setSliderValue] = useState(0);
   const [clickSearch, setClickSearch] = useState(false);
   const [checkedListPassenger, setCheckedListPassenger] = useState([]);
+  const [initialPage, setInitialPage] = useState(true);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -82,16 +89,55 @@ function HotelSearchBody() {
 
   const SignupSchema = Yup.object().shape({
     place: Yup.string(),
-    vip: Yup.string(),
+    passengers: Yup.string().required("Passengers is Required"),
+    checkin: Yup.date().required("Check In is Required"),
+
+    checkout: Yup.date()
+      .when(
+        "checkin",
+        (checkin, yup) =>
+          checkin && yup.min(checkin, "Checkout Date cannot be before Checkin")
+      )
+      .required("Check Out Is Required"),
+    children: Yup.string().required("Children is Required"),
   });
   const formik = useFormik({
     initialValues: {
       place: "",
-
       vip: "",
+      passengers: "",
+      checkout: "",
+      children: "",
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
+      setInitialPage(false);
+      setDisable(true);
+      toast.success("Check In Checkout Date Confirmed", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChanegBtn(true),
+      });
+      localStorage.setItem(
+        "checkoutTime",
+        JSON.stringify({
+          checkin: values.checkin,
+          checkout: values.checkout,
+        })
+      );
+      localStorage.setItem(
+        "hotelPassengers",
+        JSON.stringify({
+          passengers: values.passengers,
+          children: values.children,
+        })
+      );
       console.log(values);
       setLoading(true);
       getRooms(values.place);
@@ -237,16 +283,7 @@ function HotelSearchBody() {
           <div>
             {
               <HotelFilterCheckboxes
-                options={[
-                  {
-                    value: "level2AndAbove1",
-                    label: "Level 2 and Above 1",
-                  },
-                  {
-                    value: "level2AndAbove2",
-                    label: "Level  and Above 2",
-                  },
-                ]}
+                options={["Level 2 and Above 1", "Level  and Above 2"]}
               />
             }
           </div>
@@ -256,47 +293,19 @@ function HotelSearchBody() {
           <div>
             {
               <HotelFilterCheckboxes
-                options={[
-                  {
-                    value: "5stars",
-                    label: "5 Stars",
-                  },
-                  {
-                    value: "4stars",
-                    label: "4 Stars",
-                  },
-                  {
-                    value: "3stars",
-                    label: "3 Stars",
-                  },
-                ]}
+                options={["5 Stars", "4 Stars", "3 Stars"]}
               />
             }
-            
           </div>
         </div>
         <div>
           <div className="head-sidebar-title">Distance From the Centre</div>
           <div>
-          {
+            {
               <HotelFilterCheckboxes
-                options={[
-                  {
-                    value: "5stars",
-                    label: "5 Stars",
-                  },
-                  {
-                    value: "4stars",
-                    label: "4 Stars",
-                  },
-                  {
-                    value: "3stars",
-                    label: "3 Stars",
-                  },
-                ]}
+                options={["5 Stars", "4 Stars", "3 Stars"]}
               />
             }
-            
           </div>
         </div>
       </div>
@@ -305,7 +314,7 @@ function HotelSearchBody() {
   const rightBar = () => {
     return (
       <div className="pl-6">
-        <div >
+        <div>
           <div>
             <div></div>
             <div className="flex mt-6 mb-6">
@@ -319,7 +328,7 @@ function HotelSearchBody() {
                 <div className=" mt-6">
                   {/* <div className="gothenberg">{formik.values.place}</div> */}
                   <div className="properties-found">
-                    {orgList.length + " "} properties found
+                    {hotelList.length + " "} properties found
                   </div>
                   <div>
                     <div>
@@ -383,11 +392,14 @@ function HotelSearchBody() {
     <div>
       <form onSubmit={formik.handleSubmit}>
         <SearchPlaceInput formik={formik} />
-
-        <div className="flex">
-          {leftBar()}
-          {rightBar()}
-        </div>
+        {initialPage ? (
+          <HomePageBody />
+        ) : (
+          <div className="flex">
+            {leftBar()}
+            {rightBar()}
+          </div>
+        )}
       </form>
     </div>
   );

@@ -12,7 +12,7 @@ import PromocodeModal from "./PromocodeModal";
 function PaymentPageBody({ room, ...props }) {
   const [disablePromo, setDisablePromo] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const [price,setPrice] = useState();
+  const [price, setPrice] = useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const SignupSchema = Yup.object().shape({
@@ -105,14 +105,14 @@ function PaymentPageBody({ room, ...props }) {
     // setSuccess(true);
   });
   useEffect(() => {
-  localStorage.setItem("currentPrice", JSON.stringify(room[0].pricePerNight));
-    console.log(room);
+    localStorage.setItem("currentPrice", JSON.stringify(room[0].pricePerNight));
   }, []);
   const handlePageClick = ({ selected }) => {
     console.log(selected);
     // setLoading(true);
     setCurrentPage(selected);
   };
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -212,7 +212,14 @@ function PaymentPageBody({ room, ...props }) {
                 </div>
               </div>
               <div>
-                <div>You will stay 1 nights</div>
+                <div>
+                  You will stay{" "}
+                  {services.convertDate(
+                    JSON.parse(localStorage.getItem("checkoutTime")).checkIn,
+                    JSON.parse(localStorage.getItem("checkoutTime")).checkout
+                  )}{" "}
+                  nights
+                </div>
                 <div className="flex">
                   <div>
                     You selected rooms for{" "}
@@ -294,25 +301,26 @@ function PaymentPageBody({ room, ...props }) {
                   </div>
                 </div>
                 <div className="flex">
-                <div className="room-characters">
-                  <div>
-                    {" "}
-                    <img src="/paymentPage/shower-head.png" />
+                  <div className="room-characters">
+                    <div>
+                      {" "}
+                      <img src="/paymentPage/shower-head.png" />
+                    </div>
+                    <div>En Suit Bath Room</div>
                   </div>
-                  <div>En Suit Bath Room</div>
+                  <div className="room-characters">
+                    {" "}
+                    <div>
+                      {" "}
+                      <img src="/paymentPage/tv-one.png" />
+                    </div>
+                    <div>Flat Screen TV</div>
+                  </div>
                 </div>
-                <div className="room-characters">
-                  {" "}
-                  <div>
-                    {" "}
-                    <img src="/paymentPage/tv-one.png" />
-                  </div>
-                  <div>Flat Screen TV</div>
-                </div></div>
               </div>
             </div>
             <div
-              style={{  paddingBottom: "20px" }}
+              style={{ paddingBottom: "20px" }}
               className="bg-white pl-6 mb-2"
             >
               <div className="head-title ">Payment Information</div>
@@ -327,9 +335,28 @@ function PaymentPageBody({ room, ...props }) {
                       {JSON.parse(localStorage?.getItem("currentPrice")) *
                         JSON.parse(localStorage.getItem("hotelPassengers"))
                           .passengers *
+                        services.convertDate(
+                          JSON.parse(
+                            localStorage.getItem("checkoutTime")
+                          ).checkIn,
+                          JSON.parse(
+                            localStorage.getItem("checkoutTime")
+                          ).checkout
+                        ) *
                         23000}
                     </div>
-                    <div className="nights-stay"> 1 Nights</div>
+                    <div className="nights-stay">
+                      {" "}
+                      {services.convertDate(
+                        JSON.parse(
+                          localStorage.getItem("checkoutTime")
+                        ).checkIn,
+                        JSON.parse(
+                          localStorage.getItem("checkoutTime")
+                        ).checkout
+                      )}{" "}
+                      Nights
+                    </div>
                   </div>
                 </div>
                 <hr />
@@ -349,7 +376,17 @@ function PaymentPageBody({ room, ...props }) {
                     {JSON.parse(localStorage?.getItem("currentPrice")) *
                       JSON.parse(localStorage.getItem("hotelPassengers"))
                         .passengers *
-                      23000}
+                      23000 
+                      *
+                      services.convertDate(
+                        JSON.parse(
+                          localStorage.getItem("checkoutTime")
+                        ).checkIn,
+                        JSON.parse(
+                          localStorage.getItem("checkoutTime")
+                        ).checkout
+                      )
+                      }
                   </div>
                 </div>
                 <div className="">

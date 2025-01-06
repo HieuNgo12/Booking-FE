@@ -62,7 +62,7 @@ function HotelListingCard({ hotel, ...props }) {
           <div className="mr-2 ml-2">Standard hotels</div>
           <div className="flex mr-2 ml-2">
             <div className="head-card-title">Very Good</div>
-            <div className="review ml-4">
+            <div className="review ml-4 mt-2">
               {hotel.reviewId.length} reviews
             </div>
           </div>
@@ -73,7 +73,7 @@ function HotelListingCard({ hotel, ...props }) {
         <div>
           <div className="flex" style={{marginTop: "20%", marginLeft: "0px"}}>
             <div className="discount">10% off</div>
-            <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight * 23000000} VND</div>
+            <div className="ml-6 money black-price">{hotel.roomId[0].pricePerNight * 23000000} VND</div>
           </div>
           <div className="mt-2">Included taxes and charges</div>
           <div className="sustainable-level flex mt-2">

@@ -18,15 +18,7 @@ function ExploreStayCard({ hotel, ...props }) {
       <div className="side">SIDE</div>
       <div className="date-explore-stay">Wed 25 Jan-fri</div>
       <div className="description">{hotel?.detailHotel}</div>
-      <button
-        onClick={() => {
-          navigate(`/hotel-detail/${hotel._id}`);
-        }}
-        style={{ color: "blue" }}
-      >
-        {" "}
-        Check for more detail
-      </button>
+
     </div>
   );
 }
