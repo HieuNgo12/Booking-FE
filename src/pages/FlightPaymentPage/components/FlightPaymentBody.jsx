@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, Checkbox, Select, InputNumber, Form } from "antd";
 import {
   PhoneOutlined,
+  GiftOutlined,
   CreditCardOutlined,
   LockOutlined,
   CalendarOutlined,
 } from "@ant-design/icons";
 import "./FlightPaymentBody.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { apiGet, apiPost } from "../../../API/APIService";
+import { apiGet, apiGetAll, apiPost } from "../../../API/APIService";
 import VNA from "../img/logo-vna.svg";
 import VJ from "../img/logo-vietjet.svg";
 import JS from "../img/logo-jetstar.svg";
@@ -19,6 +20,10 @@ import "react-phone-input-2/lib/style.css";
 import validator from "validator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaPaypal, FaCcMastercard, FaCcVisa } from "react-icons/fa";
+import zaloPayLogo from "../img/zalo-pay-logo-inkythuatso.svg";
+import VNPayLogo from "../img/vnpay-logo-inkythuatso.svg";
+import momoLogo from "../img/logo-momo.svg.svg";
 
 function FlightPaymentBody() {
   const [form] = Form.useForm();
@@ -26,7 +31,11 @@ function FlightPaymentBody() {
   const navigate = useNavigate();
   const [data, setData] = useState({});
   const [type, setType] = useState({});
-  const [handleMethod, setHandleMethod] = useState("ZaloPay");
+  const [handleMethod, setHandleMethod] = useState("ZaloPay" || "VNPay");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [terms, setTerms] = useState(false);
+  const [code, setCode] = useState("");
+  const [promotion, setPromotion] = useState("");
 
   const { searchData } = useSelector((state) => state?.searchSlice);
 
@@ -70,6 +79,19 @@ function FlightPaymentBody() {
 
   const onFinish = async (values) => {
     try {
+      if (terms === false) {
+        return toast.warn("You must agree to the terms before booking!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+
       if (!validator.isEmail(values.email)) {
         return toast.warn("Email is not valid! Please check again!", {
           position: "top-center",
@@ -108,11 +130,66 @@ function FlightPaymentBody() {
         }
       } else if (responseBooking && values.paymentMethod === "VNPay") {
         console.log("VNPay");
+        const responsePayment = await apiPost(
+          `create-payment-vnpay/${responseBooking.data._id}`,
+          { paymentMethod: values.paymentMethod }
+        );
+
+        if (responsePayment) {
+          window.open(responsePayment.data, "noopener,noreferrer");
+          navigate("/");
+        }
       } else if (responseBooking && values.paymentMethod === "Momo") {
         console.log("Momo");
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleCheckPromotion = async () => {
+    setPromotion({});
+    try {
+      if (code) {
+        const response = await apiGetAll(`check-code/flight/${code}`);
+
+        if (response.data) {
+          const promotion = response.data;
+
+          if (promotion.status === "inactive") {
+            toast.warn("This promotion is currently inactive!", {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+            });
+          } else {
+            setPromotion(promotion);
+            toast.success("Promotion applied successfully!", {
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: false,
+            });
+          }
+        } else {
+          toast.warn("Unexpected server response!", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.warn(error.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -128,12 +205,37 @@ function FlightPaymentBody() {
   };
 
   const handleTotalAmount = () => {
-    const total = handlePriceAdults() + handlePriceChildren();
-    return total;
+    if (promotion && Object.keys(promotion).length !== 0) {
+      if (promotion.discountType === "fixed") {
+        const total =
+          handlePriceAdults() +
+          handlePriceChildren() -
+          promotion?.discountValue;
+        return total;
+      } else if (promotion.discountType === "percentage") {
+        const total =
+          ((handlePriceAdults() + handlePriceChildren()) *
+            (100 - promotion?.discountValue)) /
+          100;
+        return total;
+      }
+    } else {
+      const total = handlePriceAdults() + handlePriceChildren();
+      return total;
+    }
+  };
+
+  const handleInputChange = (e) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length > 2) {
+      value = `${value.slice(0, 2)}/${value.slice(2, 4)}`;
+    }
+    setExpiryDate(value);
+    form.setFieldsValue({ expDate: value });
   };
 
   return (
-    <div className="flex max-w-[1224px] shadow-lg rounded-lg">
+    <div className="flex max-w-[1224px] shadow-lg rounded-lg mb-5">
       <div className="w-1/2 mx-auto bg-white  p-6 space-y-6">
         <div className="head-title">Information You need to pay attention.</div>
         <div className="passengers-are-divided">
@@ -240,7 +342,6 @@ function FlightPaymentBody() {
               <span className="text-sm font-bold">
                 {" "}
                 For {searchData?.passengers} Adults{" "}
-                {`( This price includes 10% tax )`}
               </span>
             </div>
             <div>
@@ -256,20 +357,33 @@ function FlightPaymentBody() {
               </span>
             </div>
           </div>
+          <div className="flex justify-between border-t pt-2 font-bold text-sm">
+            <span className="text-red-500">Promotion Type :</span>
+            <span>
+              {Object.keys(promotion).length !== 0
+                ? promotion?.discountType === "fixed"
+                  ? "fixed"
+                  : "percentage"
+                : "NO"}
+            </span>
+          </div>
+          <div className="flex justify-between  font-bold text-sm">
+            <span className="text-red-500">Discount :</span>
+            <span>
+              {Object.keys(promotion).length !== 0
+                ? promotion?.discountType === "fixed"
+                  ? `${promotion?.discountValue} VND`
+                  : `${promotion?.discountValue} %`
+                : "0"}
+            </span>
+          </div>
           <div className="flex justify-between border-t pt-2 font-bold text-lg">
-            <span>Total (VND)</span>
-            <span className="text-green-600">VND {handleTotalAmount()}</span>
+            <span className="text-red-500">Total</span>
+            <span>VND {handleTotalAmount()}</span>
           </div>
         </div>
 
-        {/* Booking Options */}
-        <div className="flex items-center space-x-2">
-          <Checkbox />
-          <span className="font-bold text-lg">Booking For Work</span>
-        </div>
-
         {/* Payment Details */}
-
         <Form
           form={form}
           initialValues={{
@@ -356,11 +470,66 @@ function FlightPaymentBody() {
               }}
               onChange={(value) => setHandleMethod(value)}
             >
-              <Select.Option value="ZaloPay">ZaloPay</Select.Option>
-              <Select.Option value="VNPay">VNPay</Select.Option>
-              <Select.Option value="Momo">Momo</Select.Option>
-              <Select.Option value="PayPal">PayPal</Select.Option>
-              <Select.Option value="CreditCard">Credit Card</Select.Option>
+              <Select.Option value="ZaloPay">
+                <div className="flex items-center gap-3 px-2 py-1">
+                  <img
+                    src={zaloPayLogo}
+                    alt="ZaloPay Logo"
+                    className="w-8 h-8 object-contain"
+                  />
+                  <div className="w-px h-6 bg-gray-200"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    ZaloPay
+                  </span>
+                </div>
+              </Select.Option>
+
+              <Select.Option value="VNPay">
+                <div className="flex items-center gap-3 px-2 py-1">
+                  <img
+                    src={VNPayLogo}
+                    alt="VNPay Logo"
+                    className="w-8 h-8 object-contain"
+                  />
+                  <div className="w-px h-6 bg-gray-200"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    VNPay
+                  </span>
+                </div>
+              </Select.Option>
+
+              <Select.Option value="Momo">
+                <div className="flex items-center gap-3 px-2 py-1">
+                  <img
+                    src={momoLogo}
+                    alt="VNPay Logo"
+                    className="w-8 h-8 object-contain"
+                  />
+                  <div className="w-px h-6 bg-gray-200"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    VNPay
+                  </span>
+                </div>
+              </Select.Option>
+
+              <Select.Option value="PayPal">
+                <div className="flex items-center gap-3 px-2 py-1">
+                  <FaPaypal className="w-8 h-8 object-contain" />
+                  <div className="w-px h-6 bg-gray-200"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    VNPay
+                  </span>
+                </div>
+              </Select.Option>
+              <Select.Option value="CreditCard">
+                <div className="flex items-center gap-3 px-2 py-1">
+                  <CreditCardOutlined className="w-8 h-8 object-contain" />
+                  <div className="w-px h-6 bg-gray-200"></div>
+                  <span className="text-sm font-medium text-gray-700">
+                    Credit Card
+                  </span>
+                </div>
+              </Select.Option>
             </Select>
           </Form.Item>
 
@@ -370,7 +539,7 @@ function FlightPaymentBody() {
             label="Card Number *"
             rules={[
               {
-                required: handleMethod === "ZaloPay" ? false : true,
+                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
                 message: "Please enter your card number!",
               },
             ]}
@@ -380,7 +549,7 @@ function FlightPaymentBody() {
               placeholder="Card Number"
               className="h-10 rounded-none"
               prefix={<CreditCardOutlined />}
-              disabled={handleMethod === "ZaloPay" ? true : false}
+              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
             />
           </Form.Item>
 
@@ -390,7 +559,7 @@ function FlightPaymentBody() {
             label="CVC"
             rules={[
               {
-                required: handleMethod === "ZaloPay" ? false : true,
+                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
                 message: "Please enter your CVC!",
               },
             ]}
@@ -400,28 +569,68 @@ function FlightPaymentBody() {
               placeholder="CVC"
               className="h-10 rounded-none"
               prefix={<LockOutlined />}
-              disabled={handleMethod === "ZaloPay" ? true : false}
+              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
             />
           </Form.Item>
 
           {/* EXP Date */}
           <Form.Item
+            label="Exp Date (MM/YY)"
             name="expDate"
-            label="EXP Date"
             rules={[
               {
-                required: handleMethod === "ZaloPay" ? false : true,
-                message: "Please enter the expiration date!",
+                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                message:
+                  handleMethod === "ZaloPay" || "VNPay"
+                    ? false
+                    : "Please enter the expiry date!",
+              },
+              {
+                pattern:
+                  handleMethod === "ZaloPay" || "VNPay"
+                    ? false
+                    : /^(0[1-9]|1[0-2])\/[0-9]{2}$/,
+                message:
+                  handleMethod === "ZaloPay" || "VNPay"
+                    ? false
+                    : "Please enter a valid expiry date in MM/YY format!",
               },
             ]}
             className="col-span-1"
           >
             <Input
+              value={expiryDate}
+              onChange={handleInputChange}
+              maxLength={5} // Giới hạn độ dài tối đa (MM/YY)
               placeholder="MM/YY"
+              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
               className="h-10 rounded-none"
               prefix={<CalendarOutlined />}
-              disabled={handleMethod === "ZaloPay" ? true : false}
             />
+          </Form.Item>
+
+          {/* Promotion */}
+          <Form.Item name="code" label="Promotion" className="col-span-1">
+            <Input
+              placeholder="Promotion"
+              className="h-10 rounded-none"
+              prefix={<GiftOutlined />}
+              onChange={(e) => setCode(e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="checkPromotion"
+            label="Check and Apply"
+            className="col-span-1"
+          >
+            <Button
+              onClick={handleCheckPromotion}
+              size="large"
+              className="font-bold text-[#07689F] border-[#07689F] w-full"
+            >
+              Check and Apply
+            </Button>
           </Form.Item>
 
           <div className="col-span-3">
@@ -432,6 +641,9 @@ function FlightPaymentBody() {
                 Read More...
               </a>
             </p>
+            <Checkbox checked={terms} onChange={() => setTerms(!terms)}>
+              I have read the terms and agree to them.
+            </Checkbox>
           </div>
 
           <Form.Item className="col-span-3">

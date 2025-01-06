@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./FlightCard.css";
 import center from "../img/Center.png";
 import { Button } from "antd";
@@ -7,10 +7,11 @@ import VJ from "../img/logo-vietjet.svg";
 import JS from "../img/logo-jetstar.svg";
 import BAA from "../img/logo-bamboo-airways.svg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function FlightCard({ dataSource }) {
   const navigate = useNavigate();
-
+  const [getInfo, setGetInfo] = useState();
   const logoAirPlane = () => {
     if (dataSource.airlineName === "Bamboo Airways") {
       return BAA;
@@ -22,6 +23,23 @@ function FlightCard({ dataSource }) {
       return VJ;
     }
   };
+
+  const { searchData } = useSelector((state) => state?.searchSlice);
+
+  useEffect(() => {
+    if (dataSource) {
+      setGetInfo(getPrice());
+    }
+  }, [dataSource]);
+
+  const getPrice = () => {
+    const getPrice = dataSource.classFlight.find(
+      (item) => item.type === searchData.classFlight
+    );
+    return getPrice ? getPrice : "Type not found";
+  };
+
+  console.log(getInfo);
 
   return (
     <div className="grid grid-cols-4 gap-4 w-full border-4 rounded border-[#F9F9F9] border-solid p-2">
@@ -104,15 +122,15 @@ function FlightCard({ dataSource }) {
         <div className="grid grid-cols-3 gap-4 items-center text-center">
           <div className="flex flex-col justify-between">
             <div className="text-green-600 text-2xl font-bold bg-[#E8F5E4]">
-              {dataSource.price} VND
+              {getInfo?.price} VND
             </div>
             <div className=" text-sm rounded text-[#4C9839] p-2">
-              {dataSource.availableSeats} vacant seats
+              {getInfo?.seats} vacant seats
             </div>
           </div>
           <div className="bg-gray-100 p-2 rounded">
-            <div className="font-bold">Eco price includes:</div>
-            <div> Personal items, hand luggage</div>
+            <div className="font-bold text-base"> {getInfo?.type}</div>
+            <div> ( Personal items, hand luggage )</div>
           </div>
           <div>
             <Button

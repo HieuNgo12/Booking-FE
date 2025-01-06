@@ -11,7 +11,6 @@ import { QRCodeSVG } from "qrcode.react";
 
 function FlightConfirmBodyPage() {
   const location = useParams();
-  const test = useLocation();
   const [booking, setBooking] = useState({});
   const [qrData, setQrData] = useState("https://example.com");
 
