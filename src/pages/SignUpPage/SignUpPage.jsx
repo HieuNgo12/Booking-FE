@@ -94,7 +94,12 @@ const SignUpPage = () => {
           justifyContent: "space-between",
         }}
       >
-        <img src={imgLogo} alt="" />
+        <img
+          src={imgLogo}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <div className="flex items-center gap-3">
           <img
             src={imgEN}
@@ -130,7 +135,7 @@ const SignUpPage = () => {
             // overflow: "hidden",
             maxWidth: "750px",
             width: "100%",
-            // height: "720px",
+            maxHeight: "600px",
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
@@ -145,7 +150,7 @@ const SignUpPage = () => {
             xs={24}
             md={12}
             style={{
-              padding: "40px",
+              padding: "20px",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -162,7 +167,7 @@ const SignUpPage = () => {
                 initialValues={{ policies: true }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-                style={{ marginTop: "20px" }}
+                // style={{ marginTop: "20px" }}
               >
                 <div className="flex justify-between gap-5">
                   <Form.Item
@@ -223,34 +228,6 @@ const SignUpPage = () => {
                   />
                 </Form.Item>
 
-                <Text>
-                  Read Terms and Privacy Policies{" "}
-                  <Text className="text-[#07689f] cursor-pointer font-bold hover:text-blue-400">
-                    here
-                  </Text>
-                </Text>
-
-                <Form.Item
-                  name="policies"
-                  // valuePropName="checked"
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        value
-                          ? Promise.resolve()
-                          : Promise.reject(
-                              new Error(
-                                "You must agree to the Terms and Privacy Policies!"
-                              )
-                            ),
-                    },
-                  ]}
-                >
-                  <Checkbox className="font-medium">
-                    I agree to all the Terms and Privacy Policies
-                  </Checkbox>
-                </Form.Item>
-
                 <Form.Item>
                   <Button
                     type="primary"
@@ -261,7 +238,7 @@ const SignUpPage = () => {
                     SIGN UP
                   </Button>
                 </Form.Item>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <div style={{ textAlign: "center" }}>
                   <Text>
                     Already have an account?{" "}
                     <Text
@@ -275,7 +252,7 @@ const SignUpPage = () => {
                 <div
                   style={{
                     textAlign: "center",
-                    marginBottom: "10px",
+                    marginBottom: "5px",
                     fontWeight: "600",
                   }}
                 >

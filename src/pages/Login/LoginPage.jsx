@@ -106,7 +106,12 @@ const LoginPage = () => {
           justifyContent: "space-between",
         }}
       >
-        <img src={imgLogo} alt="" />
+        <img
+          src={imgLogo}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <div className="flex items-center gap-3">
           <img
             src={imgEN}
@@ -140,10 +145,10 @@ const LoginPage = () => {
           style={{
             border: "1px solid #e6e6e6",
             borderRadius: "10px",
-            overflow: "hidden",
+            // overflow: "hidden",
             maxWidth: "750px",
             width: "100%",
-            // maxHeight: "700px",
+            maxHeight: "600px",
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
@@ -168,6 +173,7 @@ const LoginPage = () => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
+              maxHeight: "600px",
             }}
           >
             <div className="w-full">

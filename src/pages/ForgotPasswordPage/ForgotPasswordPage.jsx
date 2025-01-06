@@ -91,7 +91,12 @@ const ForgotPasswordPage = () => {
           justifyContent: "space-between",
         }}
       >
-        <img src={imgLogo} alt="" />
+        <img
+          src={imgLogo}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <div className="flex items-center gap-3">
           <img
             src={imgEN}
@@ -124,10 +129,10 @@ const ForgotPasswordPage = () => {
           style={{
             border: "1px solid #e6e6e6",
             borderRadius: "10px",
-            overflow: "hidden",
-            maxWidth: "900px",
+            // overflow: "hidden",
+            maxWidth: "750px",
             width: "100%",
-            height: "720px",
+            maxHeight: "600px",
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
@@ -142,7 +147,7 @@ const ForgotPasswordPage = () => {
             xs={24}
             md={12}
             style={{
-              padding: "40px",
+              padding: "20px",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -173,7 +178,12 @@ const ForgotPasswordPage = () => {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block className="bg-[#07689f]">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    block
+                    className="bg-[#07689f]"
+                  >
                     Sent OTP
                   </Button>
                 </Form.Item>

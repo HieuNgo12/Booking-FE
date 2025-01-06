@@ -225,9 +225,9 @@ const HeaderFlightPageBody = () => {
             placeholder="Select class"
           >
             <Select.Option value="economy">Economy</Select.Option>
-            <Select.Option value="business ">Business</Select.Option>
+            <Select.Option value="business">Business</Select.Option>
             <Select.Option value="first">First</Select.Option>
-            <Select.Option value="premium ">Premium</Select.Option>
+            <Select.Option value="premium">Premium</Select.Option>
           </Select>
         </Form.Item>
 
