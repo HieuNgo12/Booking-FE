@@ -9,9 +9,10 @@ function HotelFavoriteListPage() {
 
   useEffect(() => {}, []);
   return (
-    <div className="center-gov">
+    <div className="center-gov content-center">
       <Navbar />
       <div className="hotel-favorites ">Hotel Favorites</div>
+      <div> <a href="/flight-favorite-page">Flight</a></div>
       <div className="mt-6 flex card-container">
         <div class="grid grid-cols-3 gap-3">
           {savedList.length

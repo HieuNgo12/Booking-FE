@@ -115,9 +115,15 @@ body {
 }
 
 .center-gov{
-  padding-left: 130px;
+ margin-left: 10%;
+ width: 1300px;
 }
 
 div {
   font-size: 12px;
+}
+
+.left-auto{
+  margin-left:auto;
+  
 }

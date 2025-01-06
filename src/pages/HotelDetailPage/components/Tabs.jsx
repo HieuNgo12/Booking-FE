@@ -138,13 +138,13 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                   </div>
                   <div>
                     <div className="flex mt-10">
-                      <div style={{ width: "30%" }}>
+                      <div style={{ width: "300px" }}>
                         {" "}
                         <ReactGoogleMap />
                       </div>
-                      <div style={{ width: "20%" }}>
+                      <div style={{ width: "300px" }} className="ml-3 mr-3">
                         <div className="head-title">Amenities</div>
-                        <div className="">
+                        <div className="flex">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
                             return (
                               <div
@@ -163,45 +163,49 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                       </div>
 
                       <div style={{ width: "50%" }} className="">
-                        <div className="family">
-                          2 Adults, 3 Children, 4 Nights | Two room , Double Bed
-                        </div>
                         <div className="flex mt-3 mb-3">
                           <div className="mr-3">
                             <img src="/homepage/location_on.png" />
                           </div>
                           <div>
                             {ht?.address?.number ||
-                              "No Number" + " " + ht?.address?.district ||
-                              "No District" + " " + " " + ht?.address?.ward ||
-                              "No Ward" + ht?.address?.city ||
-                              "No Location"}
+                              "" + " " + ht?.address?.district ||
+                              "" + " " + " " + ht?.address?.ward ||
+                              "" + ht?.address?.city ||
+                              ""}
                           </div>
                         </div>
                         <div className="flex">
                           <div className="price">
-                            {hotel[0].roomId[0].pricePerNight}$
+                            {hotel[0].roomId[0].pricePerNight * 23000000} VND
                           </div>{" "}
-                          <div className="per-night ml-4">per night</div>
-                          <button
-                            onClick={() => {
-                              onFav();
-                            }}
-                          >
-                            <img src={"/detailPage/fav.png"} />
-                          </button>
+                          <div className="per-night ml-1">per night</div>
+                          <div></div>
+                        </div>
+
+                        <div>
                           <div>
-                        {disable ? (
-                          <button className="book-now-button">
-                            <a
-                              className="book-now-button"
-                              href={`/payment-detail/${hotel[0].roomId[0]._id}`}
-                            >
-                              Book Now
-                            </a>
-                          </button>
-                        ) : null}
-                      </div>
+                            <div className="flex mt-6">
+                              <button
+                                onClick={() => {
+                                  onFav();
+                                }}
+                              >
+                                <img src={"/detailPage/fav.png"} />
+                              </button>
+                              {disable ? (
+                                <button className="book-now-button">
+                                  <a
+                                    className="book-now-button"
+                                    href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                                    disabled={!disable}
+                                  >
+                                    Book Now
+                                  </a>
+                                </button>
+                              ) : null}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -211,7 +215,6 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                       style={{ marginLeft: "70%", marginTop: "20px" }}
                     >
                       <div></div>
-                 
                     </div>
                   </div>
                 </div>

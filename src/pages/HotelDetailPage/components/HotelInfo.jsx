@@ -33,7 +33,7 @@ function HotelInfo({ hotel, ...props }) {
              
                 <td>{room.detailRoom}</td>
                 <td>
-                  <button>{room.pricePerNight} $</button>
+                  <button>{room.pricePerNight * 23000000}</button>
                 </td>
               </tr>
             );

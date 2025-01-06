@@ -381,6 +381,42 @@ function FlightPaymentBody() {
             <span className="text-red-500">Total</span>
             <span>VND {handleTotalAmount()}</span>
           </div>
+          <div className="flex mt-6">
+            <div>
+              <div className="label-input">First Name</div>
+              <div>
+                <input className="classic-input mr-3" />
+              </div>
+            </div>
+            <div>
+              <div className="label-input"> Last Name</div>
+              <div>
+                <input className="classic-input  mr-3" />
+              </div>
+            </div>
+            <div>
+              <div className="label-input">Phone Number</div>
+              <div>
+                <input className="classic-input" />
+              </div>
+            </div>
+          </div>
+          <div className="head-title mt-3">Cancellation Policy</div>
+          <div className="flex mt-3">
+            <div>Get a Full Refund If You Cancel By Jun 23 {"(PDT)"} .</div>
+            <div className="ml-3">Read More</div>
+          </div>
+          <div className="flex mt-6">
+            <div>
+              <button className="blue-button">Confirm And Pay</button>
+            </div>
+            <div>
+              <button className="save-button ml-6">
+                {" "}
+                Save If You Like It {"<3"}
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Payment Details */}

@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import "./HotelIsBookedPage.css"
 function HotelIsBookedPage() {
   return (
-    <div className="center-gov">
+    <div className="center-gov content-center">
       <Navbar />
       <div className="container-center">
         <div className="is-booked-card">

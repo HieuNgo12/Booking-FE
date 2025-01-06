@@ -4,11 +4,11 @@ import ReactPaginate from "react-paginate";
 
 function HotelListingCard({ hotel, ...props }) {
   return (
-    <div style={{ width: "820px" }} className="card flex mb-2 pt-2">
+    <div style={{ width: "820px" }} className="hotel-listing-card  flex mb-2 pt-2">
       <div style={{ width: "30%", padding: "4px" }}>
-        <img src={hotel.imgHotel.avatar} />
+        <img src={hotel.imgHotel.avatar}  style={{width: "100%", height: "225px"}}/>
       </div>
-      <div style={{ width: "40%",marginLeft: "10px" }}>
+      <div style={{ width: "40%" }}>
         <div className="head-card-title ml-2">{hotel.hotelName}</div>
         <div className="flex mt-2">
           <div>
@@ -71,9 +71,9 @@ function HotelListingCard({ hotel, ...props }) {
 
       <div>
         <div>
-          <div className="flex">
+          <div className="flex" style={{marginTop: "20%", marginLeft: "0px"}}>
             <div className="discount">10% off</div>
-            <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight}</div>
+            <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight * 23000000} VND</div>
           </div>
           <div className="mt-2">Included taxes and charges</div>
           <div className="sustainable-level flex mt-2">
