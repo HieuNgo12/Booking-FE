@@ -133,16 +133,28 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
               return (
                 <div>
                   <div className="flex">
-                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
-                    <div style={{ width: "50%" }}>{ht?.detailHotel}</div>
+                    <div style={{ width: "50%" }}>
+                      {ht?.detailHotel ||
+                        `Located within 3.3 km of Giac Lam Pagoda and 4.3 km of Tan Dinh Market, HANZ Quynh Giang Hotel provides rooms with air conditioning and a private bathroom in Ho Chi Minh City. This 3-star hotel offers free WiFi. The property is allergy-free and is situated 4.8 km from Dam Sen Cultural Park.
+
+At the hotel, every room comes with a desk, a flat-screen TV, a private bathroom, bed linen and towels. All units include a wardrobe.
+
+War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification Palace is 5.6 km away. Tan Son Nhat International Airport is 2 km from the property.`}{" "}
+                    </div>
+                    <div style={{ width: "50%" }}>
+                      {ht?.detailHotel ||
+                        "Distance in property description is calculated using © OpenStreetMap"}
+                    </div>
                   </div>
                   <div>
                     <div className="flex mt-10">
                       <div style={{ width: "300px" }}>
                         {" "}
+                        <div className="head-title">Map</div>
+
                         <ReactGoogleMap />
                       </div>
-                      <div style={{ width: "300px" }} className="ml-3 mr-3">
+                      <div style={{ width: "1000px" }} className="ml-3 mr-3">
                         <div className="head-title">Amenities</div>
                         <div className="flex">
                           {hotel[0].roomId[0].amenities?.map((amenity) => {
@@ -193,7 +205,7 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                               >
                                 <img src={"/detailPage/fav.png"} />
                               </button>
-                              {disable ? (
+                         
                                 <button className="book-now-button">
                                   <a
                                     className="book-now-button"
@@ -203,7 +215,6 @@ export default function hotelDetailTabs({ hotel, disable, ...props }) {
                                     Book Now
                                   </a>
                                 </button>
-                              ) : null}
                             </div>
                           </div>
                         </div>

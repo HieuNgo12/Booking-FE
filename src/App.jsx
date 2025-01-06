@@ -69,12 +69,6 @@ function App() {
   const customerRouter = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
-      errorElement: <ErrorPage />,
-      children: [],
-    },
-    {
-      path: "/hotel-search",
       element: <HotelSearchPage />,
       errorElement: <ErrorPage />,
       children: [],
