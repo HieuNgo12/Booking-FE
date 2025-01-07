@@ -7,8 +7,9 @@ import "./FiveStar.css";
 import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { services } from "../../../Services/services";
 
-function FiveStar() {
+function FiveStar({hotel,...props}) {
   const [rating, setRating] = useState(5);
   const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
@@ -49,7 +50,16 @@ function FiveStar() {
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
-      console.log(values);
+        
+      const body = {
+        objectType: "hotel",
+        objectId: hotel._id,
+        userId: "6751570cbd20ef4184e7b5e8",
+        comment: values.comment,
+        rating: rating,
+      };
+      const data = await services.createReview(body);
+      console.log(data);
       const uploadFile = () => {
         const url = `${url}/api/v1/reviews/uploadFile`;
         const formData = new FormData();
@@ -60,7 +70,7 @@ function FiveStar() {
             "content-type": "multipart/form-data",
           },
         };
-        axios.post(url, formData, config).then(async(response) => {
+        axios.post(url, formData, config).then(async (response) => {
           console.log(response.data);
           const body = {
             productId: id,
@@ -70,16 +80,13 @@ function FiveStar() {
             image: response.data.secure_url,
           };
           console.log(body);
-          const res = await axios.post(
-            `${url}/api/v1/create-review`,
-            body
-          );
+          const res = await axios.post(`${url}/api/v1/create-review`, body);
         });
       };
       uploadFile();
       setModal(false);
       console.log(id);
-     
+
       window.location.reload();
     },
   });
@@ -88,7 +95,7 @@ function FiveStar() {
       <button
         className="search-button ml-6 mb-6"
         onClick={async (e) => {
-            e.preventDefault();
+          e.preventDefault();
           setModal(true);
         }}
       >
@@ -97,7 +104,7 @@ function FiveStar() {
       <>
         {modal ? (
           <>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e)}}>
               <div className=" justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
                   {/*content*/}
@@ -145,7 +152,7 @@ function FiveStar() {
                     </div>
                     <Body>
                       <div className="flex">
-                        {[...Array(5)].map((star, i) => {
+                        {[...Array(10)].map((star, i) => {
                           const ratingValue = i + 1;
 
                           return (
@@ -198,10 +205,7 @@ function FiveStar() {
                       >
                         Close
                       </button>
-                      <button
-                        className="search-button"
-                        type="submit"
-                      >
+                      <button className="search-button" type="submit " >
                         Post Comment
                       </button>
                     </div>

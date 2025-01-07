@@ -63,19 +63,10 @@ export const services = {
     const data = await axios.post(dataUrl, body);
     return data;
   },
-   convertDate: (checkin,checkout) => {
-    const date1 = moment(
-    checkin
-    );
-    const date2 = moment(
-     checkout
-    );
-    let duration = date2.diff(date1, "days");
-    const durationMoment = moment.duration(duration, "milliseconds");
-    console.log(duration);
+  createReview: async (body) => {
 
-    // const diffTime = Math.abs(date2 - newDate1);
-    // const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    return duration;
-  }
+    const dataUrl = `${url}/api/v1/create-review-without-authen`;
+    const data = await axios.post(dataUrl, body);
+    return data;
+  },
 };

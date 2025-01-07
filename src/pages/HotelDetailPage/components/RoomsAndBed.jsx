@@ -3,6 +3,7 @@ import "./RoomsAndBed.css";
 import { addDefaultSrc } from "../../Services/defaultImage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { utils } from "../../Services/utils";
 function RoomsAndBed({ disable, hotel, ...props }) {
   useEffect(() => {
     console.log(hotel);
@@ -57,7 +58,7 @@ function RoomsAndBed({ disable, hotel, ...props }) {
 
                 <td>{room.detailRoom}</td>
                 <td>
-                  <button>{room.pricePerNight * 23000000}</button>
+                  <button>{utils.numberWithCommas( room.pricePerNight * 1)}</button>
                 </td>
                 <td>
                   {disable ? (

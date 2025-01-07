@@ -237,7 +237,7 @@ function App() {
       element: <HotelFavoriteListPage />,
     },
     {
-      path: "/confirm-page/:bookingId",
+      path: "//hotel-confirm-page/:bookingId",
       element: <ConfirmPage />,
     },
     {
