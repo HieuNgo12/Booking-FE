@@ -58,7 +58,7 @@ function ConfirmTable({ booking, ...props }) {
             <tbody>
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td scope="row" class="">
-                  {services.convertDate(booking[0]?.bookingStartDate,booking[0]?.bookingEndDate) + " "}
+                  {u.convertDate(booking[0]?.bookingStartDate,booking[0]?.bookingEndDate) + " "}
                   Nights
                 </td>
                 {booking.length ? (

@@ -1,6 +1,7 @@
 import React from "react";
 import "./HotelInfo.css";
 import { addDefaultSrc } from "../../Services/defaultImage";
+import { utils } from "../../Services/utils";
 function HotelInfo({ hotel, ...props }) {
   return (
     <table class="table-auto">
@@ -33,7 +34,7 @@ function HotelInfo({ hotel, ...props }) {
              
                 <td>{room.detailRoom}</td>
                 <td>
-                  <button>{room.pricePerNight * 23000000}</button>
+                  <button>{utils.numberWithCommas (room.pricePerNight * 1) }</button>
                 </td>
               </tr>
             );

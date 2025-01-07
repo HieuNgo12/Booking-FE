@@ -128,6 +128,7 @@ function HotelDetailPage({ hotels, ...props }) {
         </div>
         <div className=" mt-6 ">
           <ArrowSlider hotel={hotel[0]} />
+          <FiveStar hotel={hotel[0]}/>
           <div>
             <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
             <div className="flex ml-6 mb-6">
@@ -187,9 +188,6 @@ function HotelDetailPage({ hotels, ...props }) {
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <FiveStar />
           </div>
         </div>
         <Footer />

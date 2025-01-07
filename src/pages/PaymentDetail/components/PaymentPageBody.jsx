@@ -8,27 +8,21 @@ import { toast } from "react-toastify";
 import { services } from "../../Services/services";
 import { useNavigate } from "react-router-dom";
 import PromocodeModal from "./PromocodeModal";
+import { utils } from "../../Services/utils";
+import PaymentModal from "./PaymentModal";
 
 function PaymentPageBody({ room, ...props }) {
   const [disablePromo, setDisablePromo] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openPayment, setOpenPayment] = useState(false);
+
   const [price, setPrice] = useState();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handlePaymentOpen = () => openPayment(true);
+  const handlePaymentClose = () => setOpenPayment(false);
+
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, "Required at least 2 letters")
-      .max(50, "Required maximum 50 letters")
-      .required("First Name Is Required"),
-    middleName: Yup.string()
-      .min(2, "Company must be at least 2 letters")
-      .max(50, "Company name must be maximum 50 letters")
-      .required("Middle Name Is Required"),
-    lastName: Yup.string().required("Last Name Is Required"),
-    emailAddress: Yup.string()
-      .email("Must be valid email")
-      .required("Email Is Required"),
-    phoneNumber: Yup.string().required("Phone Number Is Required"),
     fullNameOnCard: Yup.string(),
     cardNumber: Yup.string(),
 
@@ -53,52 +47,7 @@ function PaymentPageBody({ room, ...props }) {
     },
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
-      toast.success("Payment Success", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        // onClose: () => setModal(false),
-      });
-      console.log({
-        userId: "6751570cbd20ef4184e7b5e8",
-        objectId: "674b530cfa3469716c80aeef",
-        bookingStartDate: JSON.parse(localStorage.getItem("checkoutTime"))
-          .checkin,
-        bookingEndDate: JSON.parse(localStorage.getItem("checkoutTime"))
-          .checkout,
-        objectType: "hotel",
-        totalPersons: room[0].maxOccupancy,
-        totalAmount: room[0].pricePerNight,
-        bookingReference: "ABD",
-        status: "confirmed",
-      });
-      const bodySubmit = {
-        userId: "6751570cbd20ef4184e7b5e8",
-        objectId: "674b530cfa3469716c80aeef",
-        bookingStartDate: JSON.parse(localStorage.getItem("checkoutTime"))
-          .checkin,
-        bookingEndDate: JSON.parse(localStorage.getItem("checkoutTime"))
-          .checkout,
-        objectType: "hotel",
-        totalPersons: room[0].maxOccupancy,
-        totalAmount: room[0].pricePerNight,
-        bookingReference: "ABD",
-        status: "confirmed",
-      };
-      // await services.createBooking(bodySubmit).then((data) => {
-      //   console.log(data);
-      //   navigate(`/confirm-page/${data.data.data._id}`, {
-      //     replace: true,
-      //   });
-      // });
-      const vnPayResponse = await services.createVNPay();
-      console.log(vnPayResponse);
-      window.location.href = vnPayResponse.data.data.orderurl;
+      setOpenPayment(true);
     },
     // return redirect("");
 
@@ -214,7 +163,7 @@ function PaymentPageBody({ room, ...props }) {
               <div>
                 <div>
                   You will stay{" "}
-                  {services.convertDate(
+                  {utils.convertDate(
                     JSON.parse(localStorage.getItem("checkoutTime")).checkIn,
                     JSON.parse(localStorage.getItem("checkoutTime")).checkout
                   )}{" "}
@@ -332,28 +281,26 @@ function PaymentPageBody({ room, ...props }) {
                   <div className="flex" style={{ marginLeft: "auto" }}>
                     <div className="price-and-nights mr-2">
                       VND{" "}
-                      {JSON.parse(localStorage?.getItem("currentPrice")) *
-                        JSON.parse(localStorage.getItem("hotelPassengers"))
-                          .passengers *
-                        services.convertDate(
-                          JSON.parse(
-                            localStorage.getItem("checkoutTime")
-                          ).checkIn,
-                          JSON.parse(
-                            localStorage.getItem("checkoutTime")
-                          ).checkout
-                        ) *
-                        23000}
+                      {utils.numberWithCommas(
+                        JSON.parse(localStorage?.getItem("currentPrice")) *
+                          JSON.parse(localStorage.getItem("hotelPassengers"))
+                            .passengers *
+                          utils.convertDate(
+                            JSON.parse(localStorage.getItem("checkoutTime"))
+                              .checkin,
+                            JSON.parse(localStorage.getItem("checkoutTime"))
+                              .checkout
+                          ) *
+                          23000
+                      )}
                     </div>
                     <div className="nights-stay">
                       {" "}
-                      {services.convertDate(
-                        JSON.parse(
-                          localStorage.getItem("checkoutTime")
-                        ).checkIn,
-                        JSON.parse(
-                          localStorage.getItem("checkoutTime")
-                        ).checkout
+                      {utils.convertDate(
+                        JSON.parse(localStorage.getItem("checkoutTime"))
+                          .checkin,
+                        JSON.parse(localStorage.getItem("checkoutTime"))
+                          .checkout
                       )}{" "}
                       Nights
                     </div>
@@ -373,20 +320,18 @@ function PaymentPageBody({ room, ...props }) {
                   <div className="original-price">Total Amount for Paymnet</div>
                   <div className="price-and-nights">
                     VND{" "}
-                    {JSON.parse(localStorage?.getItem("currentPrice")) *
-                      JSON.parse(localStorage.getItem("hotelPassengers"))
-                        .passengers *
-                      23000 
-                      *
-                      services.convertDate(
-                        JSON.parse(
-                          localStorage.getItem("checkoutTime")
-                        ).checkIn,
-                        JSON.parse(
-                          localStorage.getItem("checkoutTime")
-                        ).checkout
-                      )
-                      }
+                    {utils.numberWithCommas(
+                      JSON.parse(localStorage?.getItem("currentPrice")) *
+                        JSON.parse(localStorage.getItem("hotelPassengers"))
+                          .passengers *
+                        23000 *
+                        utils.convertDate(
+                          JSON.parse(localStorage.getItem("checkoutTime"))
+                            .checkin,
+                          JSON.parse(localStorage.getItem("checkoutTime"))
+                            .checkout
+                        )
+                    )}
                   </div>
                 </div>
                 <div className="">
@@ -419,28 +364,19 @@ function PaymentPageBody({ room, ...props }) {
                 </div>
               </div>
             </div>
-            <div style={{ height: "120px" }} className="pl-6 bg-white ">
+            {/* <div style={{ height: "120px" }} className="pl-6 bg-white ">
               <div className="head-title pt-4">Payment Methods </div>
               <div className="flex pt-4">
                 <div className="sub-title mr-6 ">Payment Method</div>
                 <div>
-                  <form class="max-w-sm mx-auto">
-                    <select
-                      id="countries"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
-                      <option selected>Choose a Method</option>
-                      <option value="cash">Cash</option>
-                      <option value="credit">Credit Card</option>
-                    </select>
-                  </form>
+                  <button type="submit">Choose A Method</button>
                 </div>
                 <div className="flex booking-for-work ">
                   <div className="sub-title p-2">Booking for Work</div>
                   <input className="ml-2" type="radio" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div style={{ width: "50%" }}>
             <div className="profile-card bg-white p-6  ml-6">
@@ -488,132 +424,6 @@ function PaymentPageBody({ room, ...props }) {
               </div>
             </div>
             <div className="pl-6">
-              <div className="pl-6 bg-white">
-                <div className="head-title">Full Name</div>
-                <div className="flex">
-                  <div>
-                    <div>
-                      <div>First Name</div>
-                    </div>
-                    <input
-                      id="firstName"
-                      name="firstName"
-                      type="firstName"
-                      placeholder="First Name"
-                      className="classic-input mr-3 p-4"
-                      onChange={formik.handleChange}
-                      value={formik.values.firstName}
-                      style={
-                        formik.errors.firstName ? { borderColor: "red" } : null
-                      }
-                    />
-                  </div>
-                  <div>
-                    <div>
-                      <div style={{}}>Middle Name</div>
-                    </div>{" "}
-                    <input
-                      id="middleName"
-                      name="middleName"
-                      type="middleName"
-                      placeholder="Middle Name"
-                      className="classic-input mr-3 p-4"
-                      onChange={formik.handleChange}
-                      value={formik.values.middleName}
-                      style={
-                        formik.errors.middleName ? { borderColor: "red" } : null
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <div>
-                      <div>Last Name</div>
-                    </div>{" "}
-                    <input
-                      id="lastName"
-                      name="lastName"
-                      type="lastName"
-                      placeholder="Last Name"
-                      className="classic-input p-4 "
-                      onChange={formik.handleChange}
-                      value={formik.values.lastName}
-                      style={
-                        formik.errors.lastName ? { borderColor: "red" } : null
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="flex mt-6 pb-6">
-                  <div className="email-phone  mr-6">
-                    <div>Email Address</div>
-                    <div>
-                      <input
-                        id="emailAddress"
-                        name="emailAddress"
-                        type="emailAddress"
-                        placeholder=".........................."
-                        className="long-payment-input pl-4"
-                        onChange={formik.handleChange}
-                        value={formik.values.emailAddress}
-                        style={
-                          formik.errors.emailAddress
-                            ? { borderColor: "red" }
-                            : null
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="email-phone  ">
-                    <div>Phone Number</div>
-                    <div>
-                      <input
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        type="phoneNumber"
-                        placeholder="764378888888"
-                        className="classic-input pl-4"
-                        onChange={formik.handleChange}
-                        value={formik.values.phoneNumber}
-                        style={
-                          formik.errors.phoneNumber
-                            ? { borderColor: "red" }
-                            : null
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="head-title mt-6">If You Need Assistance</div>
-                <div className="mt-6">
-                  Choose An Option Based On Physical Disability Accordingly.
-                </div>
-                <div className="flex mt-6">
-                  <div className="" style={{ width: "100%" }}>
-                    <div className="smart-title">Choose An Option</div>
-                    <div>
-                      <input
-                        placeholder="Not Provided"
-                        className="classic-input pl-4"
-                      />
-                    </div>
-                  </div>
-                  <div style={{ width: "60%" }}>
-                    <div className="smart-title">Region/Country</div>
-                    <div>
-                      <input
-                        id="country"
-                        name="country"
-                        type="country"
-                        placeholder="Country"
-                        className="classic-input pl-4"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="pl-6 pt-6 bg-white">
                 <div className="head-title mb-6 ">Add to Your Stay</div>
                 <div className="flex">
@@ -729,7 +539,12 @@ function PaymentPageBody({ room, ...props }) {
                       className="please-select"
                     />
                     <div className="">Time for CET time zone</div>
-
+                    <div>
+                      <img
+                        src="/paymentPage/images.jpg"
+                        style={{ height: "255px",marginBottom: "9px", marginTop: "9px" }}
+                      />
+                    </div>
                     <div className="flex ">
                       <div>
                         <button
@@ -757,6 +572,12 @@ function PaymentPageBody({ room, ...props }) {
               handleClose={handleClose}
               handleOpen={handleOpen}
               formik={formik}
+            />
+            <PaymentModal
+              open={openPayment}
+              setOpen={setOpenPayment}
+              handleClose={handlePaymentClose}
+              handleOpen={handlePaymentOpen}
             />
             {/* <div
               className="section-width bg-white m-6 p-6 "

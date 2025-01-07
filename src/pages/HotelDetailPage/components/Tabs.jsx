@@ -9,6 +9,8 @@ import PlaceRules from "./PlaceRules";
 import HotelInfo from "./HotelInfo";
 import { useNavigate } from "react-router-dom";
 import ReactGoogleMap from "../../components/ReactGoogleMap";
+import { utils } from "../../Services/utils";
+import FiveStar from "./PostReview/FiveStar";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -151,7 +153,6 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                       <div style={{ width: "300px" }}>
                         {" "}
                         <div className="head-title">Map</div>
-
                         <ReactGoogleMap />
                       </div>
                       <div style={{ width: "1000px" }} className="ml-3 mr-3">
@@ -171,7 +172,6 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                             );
                           })}
                         </div>
-                        <div></div>
                       </div>
 
                       <div style={{ width: "50%" }} className="">
@@ -189,7 +189,10 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                         </div>
                         <div className="flex">
                           <div className="price">
-                            {hotel[0].roomId[0].pricePerNight * 23000000} VND
+                            {utils.numberWithCommas(
+                              hotel[0].roomId[0].pricePerNight * 1
+                            )}{" "}
+                            VND
                           </div>{" "}
                           <div className="per-night ml-1">per night</div>
                           <div></div>
@@ -205,16 +208,16 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                               >
                                 <img src={"/detailPage/fav.png"} />
                               </button>
-                         
-                                <button className="book-now-button">
-                                  <a
-                                    className="book-now-button"
-                                    href={`/payment-detail/${hotel[0].roomId[0]._id}`}
-                                    disabled={!disable}
-                                  >
-                                    Book Now
-                                  </a>
-                                </button>
+
+                              <button className="book-now-button">
+                                <a
+                                  className="book-now-button"
+                                  href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                                  disabled={!disable}
+                                >
+                                  Book Now
+                                </a>
+                              </button>
                             </div>
                           </div>
                         </div>
