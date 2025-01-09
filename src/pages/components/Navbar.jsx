@@ -87,13 +87,6 @@ function Navbar() {
           }}
         />
 
-        {/* <div>
-          <a href="/hotel-search">
-            {" "}
-            <img className="classic-image" src={"/homepage/hotel.png"} />
-          </a>
-        </div> */}
-
         <div className="flex items-center">
           <Input
             placeholder="input search text"
@@ -135,7 +128,7 @@ function Navbar() {
               transition: "color 0.3s",
             }}
             className="hover:text-[#05486C]"
-            onClick={() => navigate("/hotel-favorite-page")}
+            onClick={() => navigate("/favorite-page")}
           />
         </div>
 

@@ -17,6 +17,9 @@ import imgLogIn from "./img/login.jpg";
 import imgLogo from "./img/Logo.png";
 import imgEN from "./img/EN.png";
 import { useDispatch, useSelector } from "react-redux";
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+import FacebookLogin from "react-facebook-login";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -94,6 +97,25 @@ const LoginPage = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const loginByGG = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
+
+  const loginByFB = () => {
+    FB.login(
+      function (response) {
+        if (response.authResponse) {
+          FB.api("/me", { fields: "name,email,picture" }, function (userInfo) {
+            console.log("Facebook User Info:", userInfo);
+          });
+        } else {
+          toast.warn("Facebook Login Cancelled", { position: "top-center" });
+        }
+      },
+      { scope: "public_profile,email" }
+    );
   };
 
   return (
@@ -243,13 +265,17 @@ const LoginPage = () => {
                 </div>
                 <Row gutter={10} className="flex justify-center cursor-pointer">
                   <Col>
-                    <img src="/login/facebook.png" />
+                    <img src="/login/facebook.png" onClick={loginByFB} />
                   </Col>
                   <Col>
                     <img src="/login/apple.png" />
                   </Col>
                   <Col>
-                    <img src="/login/google.png" />
+                    <img
+                      src="/login/google.png"
+                      className="cursor-pointer"
+                      onClick={() => loginByGG()}
+                    />
                   </Col>
                 </Row>
                 <div style={{ textAlign: "center", marginTop: "20px" }}>

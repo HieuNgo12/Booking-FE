@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import { apiGet } from "../../../API/APIService";
+import { useSelector } from "react-redux";
 
 const CheckboxGroup = Checkbox.Group;
 const passengerRatingArr = [
@@ -42,7 +43,6 @@ function FlightSearchBody() {
   const [dataResult, setDataResult] = useState([]);
   const location = useLocation();
 
-  console.log(dataResult);
   const callApi = async () => {
     try {
       const response = await apiGet("search-flight", location.state.findFlight);
@@ -51,6 +51,8 @@ function FlightSearchBody() {
       console.log(error);
     }
   };
+
+  const { searchData } = useSelector((state) => state?.searchSlice);
 
   useEffect(() => {
     if (location.state) {
@@ -240,41 +242,23 @@ function FlightSearchBody() {
               pagination={{
                 pageSize: 5,
               }}
-              renderItem={(item) => (
-                <List.Item>
-                  <FlightCard dataSource={item} />
-                </List.Item>
-              )}
+              renderItem={(item) =>
+                item.returnInfo ? (
+                  item.returnInfo?.map((item2) => (
+                    <List.Item className="flex">
+                      <FlightCard dataSource={item} dataReturn={item2} />
+                    </List.Item>
+                  ))
+                ) : (
+                  <List.Item className="flex">
+                    <FlightCard dataSource={item} />
+                  </List.Item>
+                )
+              }
             />
           ) : (
-            <div>Không tìm thấy kết quả phù hợp !</div>
+            <div>Flight is not found! !</div>
           )}
-
-          <div className="flex justify-between mt-10 mb-10">
-            <Button
-              className="text-[#07689F] border-[#07689F] h-10"
-              icon={<HeartOutlined />}
-              onClick={() => {
-                const favplaces = JSON.parse(localStorage.getItem("favList"));
-                setHotelList(favplaces);
-                setLoading(true);
-              }}
-              // prefix={}
-            >
-              List Your Favorite Places
-            </Button>
-            <Button
-              type="primary"
-              className="text-white bg-[#07689F] h-10"
-              onClick={() => {
-                const favplaces = JSON.parse(localStorage.getItem("favList"));
-                setHotelList(favplaces);
-                setLoading(true);
-              }}
-            >
-              See More Search Results <RightOutlined />
-            </Button>
-          </div>
         </div>
       </div>
     </div>

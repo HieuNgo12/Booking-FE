@@ -28,6 +28,7 @@ const GetHotelBookingPage = () => {
         pagination={{
           pageSize: 5,
         }}
+        // style={{zIndex : 10}}
         renderItem={(item) => (
           <List.Item
             className="flex justify-between items-center bg-white p-4 shadow-md rounded-lg hover:shadow-lg cursor-pointer"

@@ -8,7 +8,12 @@ import {
   CalendarOutlined,
 } from "@ant-design/icons";
 import "./FlightPaymentBody.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { apiGet, apiGetAll, apiPost } from "../../../API/APIService";
 import VNA from "../img/logo-vna.svg";
 import VJ from "../img/logo-vietjet.svg";
@@ -27,22 +32,46 @@ import momoLogo from "../img/logo-momo.svg.svg";
 
 function FlightPaymentBody() {
   const [form] = Form.useForm();
-  const params = useParams();
+  const [searchParams] = useSearchParams();
+  const flightId = searchParams.get("flightId");
+  const flightReturnId = searchParams.get("flightreturnId");
   const navigate = useNavigate();
   const [data, setData] = useState({});
+  const [dataReturn, setDataReturn] = useState({});
   const [type, setType] = useState({});
+  const [typeReturn, setTypeReturn] = useState({});
   const [handleMethod, setHandleMethod] = useState("ZaloPay" || "VNPay");
   const [expiryDate, setExpiryDate] = useState("");
   const [terms, setTerms] = useState(false);
   const [code, setCode] = useState("");
   const [promotion, setPromotion] = useState("");
+  const [dataLocal, setDataLocal] = useState("");
 
   const { searchData } = useSelector((state) => state?.searchSlice);
 
+  const compareLocalAndData = () => {
+    const getLocalSS = localStorage.getItem("fav");
+    const loop = JSON.parse(getLocalSS).find(
+      (item) => item.searchData.productId === data._id
+    );
+    setDataLocal(loop);
+    console.log(loop);
+  };
+
+  useEffect(() => {
+    compareLocalAndData();
+  }, []);
+
   const callApi = async () => {
     try {
-      const response = await apiGet(`get-flight-by-id/${params.flightId}`);
+      const response = await apiGet(`get-flight-by-id/${flightId}`);
       setData(response.data);
+      if (flightReturnId) {
+        const responseReturn = await apiGet(
+          `get-flight-by-id/${flightReturnId}`
+        );
+        setDataReturn(responseReturn.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -58,9 +87,24 @@ function FlightPaymentBody() {
     }
   });
 
+  useEffect(() => {
+    if (searchData && dataReturn?.classFlight) {
+      setTypeReturn(getPriceReturn());
+    }
+  });
+
   const getPrice = () => {
     const price = data?.classFlight?.find(
-      (item) => item.type === searchData.classFlight
+      (item) =>
+        item.type === searchData?.classFlight ||
+        dataLocal?.searchData?.classFlight
+    );
+    return price ? price : "No type";
+  };
+
+  const getPriceReturn = () => {
+    const price = dataReturn?.classFlight?.find(
+      (item) => item.type === searchData?.classFlight
     );
     return price ? price : "No type";
   };
@@ -193,14 +237,41 @@ function FlightPaymentBody() {
     }
   };
 
+  console.log(type?.price);
+  console.log(dataLocal?.searchData?.passengers);
+
   const handlePriceAdults = () => {
-    const totalPriceAdults = type?.price * searchData?.passengers;
+    if (Object.keys(typeReturn).length === 0) {
+      const totalPriceAdults =
+        Object.keys(searchData).length !== 0
+          ? type?.price * searchData?.passengers
+          : type?.price * dataLocal?.searchData?.passengers;
+      return totalPriceAdults;
+    }
+
+    const totalPriceAdults =
+      type?.price * searchData?.passengers +
+      typeReturn?.price * searchData?.passengers;
     return totalPriceAdults;
   };
 
   const handlePriceChildren = () => {
+    if (Object.keys(typeReturn).length === 0) {
+      if (Object.keys(searchData).length !== 0) {
+        const childrenCount = Number(searchData?.children) || 0;
+        const totalPriceAdults = (type?.price / 2) * childrenCount;
+        return totalPriceAdults;
+      } else {
+        const childrenCount = Number(dataLocal?.searchData?.children) || 0;
+        const totalPriceAdults = (type?.price / 2) * childrenCount;
+        return totalPriceAdults;
+      }
+    }
+
     const childrenCount = Number(searchData?.children) || 0;
-    const totalPriceAdults = (type?.price / 2) * childrenCount;
+    const totalPriceAdults =
+      (type?.price / 2) * childrenCount +
+      (typeReturn?.price / 2) * childrenCount;
     return totalPriceAdults;
   };
 
@@ -225,6 +296,11 @@ function FlightPaymentBody() {
     }
   };
 
+  const handlePriceBefore = () => {
+    const total = handlePriceAdults() + handlePriceChildren();
+    return total;
+  };
+
   const handleInputChange = (e) => {
     let value = e.target.value.replace(/[^0-9]/g, "");
     if (value.length > 2) {
@@ -243,34 +319,7 @@ function FlightPaymentBody() {
         </div>
         <div className="please-check-category">Please Check Categories</div>
 
-        <div className="">
-          {/* Thông tin Tổng Quan */}
-          <div className="flex justify-between items-center border-b pb-4 mb-4">
-            <div className="text-lg font-semibold text-gray-700">
-              Fly Straight
-            </div>
-            <div className="text-lg font-semibold text-gray-700">
-              Flight Duration:{" "}
-              <span className="text-[#07689F]">
-                {" "}
-                {data?.departureDate && data?.destinationDate
-                  ? (() => {
-                      const diffMs = Math.abs(
-                        new Date(data?.destinationDate) -
-                          new Date(data?.departureDate)
-                      );
-                      const hours = Math.floor(diffMs / (1000 * 60 * 60));
-                      const minutes = Math.floor(
-                        (diffMs % (1000 * 60 * 60)) / (1000 * 60)
-                      );
-
-                      return `${hours} hours ${minutes} minutes`;
-                    })()
-                  : "N/A"}
-              </span>
-            </div>
-          </div>
-
+        <div className="flex flex-col gap-5">
           <div className="flex flex-col md:flex-row items-center gap-4 border-b pb-4">
             <div className="flex-1">
               <h3 className="text-md font-bold text-gray-800">
@@ -291,6 +340,39 @@ function FlightPaymentBody() {
               <p className="text-sm text-gray-600">
                 Flight Class: <span className="font-medium">{type?.type}</span>
               </p>
+              <p className="text-sm text-gray-600">
+                Date:{" "}
+                <span className="font-medium">
+                  {data?.destinationDate?.slice(0, 10)}
+                </span>
+              </p>
+              <p className="text-sm text-gray-600">
+                Time:{" "}
+                <span className="font-medium">
+                  {data?.destinationDate?.slice(11, 19)}
+                </span>
+              </p>
+              <p className="text-sm text-gray-600">
+                Price: <span className="font-medium">{type?.price}</span> VND
+              </p>
+              <p className="text-sm text-gray-600">
+                Adults:{" "}
+                <span className="font-medium">
+                  {" "}
+                  {Object.keys(searchData).length !== 0
+                    ? searchData?.passengers
+                    : dataLocal?.searchData?.passengers}
+                </span>{" "}
+              </p>
+              <p className="text-sm text-gray-600">
+                Children:{" "}
+                <span className="font-medium">
+                  {" "}
+                  {searchData?.children
+                    ? `For ${searchData?.children} Children`
+                    : "No Children"}{" "}
+                </span>{" "}
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <img
@@ -303,6 +385,79 @@ function FlightPaymentBody() {
               </p>
             </div>
           </div>
+
+          {flightReturnId && (
+            <div className="flex flex-col md:flex-row items-center gap-4 border-b pb-4">
+              <div className="flex-1">
+                <h3 className="text-md font-bold text-gray-800">
+                  Return Flight No
+                </h3>
+                <p className="text-sm text-gray-600">
+                  From:{" "}
+                  <span className="font-medium">
+                    {" "}
+                    {dataReturn?.departureAirport}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  To:{" "}
+                  <span className="font-medium">
+                    {" "}
+                    {dataReturn?.destinationAirport}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  Flight Code:{" "}
+                  <span className="font-medium">
+                    {dataReturn?.flightNumber}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  Flight Class:{" "}
+                  <span className="font-medium">{type?.type}</span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  Date:{" "}
+                  <span className="font-medium">
+                    {dataReturn?.destinationDate?.slice(0, 10)}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  Time:{" "}
+                  <span className="font-medium">
+                    {dataReturn?.destinationDate?.slice(11, 19)}
+                  </span>
+                </p>
+                <p className="text-sm text-gray-600">
+                  Price:{" "}
+                  <span className="font-medium">{typeReturn?.price}</span> VND
+                </p>
+                <p className="text-sm text-gray-600">
+                  Adults:{" "}
+                  <span className="font-medium"> {searchData?.passengers}</span>{" "}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Children:{" "}
+                  <span className="font-medium">
+                    {" "}
+                    {searchData?.children
+                      ? `For ${searchData?.children} Children`
+                      : "No Children"}{" "}
+                  </span>{" "}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <img
+                  src={logoAirPlane()}
+                  alt="Delta Airlines"
+                  className="h-20 object-contain"
+                />
+                <p className="text-gray-700 font-medium text-lg">
+                  {dataReturn?.airlineName}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div>
@@ -335,28 +490,10 @@ function FlightPaymentBody() {
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Price Details</h3>
           <div className="flex justify-between text-gray-600">
-            <div>
-              <span className="text-lg font-bold text-red-500">
-                {handlePriceAdults() ? `${handlePriceAdults()} VND` : ""}
-              </span>
-              <span className="text-sm font-bold">
-                {" "}
-                For {searchData?.passengers} Adults{" "}
-              </span>
-            </div>
-            <div>
-              <span className="text-lg font-bold text-red-500">
-                {handlePriceChildren() === 0
-                  ? ""
-                  : `${handlePriceChildren()} VND `}
-              </span>
-              <span className="text-sm">
-                {searchData?.children
-                  ? `For ${searchData?.children} Children`
-                  : "No Children"}{" "}
-              </span>
-            </div>
+            <span className="text-red-500 font-bold text-sm">Price :</span>
+            <span className="text-lg font-bold">{handlePriceBefore()}</span>
           </div>
+
           <div className="flex justify-between border-t pt-2 font-bold text-sm">
             <span className="text-red-500">Promotion Type :</span>
             <span>
@@ -379,43 +516,7 @@ function FlightPaymentBody() {
           </div>
           <div className="flex justify-between border-t pt-2 font-bold text-lg">
             <span className="text-red-500">Total</span>
-            <span>VND {handleTotalAmount()}</span>
-          </div>
-          <div className="flex mt-6">
-            <div>
-              <div className="label-input">First Name</div>
-              <div>
-                <input className="classic-input mr-3" />
-              </div>
-            </div>
-            <div>
-              <div className="label-input"> Last Name</div>
-              <div>
-                <input className="classic-input  mr-3" />
-              </div>
-            </div>
-            <div>
-              <div className="label-input">Phone Number</div>
-              <div>
-                <input className="classic-input" />
-              </div>
-            </div>
-          </div>
-          <div className="head-title mt-3">Cancellation Policy</div>
-          <div className="flex mt-3">
-            <div>Get a Full Refund If You Cancel By Jun 23 {"(PDT)"} .</div>
-            <div className="ml-3">Read More</div>
-          </div>
-          <div className="flex mt-6">
-            <div>
-              <button className="blue-button">Confirm And Pay</button>
-            </div>
-            <div>
-              <button className="save-button ml-6">
-                {" "}
-                Save If You Like It {"<3"}
-              </button>
-            </div>
+            <span className=" text-red-500">VND {handleTotalAmount()}</span>
           </div>
         </div>
 
@@ -553,7 +654,7 @@ function FlightPaymentBody() {
                   <FaPaypal className="w-8 h-8 object-contain" />
                   <div className="w-px h-6 bg-gray-200"></div>
                   <span className="text-sm font-medium text-gray-700">
-                    VNPay
+                    PayPal
                   </span>
                 </div>
               </Select.Option>
@@ -575,7 +676,10 @@ function FlightPaymentBody() {
             label="Card Number *"
             rules={[
               {
-                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                required:
+                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                    ? false
+                    : true,
                 message: "Please enter your card number!",
               },
             ]}
@@ -585,7 +689,11 @@ function FlightPaymentBody() {
               placeholder="Card Number"
               className="h-10 rounded-none"
               prefix={<CreditCardOutlined />}
-              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
+              disabled={
+                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  ? true
+                  : false
+              }
             />
           </Form.Item>
 
@@ -595,7 +703,10 @@ function FlightPaymentBody() {
             label="CVC"
             rules={[
               {
-                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                required:
+                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                    ? false
+                    : true,
                 message: "Please enter your CVC!",
               },
             ]}
@@ -605,7 +716,11 @@ function FlightPaymentBody() {
               placeholder="CVC"
               className="h-10 rounded-none"
               prefix={<LockOutlined />}
-              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
+              disabled={
+                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  ? true
+                  : false
+              }
             />
           </Form.Item>
 
@@ -615,7 +730,10 @@ function FlightPaymentBody() {
             name="expDate"
             rules={[
               {
-                required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                required:
+                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                    ? false
+                    : true,
                 message:
                   handleMethod === "ZaloPay" || "VNPay"
                     ? false
@@ -623,11 +741,11 @@ function FlightPaymentBody() {
               },
               {
                 pattern:
-                  handleMethod === "ZaloPay" || "VNPay"
+                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
                     ? false
                     : /^(0[1-9]|1[0-2])\/[0-9]{2}$/,
                 message:
-                  handleMethod === "ZaloPay" || "VNPay"
+                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
                     ? false
                     : "Please enter a valid expiry date in MM/YY format!",
               },
@@ -639,7 +757,11 @@ function FlightPaymentBody() {
               onChange={handleInputChange}
               maxLength={5} // Giới hạn độ dài tối đa (MM/YY)
               placeholder="MM/YY"
-              disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
+              disabled={
+                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  ? true
+                  : false
+              }
               className="h-10 rounded-none"
               prefix={<CalendarOutlined />}
             />

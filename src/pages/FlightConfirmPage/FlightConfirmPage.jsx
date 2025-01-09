@@ -1,16 +1,22 @@
 import React from "react";
-import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import FlightConfirmBody from "./components/FlightConfirmBody";
+import Footer from "../components/Footer";
+import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
+import FlightConfirmBodyPage from "./components/FlightConfirmBodyPage";
 
-function FlightConfirmPage() {
+function FlightConfirmPgae() {
   return (
-    <div className="center-gov content-center">
-      <Navbar />
-      <FlightConfirmBody />
+    <div className="flex flex-col justify-center items-center ">
+      <div className="flex w-full sticky top-0 bg-[#F9F9F9] justify-center z-10">
+        <Navbar />
+      </div>
+      <div className="min-w-[1224px] mb-10">
+        <HeaderFlightPageBody />
+        <FlightConfirmBodyPage />
+      </div>
       <Footer />
     </div>
   );
 }
 
-export default FlightConfirmPage;
+export default FlightConfirmPgae;

@@ -13,16 +13,21 @@ function FlightConfirmBodyPage() {
   const location = useParams();
   const [booking, setBooking] = useState({});
   const [qrData, setQrData] = useState("https://example.com");
+  console.log(location.bookingId);
 
   const callApi = async () => {
     try {
-      const response1 = await apiGet(`create-payment/${location.bookingId}`);
-      const response2 = await apiGet(`get-booking/${location.bookingId}`);
+      // const response1 = await apiGet(`create-payment/${location.bookingId}`);
+      const response2 = await apiGet(
+        `get-booking-no-token/${location.bookingId}`
+      );
       setBooking(response2.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(booking);
 
   useEffect(() => {
     callApi();
@@ -50,6 +55,118 @@ function FlightConfirmBodyPage() {
         </p>
       </div>
 
+      <div className="flex gap-3 justify-between">
+        {/* Table Header */}
+        <div>
+          <div className="grid grid-cols-7 text-center bg-[#A6A6A6] font-bold text-white ">
+            <div className="col-span-2 py-3 border-r text-lg">✈️ Flight</div>
+            <div className="col-span-2 py-3 border-r text-lg">🛫 From</div>
+            <div className="col-span-2 py-3 border-r text-lg">🛬 To</div>
+            <div className="py-3 border-r text-lg">Duration</div>
+            {/* <div className="col-span-2 py-3 border-r text-lg">QR Code</div> */}
+          </div>
+
+          {/* Flight Details - First Flight */}
+          <div className="grid grid-cols-7 text-sm border-2 ">
+            {/* Airline Info */}
+            <div className="col-span-2 flex flex-col items-center justify-center p-4 border-r">
+              <img
+                src={logoAirPlane()}
+                alt="Airline Logo"
+                className="h-16 mb-2"
+              />
+              <h3 className="text-lg font-bold text-gray-700">
+                {booking?.objectId?.airlineName}
+              </h3>
+              <p className="text-gray-500">
+                {" "}
+                {booking?.objectId?.flightNumber}
+              </p>
+              <p className="text-[#07689F]">Economy Class</p>
+            </div>
+
+            {/* From */}
+            <div className="col-span-2 flex flex-col justify-center p-4 border-r">
+              <p className="text-[#07689F] font-bold text-lg">
+                {booking?.objectId?.departureDate.slice(11, 19)}
+              </p>
+              <p className="text-green-600 font-semibold">
+                {" "}
+                {booking?.objectId?.departureDate.slice(0, 10)}
+              </p>
+              <p className="font-bold">{booking?.objectId?.departurePlace}</p>
+              <p className="text-gray-500 text-sm">
+                {booking?.objectId?.departureAirport}
+              </p>
+            </div>
+
+            {/* To */}
+            <div className="col-span-2 flex flex-col justify-center p-4 border-r">
+              <p className="text-[#07689F] font-bold text-lg">
+                {" "}
+                {booking?.objectId?.destinationDate.slice(11, 19)}
+              </p>
+              <p className="text-green-600 font-semibold">
+                {" "}
+                {booking?.objectId?.destinationDate.slice(0, 10)}
+              </p>
+              <p className="font-bold">{booking?.objectId?.destinationPlace}</p>
+              <p className="text-gray-500 text-sm">
+                {" "}
+                {booking?.objectId?.destinationAirport}
+              </p>
+            </div>
+
+            {/* Duration */}
+            <div className="flex items-center justify-center p-4 border-r">
+              <p className="font-bold text-xl text-gray-700">
+                {" "}
+                {booking?.objectId?.departureDate &&
+                booking?.objectId?.destinationDate
+                  ? (() => {
+                      const diffMs = Math.abs(
+                        new Date(booking?.objectId?.destinationDate) -
+                          new Date(booking?.objectId?.departureDate)
+                      );
+                      const hours = Math.floor(diffMs / (1000 * 60 * 60));
+                      const minutes = Math.floor(
+                        (diffMs % (1000 * 60 * 60)) / (1000 * 60)
+                      );
+
+                      return (
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="text-xl font-bold text-[#07689F] flex items-center gap-2">
+                            <span>{hours}</span>
+                            <span className="text-sm font-normal text-black">
+                              hours
+                            </span>
+                          </div>
+                          <div className="text-xl font-bold text-[#07689F] flex items-center gap-2">
+                            <span>{minutes} </span>
+                            <span className="text-sm font-normal text-black">
+                              minutes
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })()
+                  : "N/A"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-r-2 border-black border-dashed"></div>
+
+        <div className="flex flex-col justify-between">
+          <div className=" py-3 border-r text-lg w-40 text-center bg-[#A6A6A6] font-bold text-white ">
+            QR Code
+          </div>
+          <div className="flex items-center justify-center">
+            <QRCodeSVG value="https://reactjs.org/" size={160} />
+          </div>
+        </div>
+      </div>
       <div className="flex gap-3 justify-between">
         {/* Table Header */}
         <div>

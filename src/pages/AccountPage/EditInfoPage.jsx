@@ -14,7 +14,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { fetchUserInfo } from "../../Redux/Slide/infoUserSlice";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -26,11 +27,12 @@ const listNationality = [
 ];
 
 const EditInfoPage = ({ dataUser, callApi }) => {
+  console.log(callApi);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [avatar, setAvatar] = useState(dataUser?.avatar);
   const [newImage, setNewImage] = useState(null);
-
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -64,7 +66,6 @@ const EditInfoPage = ({ dataUser, callApi }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        console.log(response)
         const data = await response.json();
         setCities(data);
       } catch (error) {
@@ -74,7 +75,6 @@ const EditInfoPage = ({ dataUser, callApi }) => {
 
     fetchData();
   }, []);
-
 
   useEffect(() => {
     if (dataUser) {
@@ -107,8 +107,8 @@ const EditInfoPage = ({ dataUser, callApi }) => {
 
   const handleCityChange = (cityId) => {
     setSelectedCity(cityId);
-    setSelectedDistrict(""); // Reset district
-    setWards([]); // Reset wards
+    setSelectedDistrict("");
+    setWards([]);
 
     if (cityId) {
       const selectedCityData = cities.find((city) => city.Name === cityId);
@@ -192,6 +192,8 @@ const EditInfoPage = ({ dataUser, callApi }) => {
               onClose: () => callApi(),
             });
             form.resetFields(["checkPassword"]);
+            // callApi();
+            dispatch(fetchUserInfo());
           } else if (req1.status === 400) {
             let res1 = await req1.json();
             toast.warn(res1.message, {
@@ -222,6 +224,8 @@ const EditInfoPage = ({ dataUser, callApi }) => {
           onClose: () => callApi(),
         });
         form.resetFields(["checkPassword"]);
+        // callApi();
+        dispatch(fetchUserInfo());
       } else if (req1.status === 400) {
         let res1 = await req1.json();
         toast.warn(res1.message, {
