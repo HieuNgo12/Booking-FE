@@ -51,7 +51,6 @@ import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 import FlightConfirmPage from "./pages/FlightConfirmPage/FlightConfirmPage";
 import FlightFavoritePage from "./pages/FlightFavoritePage/FlightFavoritePage";
 import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
-import FlightConfirmPgae from "./pages/FlightConfirmPgae/FlightConfirmPgae.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -222,7 +221,6 @@ function App() {
       element: <SearchPage />,
     },
     {
-
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
     },
@@ -239,7 +237,7 @@ function App() {
       element: <DetailBookingTourPage />,
     },
     {
-      path: "/hotel-favorite-page",
+      path: "/favorite-page",
       element: <HotelFavoriteListPage />,
     },
     {
@@ -259,16 +257,12 @@ function App() {
       element: <FlightSearchPage />,
     },
     {
-      path: "/flight-detail-page/:flightId",
+      path: "/flight-detail-page",
       element: <FlightDetailPage />,
     },
     {
-      path: "/flight-payment-page/:flightId",
+      path: "/flight-payment-page",
       element: <FlightPaymentPage />,
-    },
-    {
-      path: "/flight-confirm-page",
-      element: <FlightConfirmPage />,
     },
     {
       path: "/flight-favorite-page",
@@ -276,7 +270,7 @@ function App() {
     },
     {
       path: "/flight-confirm-page/:bookingId",
-      element: <FlightConfirmPgae />,
+      element: <FlightConfirmPage />,
     },
     {
       path: "/chat-page",

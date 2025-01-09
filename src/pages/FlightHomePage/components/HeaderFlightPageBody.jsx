@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Input,
   Button,
-  DatePicker,
+  // DatePicker,
   Select,
   Form,
   AutoComplete,
@@ -17,7 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { setSearchData } from "../../../Redux/Slide/searchSlice";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const suggestions = [
   { value: "Da Nang International Airport" },
   { value: "Cam Ranh International Airport" },
@@ -243,14 +244,7 @@ const HeaderFlightPageBody = () => {
           }}
           rules={[{ required: true, message: "Please select dates!" }]}
         >
-          <DatePicker
-            className="w-full"
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "4px",
-              height: "40px",
-            }}
-          />
+          <Input className="w-full h-10" type="date" />
         </Form.Item>
 
         {/* Return  */}
@@ -267,14 +261,10 @@ const HeaderFlightPageBody = () => {
             { required: handleTrip === "two", message: "Please select dates!" },
           ]}
         >
-          <DatePicker
-            className="w-full"
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "4px",
-              height: "40px",
-            }}
+          <Input
+            className="w-full h-10"
             disabled={handleTrip === "one"}
+            type="date"
           />
         </Form.Item>
 
