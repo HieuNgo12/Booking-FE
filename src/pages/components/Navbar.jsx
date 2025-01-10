@@ -9,7 +9,7 @@ import {
   GlobalOutlined,
   DownOutlined,
   UserOutlined,
-  RightOutlined,
+  BellOutlined,
   CreditCardOutlined,
   SettingOutlined,
   LogoutOutlined,
@@ -89,7 +89,7 @@ function Navbar() {
 
         <div className="flex items-center">
           <Input
-            placeholder="input search text"
+            placeholder="Find something..."
             allowClear
             // onSearch={onSearch}
             style={{ width: 500, height: 40, marginRight: 20 }}
@@ -118,6 +118,7 @@ function Navbar() {
               transition: "color 0.3s",
             }}
             className="hover:text-[#05486C]"
+            onClick={() => navigate("/customers-service-page")}
           />
 
           <HeartOutlined
@@ -171,24 +172,35 @@ function Navbar() {
                 </Space>
               </a>
             </Dropdown>
+            <BellOutlined
+              style={{
+                fontSize: "24px",
+                color: "#07689F",
+                cursor: "pointer",
+                transition: "color 0.3s",
+              }}
+              className="hover:text-[#05486C]"
+              onClick={() => navigate("/favorite-page")}
+            />
           </div>
         )}
       </nav>
 
       <div className="flex justify-center mb-5 mt-2 product-tags">
         <div
+          onClick={() => navigate("/deals-page")}
+          className={`middle ${
+            pathname === "/deals-page" ? "active" : ""
+          }  cursor-pointer`}
+        >
+          <a>Deals</a>
+        </div>
+        <div
           className={`middle ${
             pathname === "/trip" ? "active" : ""
           }  cursor-pointer`}
         >
           <a>Trip</a>
-        </div>
-        <div
-          className={`middle ${
-            pathname === "/deals" ? "active" : ""
-          }  cursor-pointer`}
-        >
-          <a>Deals</a>
         </div>
         <div
           onClick={() => navigate("/")}
@@ -208,17 +220,18 @@ function Navbar() {
         </div>
         <div
           className={`middle ${
-            pathname === "/apartment" ? "active" : ""
+            pathname === "/cab" ? "active" : ""
           }  cursor-pointer`}
         >
-          <a>Apartment</a>
+          <a>Cab</a>
         </div>
         <div
           className={`middle ${
-            pathname === "/camper" ? "active" : ""
+            pathname === "/car" ? "active" : ""
           }  cursor-pointer`}
+          onClick={() => navigate("/about-us-page")}
         >
-          <a>Camper</a>
+          <a>About Us</a>
         </div>
       </div>
     </div>

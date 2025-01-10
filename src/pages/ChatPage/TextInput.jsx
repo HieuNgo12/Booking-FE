@@ -1,46 +1,36 @@
-import React from 'react'
-import TextField from '@material-ui/core/TextField';
-import { createStyles, makeStyles } from "@material-ui/core/styles";
-import SendIcon from '@material-ui/icons/Send';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import SendIcon from "@mui/icons-material/Send";
+import { styled } from "@mui/material/styles";
 
+// Tạo các thành phần styled
+const WrapForm = styled("form")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  width: "95%",
+  margin: `${theme.spacing(0)} auto`,
+}));
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    wrapForm : {
-        display: "flex",
-        justifyContent: "center",
-        width: "95%",
-        margin: `${theme.spacing(0)} auto`
-    },
-    wrapText  : {
-        width: "100%"
-    },
-    button: {
-        //margin: theme.spacing(1),
-    },
-  })
-);
+const WrapText = styled(TextField)({
+  width: "100%",
+});
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+}));
 
 export const TextInput = () => {
-    const classes = useStyles();
-    return (
-        <>
-            <form className={classes.wrapForm}  noValidate autoComplete="off">
-            <TextField
-                id="standard-text"
-                label="メッセージを入力"
-                className={classes.wrapText}
-                //margin="normal"
-            />
-            <Button variant="contained" color="primary" className={classes.button}>
-                <SendIcon />
-            </Button>
-            </form>
-        </>
-    )
-}
-
-
-
+  return (
+    <WrapForm noValidate autoComplete="off">
+      <WrapText
+        id="standard-text"
+        label="メッセージを入力"
+        variant="outlined"
+      />
+      <StyledButton variant="contained" color="primary">
+        <SendIcon />
+      </StyledButton>
+    </WrapForm>
+  );
+};

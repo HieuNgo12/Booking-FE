@@ -51,6 +51,9 @@ import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
 import FlightConfirmPage from "./pages/FlightConfirmPage/FlightConfirmPage";
 import FlightFavoritePage from "./pages/FlightFavoritePage/FlightFavoritePage";
 import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
+import DealsPage from "./pages/DealsPage/DealsPage.jsx";
+import CustomerPage from "./pages/CustomerPage/CustomerPage.jsx";
+import AboutUsPage from "./pages/AboutUsPage/AboutUsPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -269,6 +272,18 @@ function App() {
     {
       path: "/chat-page",
       element: <ChatAppPage />,
+    },
+    {
+      path: "/deals-page",
+      element: <DealsPage />,
+    },
+    {
+      path: "/customers-service-page",
+      element: <CustomerPage />,
+    },
+    {
+      path: "/about-us-page",
+      element: <AboutUsPage />,
     },
   ]);
 
