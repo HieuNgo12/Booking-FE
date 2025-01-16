@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FlightFavoritePageBody from "./components/FlightFavoritePageBody";
+import ChatBox from "../ChatPage/ChatBox";
 
 function FlightFavoritePage() {
   return (
@@ -9,6 +10,7 @@ function FlightFavoritePage() {
       <Navbar />
       <FlightFavoritePageBody />
       <Footer />
+      <ChatBox />
     </div>
   );
 }

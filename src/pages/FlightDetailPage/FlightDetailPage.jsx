@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FlightDetailBody from "./components/FlightDetailBody";
 import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
+import ChatBox from "../ChatPage/ChatBox";
 
 function FlightDetailPage() {
   return (
@@ -15,6 +16,7 @@ function FlightDetailPage() {
         <FlightDetailBody />
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

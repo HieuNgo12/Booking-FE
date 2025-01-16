@@ -17,15 +17,72 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckoutInput from "../components/CheckoutInput";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-toastify"
 import FiveStar from "./components/PostReview/FiveStar";
+import { toast } from "react-toastify";
+import ChatBox from "../ChatPage/ChatBox";
 function HotelDetailPage({ hotels, ...props }) {
   const { hotelId } = useParams();
   const [hotel, setHotel] = useState([]);
   const [disable, setDisable] = useState(false);
 
+  const SignupSchema = Yup.object().shape({
+    passengers: Yup.string().required("Passengers is Required"),
+    checkin: Yup.date().required("Check In is Required"),
+
+    checkout: Yup.date()
+      .when(
+        "checkin",
+        (checkin, yup) =>
+          checkin && yup.min(checkin, "Checkout Date cannot be before Checkin")
+      )
+      // .moreThan(Yup.ref("checkin"), "Cannot Exceed Checkin Date")
+      .required("Check Out Is Required"),
+    children: Yup.string().required("Children is Required"),
+  });
   const navigate = useNavigate();
 
+  const formik = useFormik({
+    initialValues: {
+      passengers: "",
+      checkin: "",
+      checkout: "",
+      children: "",
+    },
+    validationSchema: SignupSchema,
+    onSubmit: async (values) => {
+      // console.log(values);
+      setDisable(true);
+      toast.success("Check In Checkout Date Confirmed", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChanegBtn(true),
+      });
+      localStorage.setItem(
+        "checkoutTime",
+        JSON.stringify({
+          checkin: values.checkin,
+          checkout: values.checkout,
+        })
+      );
+      localStorage.setItem(
+        "hotelPassengers",
+        JSON.stringify({
+          passengers: values.passengers,
+          children: values.children,
+        })
+      );
+      // navigate(`/payment-detail${JSON.parse(localStorage.getItem("roomId"))}`, { replace: true })
+    },
+    // return redirect("");
+
+    // setSuccess(true);
+  });
   useEffect(() => {
     const getHotel = async () => {
       const dataUrl = `${url}/api/v1/hotel/${hotelId}`;
@@ -40,7 +97,7 @@ function HotelDetailPage({ hotels, ...props }) {
   };
   return (
     <div className="center-gov content-center ">
-      <form >
+      <form>
         {" "}
         <Navbar />
         {hotel?.length ? (
@@ -128,7 +185,7 @@ function HotelDetailPage({ hotels, ...props }) {
         </div>
         <div className=" mt-6 ">
           <ArrowSlider hotel={hotel[0]} />
-          <FiveStar hotel={hotel[0]}/>
+          <FiveStar hotel={hotel[0]} />
           <div>
             <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
             <div className="flex ml-6 mb-6">
@@ -191,6 +248,7 @@ function HotelDetailPage({ hotels, ...props }) {
           </div>
         </div>
         <Footer />
+        <ChatBox />
       </form>
     </div>
   );

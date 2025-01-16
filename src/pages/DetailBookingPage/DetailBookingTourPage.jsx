@@ -9,7 +9,7 @@ const DetailBookingTourPage = () => {
 
   const callApi = async () => {
     try {
-      const response = await apiGetAll(`get-booking/${params.bookingId}`);
+      const response = await apiGetAll(`get-booking-no-token/${params.bookingId}`);
       setDatabooking(response.data);
     } catch (error) {
       console.log(error);

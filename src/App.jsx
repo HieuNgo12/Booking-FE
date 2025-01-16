@@ -54,6 +54,10 @@ import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
 import DealsPage from "./pages/DealsPage/DealsPage.jsx";
 import CustomerPage from "./pages/CustomerPage/CustomerPage.jsx";
 import AboutUsPage from "./pages/AboutUsPage/AboutUsPage.jsx";
+import SupportListPage from "./pages/AccountPage/SupportListPage.jsx";
+import SupportDetailPage from "./pages/AccountPage/SupportDetailPage.jsx";
+import ReviewPage from "./pages/AccountPage/ReviewPage.jsx";
+import BookingSearchPage from "./pages/BookingSearchPage/BookingSearchPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -80,6 +84,11 @@ function App() {
       element: <PaymentDetailPage />,
       errorElement: <ErrorPage />,
       children: [],
+    },
+    {
+      path: "/booking-search",
+      element: <BookingSearchPage />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/login",
@@ -139,6 +148,11 @@ function App() {
           errorElement: <ErrorPage />,
         },
         {
+          path: "review",
+          element: <ReviewPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "authentication",
           element: <AuthenticationPage />,
           errorElement: <ErrorPage />,
@@ -181,9 +195,21 @@ function App() {
               errorElement: <ErrorPage />,
             },
             {
-              path: "sent-email-to-easyset",
-              element: <SupportEmailPage />,
+              path: "list-support",
+              element: <SupportListPage />,
               errorElement: <ErrorPage />,
+              children: [
+                {
+                  path: "sent-email-to-easyset",
+                  element: <SupportEmailPage />,
+                  errorElement: <ErrorPage />,
+                },
+                {
+                  path: "support-detail",
+                  element: <SupportDetailPage />,
+                  errorElement: <ErrorPage />,
+                },
+              ],
             },
           ],
         },

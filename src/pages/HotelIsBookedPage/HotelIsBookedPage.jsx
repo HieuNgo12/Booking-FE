@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./HotelIsBookedPage.css"
+import ChatBox from "../ChatPage/ChatBox";
 function HotelIsBookedPage() {
   return (
     <div className="center-gov content-center">
@@ -23,6 +24,7 @@ function HotelIsBookedPage() {
         </div>
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }
