@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Input, Dropdown, Space, Button, Avatar } from "antd";
@@ -13,6 +13,7 @@ import {
   CreditCardOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ContactsOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +24,7 @@ function Navbar() {
   let dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
-
+  const [handleSearch, setHandleSearch] = useState();
   const { infor, status, error } = useSelector((state) => state.inforUser);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ function Navbar() {
           <Input
             placeholder="Find something..."
             allowClear
-            // onSearch={onSearch}
+            onChange={(e) => setHandleSearch(e.target.value)}
             style={{ width: 500, height: 40, marginRight: 20 }}
             suffix={
               <SearchOutlined style={{ color: "#07689F", cursor: "pointer" }} />
@@ -100,6 +101,17 @@ function Navbar() {
         </div>
 
         <div className="flex justify-around gap-5 mr-5">
+          <ContactsOutlined
+            style={{
+              fontSize: "24px",
+              color: "#07689F",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
+            className="hover:text-[#05486C]"
+            onClick={() => navigate("/booking-search")}
+          />
+
           <GlobalOutlined
             style={{
               fontSize: "24px",
@@ -218,13 +230,13 @@ function Navbar() {
         >
           <a>Flight</a>
         </div>
-        <div
+        {/* <div
           className={`middle ${
             pathname === "/cab" ? "active" : ""
           }  cursor-pointer`}
         >
           <a>Cab</a>
-        </div>
+        </div> */}
         <div
           className={`middle ${
             pathname === "/car" ? "active" : ""

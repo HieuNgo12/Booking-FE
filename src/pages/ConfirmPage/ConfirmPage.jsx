@@ -5,6 +5,7 @@ import "./ConfirmPage.css";
 import ConfirmTable from "./components/ConfirmTable";
 import { services } from "../Services/services";
 import { useParams } from "react-router-dom";
+import ChatBox from "../ChatPage/ChatBox";
 function ConfirmPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState([]);
@@ -66,6 +67,7 @@ function ConfirmPage() {
         </div>
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

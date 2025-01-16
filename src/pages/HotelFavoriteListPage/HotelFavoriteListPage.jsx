@@ -5,6 +5,7 @@ import FavoriteCard from "./components/FavoriteCard";
 import "./HotelFavoriteListPage.css";
 import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
 import FavoriteFlightCard from "./components/FavoriteFlightCard";
+import ChatBox from "../ChatPage/ChatBox";
 function HotelFavoriteListPage() {
   const [list, setList] = useState([]);
   const [listFlight, setListFlight] = useState([]);
@@ -24,7 +25,12 @@ function HotelFavoriteListPage() {
         <Navbar />
       </div>
       <div className="max-w-[1224px]">
-        <HeaderFlightPageBody />
+        <h1 className="text-3xl font-bold text-[#07689F] mb-4">
+          Which Exciting Place Is Your Next Adventure Taking You?
+        </h1>
+        <div className="text-[#07689F] text-lg mb-6">
+          Discover exclusive Genius rewards wherever your journey takes you!
+        </div>
         <div className="hotel-favorites ">Hotel Favorites</div>
         <div className="flex">
           <div class="grid grid-cols-3 gap-3">
@@ -36,8 +42,10 @@ function HotelFavoriteListPage() {
           </div>
         </div>
 
+        <div className="border-2"></div>
+
         <div className="hotel-favorites ">Flight Favorites</div>
-        <div className="flex">
+        <div className="flex shadow-sm">
           <div class="grid grid-cols-3 gap-3">
             {listFlight.length > 0 ? (
               listFlight.map((item) => (
@@ -52,8 +60,13 @@ function HotelFavoriteListPage() {
             )}
           </div>
         </div>
+
+        <div className="border-2"></div>
+
+        <div className="hotel-favorites ">Tour Favorites</div>
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

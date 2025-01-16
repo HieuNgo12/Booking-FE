@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FlightCard from "./FlightCard";
 import { Slider } from "@mui/material";
 import { Button } from "antd";
-import { Checkbox, Divider, List } from "antd";
+import { Checkbox, Divider, List, Drawer, Space } from "antd";
 import {
   SearchOutlined,
   HeartOutlined,
@@ -10,7 +10,12 @@ import {
 } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import { apiGet } from "../../../API/APIService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addFlight,
+  clearFlights,
+  removeFlight,
+} from "../../../Redux/Slide/compareSlice";
 
 const CheckboxGroup = Checkbox.Group;
 const passengerRatingArr = [
@@ -41,8 +46,11 @@ function FlightSearchBody() {
   const [checkedListPassenger, setCheckedListPassenger] = useState([]);
   const [checkedListPopular, setCheckedListPopular] = useState([]);
   const [dataResult, setDataResult] = useState([]);
+  const [selected, setSelected] = useState({});
   const location = useLocation();
-
+  const [open, setOpen] = useState(false);
+  const [arrDrawer, setArrDrawer] = useState([]);
+  const dispatch = useDispatch();
   const callApi = async () => {
     try {
       const response = await apiGet("search-flight", location.state.findFlight);
@@ -53,6 +61,7 @@ function FlightSearchBody() {
   };
 
   const { searchData } = useSelector((state) => state?.searchSlice);
+  const { compareFlights } = useSelector((state) => state?.compareSlice);
 
   useEffect(() => {
     if (location.state) {
@@ -103,6 +112,26 @@ function FlightSearchBody() {
 
   const onChange = (e) => {
     console.log(`checked = ${e.target.checked}`);
+  };
+
+  useEffect(() => {
+    if (Object.keys(selected).length !== 0) {
+      dispatch(addFlight(selected));
+      const checkItem = arrDrawer.some((item) => item._id === selected._id);
+      if (!checkItem) {
+        setArrDrawer((prevArr) => [...prevArr, selected]);
+      }
+    }
+  }, [selected]);
+
+  const showDrawer = () => {
+    // console.log(selected);
+    // dispatch(addFlight(selected));
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -246,12 +275,20 @@ function FlightSearchBody() {
                 item.returnInfo ? (
                   item.returnInfo?.map((item2) => (
                     <List.Item className="flex">
-                      <FlightCard dataSource={item} dataReturn={item2} />
+                      <FlightCard
+                        dataSource={item}
+                        dataReturn={item2}
+                        openDrawer={setOpen}
+                      />
                     </List.Item>
                   ))
                 ) : (
                   <List.Item className="flex">
-                    <FlightCard dataSource={item} />
+                    <FlightCard
+                      dataSource={item}
+                      openDrawer={showDrawer}
+                      selected={setSelected}
+                    />
                   </List.Item>
                 )
               }
@@ -261,6 +298,72 @@ function FlightSearchBody() {
           )}
         </div>
       </div>
+      <Drawer
+        title={
+          <div className="text-xl font-bold text-[#07689F]">Flight Details</div>
+        }
+        placement="bottom"
+        width={500}
+        onClose={onClose}
+        open={open}
+        mask={false}
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={() => dispatch(clearFlights())}>Clear</Button>
+            <Button
+              type="primary"
+              onClick={onClose}
+              style={{ backgroundColor: "#07689F" }}
+            >
+              OK
+            </Button>
+          </Space>
+        }
+      >
+        <div className="p-2">
+          {/* Table */}
+          <div className="border border-gray-300 rounded-lg shadow-md overflow-hidden">
+            <div className="grid grid-cols-9 bg-gray-100 p-1 font-bold text-sm text-gray-700">
+              <div>Airline Name</div>
+              <div>Flight Number</div>
+              <div>Departure Airport</div>
+              <div>Departure Date</div>
+              <div>Departure Place</div>
+              <div>Destination Airport</div>
+              <div>Destination Date</div>
+              <div>Destination Place</div>
+              <div>Actions</div>
+            </div>
+
+            {/* Rows */}
+            {compareFlights.map((item, index) => (
+              <div
+                key={index}
+                className="grid grid-cols-9 p-2 text-sm text-gray-600 items-center border-b border-gray-300"
+              >
+                <div>{item?.airlineName || "N/A"}</div>
+                <div>{item?.flightNumber || "N/A"}</div>
+                <div>{item?.departureAirport || "N/A"}</div>
+                <div>{item?.departureDate?.slice(0, 19) || "N/A"}</div>
+                <div>{item?.departurePlace || "N/A"}</div>
+                <div>{item?.destinationAirport || "N/A"}</div>
+                <div>{item?.destinationDate?.slice(0, 19) || "N/A"}</div>
+                <div>{item?.destinationPlace || "N/A"}</div>
+                <div>
+                  <Button
+                    type="primary"
+                    className="bg-[#07689F] hover:bg-[#055770]"
+                    onClick={() => dispatch(removeFlight(item._id))}
+                  >
+                    Remove
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 }

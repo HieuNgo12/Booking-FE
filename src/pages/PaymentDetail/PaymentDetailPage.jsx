@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { services } from "../Services/services";
 import axios from "axios";
 import { url } from "../../url";
+import ChatBox from "../ChatPage/ChatBox";
 
 function PaymentDetailPage() {
   const [room, setRoom] = useState([]);
@@ -28,6 +29,7 @@ function PaymentDetailPage() {
         {room.length ? <PaymentPageBody room={room} /> : null}
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

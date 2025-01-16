@@ -70,6 +70,7 @@
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
     "sort-by": "^1.2.0",
     "styled-components": "4.3.2",
     "supercluster": "7.1.0",

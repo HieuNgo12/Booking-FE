@@ -57,6 +57,22 @@ const HeaderFlightPageBody = () => {
           }
         );
       }
+
+      if (new Date(values.departureDate) < new Date()) {
+        return toast.warn(
+          "The departureDate date must be greater than or equal to the current date",
+          {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
+      }
       if (values.returnDate) {
         const departureDate = dayjs(values.departureDate);
         const returnDate = dayjs(values.returnDate);

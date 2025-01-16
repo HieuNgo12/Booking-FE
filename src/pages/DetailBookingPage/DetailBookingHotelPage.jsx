@@ -9,7 +9,7 @@ const DetailBookingHotelPage = () => {
 
   const callApi = async () => {
     try {
-      const response = await apiGetAll(`get-booking/${params.bookingId}`);
+      const response = await apiGetAll(`get-booking-no-token/${params.bookingId}`);
       setDatabooking(response.data);
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ const DetailBookingHotelPage = () => {
             <div className="text-gray-500 text-sm">
               PIN code:{" "}
               <span className="text-blue-600 font-bold text-lg">
-                {dataBooking.pin}
+                {dataBooking.pinCode}
               </span>
             </div>
             <span className="bg-green-500 text-white py-1 px-3 rounded-lg font-semibold text-sm">

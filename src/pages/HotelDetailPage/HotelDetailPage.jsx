@@ -17,7 +17,8 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import CheckoutInput from "../components/CheckoutInput";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
+import ChatBox from "../ChatPage/ChatBox";
 function HotelDetailPage({ hotels, ...props }) {
   const { hotelId } = useParams();
   const [hotel, setHotel] = useState([]);
@@ -35,8 +36,7 @@ function HotelDetailPage({ hotels, ...props }) {
       )
       // .moreThan(Yup.ref("checkin"), "Cannot Exceed Checkin Date")
       .required("Check Out Is Required"),
-      children: Yup.string().required("Children is Required"),
-
+    children: Yup.string().required("Children is Required"),
   });
   const navigate = useNavigate();
 
@@ -68,8 +68,6 @@ function HotelDetailPage({ hotels, ...props }) {
           checkin: values.checkin,
           checkout: values.checkout,
         })
-        
-  
       );
       localStorage.setItem(
         "hotelPassengers",
@@ -77,8 +75,6 @@ function HotelDetailPage({ hotels, ...props }) {
           passengers: values.passengers,
           children: values.children,
         })
-        
-  
       );
       // navigate(`/payment-detail${JSON.parse(localStorage.getItem("roomId"))}`, { replace: true })
     },
@@ -251,6 +247,7 @@ function HotelDetailPage({ hotels, ...props }) {
           </div>
         </div>
         <Footer />
+        <ChatBox />
       </form>
     </div>
   );
