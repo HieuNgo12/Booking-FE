@@ -58,10 +58,10 @@ function RoomsAndBed({ disable, hotel, ...props }) {
 
                 <td>{room.detailRoom}</td>
                 <td>
-                  <button>{utils.numberWithCommas( room.pricePerNight * 1)}</button>
+                  <button>{utils.numberWithCommas( Number(room?.priceAveragePerNight) * 1)}</button>
                 </td>
                 <td>
-                  {disable ? (
+                
                     <button className="book-now-button"  >
                       <a
                         className="book-now-button"
@@ -71,7 +71,6 @@ function RoomsAndBed({ disable, hotel, ...props }) {
                         Book Now
                       </a>
                     </button>
-                  ) : null}
                 </td>
               </tr>
             );

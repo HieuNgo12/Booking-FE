@@ -25,7 +25,7 @@ function FavoriteCard({ hotel, ...props }) {
           </div>
         </div>
         <div className="flex mt-6 ">
-          <div className="black-price ">${hotel.priceAveragePerNight}</div>
+          <div className="black-price ">${Number(hotel.priceAveragePerNight)}</div>
           <div className="discount">16% off</div>
         </div>
         <div className="taxes-charges">Include Taxes and Charges</div>

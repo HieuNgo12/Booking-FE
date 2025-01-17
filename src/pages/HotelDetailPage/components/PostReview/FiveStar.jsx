@@ -8,8 +8,9 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { services } from "../../../Services/services";
+import { ToastContainer, toast } from "react-toastify";
 
-function FiveStar({hotel,...props}) {
+function FiveStar({ hotel,postingComment,setPostingComment, ...props }) {
   const [rating, setRating] = useState(5);
   const [hover, setHover] = useState(null);
   const [comment, setComment] = useState("");
@@ -43,22 +44,31 @@ function FiveStar({hotel,...props}) {
     comment: Yup.string().required("Your Comment Is Required"),
     image: Yup.string(),
   });
-  const formik = useFormik({
-    initialValues: {
-      comment: "",
-      image: "",
-    },
-    validationSchema: SignupSchema,
-    onSubmit: async (values) => {
-        
-      const body = {
+  const submitButton = async (e) => {
+    e.preventDefault();
+
+    setPostingComment(!postingComment)
+    setModal(false);
+    toast.success("Successfully post comment", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChanegBtn(true),
+      });
+    const body = {
         objectType: "hotel",
         objectId: hotel._id,
         userId: "6751570cbd20ef4184e7b5e8",
-        comment: values.comment,
+        comment: formik.values.comment,
         rating: rating,
       };
       const data = await services.createReview(body);
+      
       console.log(data);
       const uploadFile = () => {
         const url = `${url}/api/v1/reviews/uploadFile`;
@@ -75,7 +85,7 @@ function FiveStar({hotel,...props}) {
           const body = {
             productId: id,
             user: JSON.parse(localStorage.getItem("user"))?.email,
-            comment: values.comment,
+            comment: formik.values.comment,
             rating: rating,
             image: response.data.secure_url,
           };
@@ -86,8 +96,18 @@ function FiveStar({hotel,...props}) {
       uploadFile();
       setModal(false);
       console.log(id);
-
       window.location.reload();
+
+  };
+  const formik = useFormik({
+    initialValues: {
+      comment: "",
+      image: "",
+    },
+    validationSchema: SignupSchema,
+    onSubmit: async (values) => {
+    
+      //   window.location.reload();
     },
   });
   return (
@@ -104,7 +124,7 @@ function FiveStar({hotel,...props}) {
       <>
         {modal ? (
           <>
-            <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e)}}>
+            <form onSubmit={formik.handleSubmit}>
               <div className=" justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
                   {/*content*/}
@@ -205,7 +225,12 @@ function FiveStar({hotel,...props}) {
                       >
                         Close
                       </button>
-                      <button className="search-button" type="submit " >
+                      <button
+                        className="search-button"
+                        onClick={(e) => {
+                          submitButton(e);
+                        }}
+                      >
                         Post Comment
                       </button>
                     </div>

@@ -26,7 +26,9 @@ function ConfirmPage() {
             <div className="your-hotel-reservation mt-3 ">
               Your Hotel Reservation
             </div>
-            <div className="confirmed ml-6">{booking[0]?.status.toUpperCase()}</div>
+            <div className="confirmed ml-6">
+              {booking[0]?.status.toUpperCase()}
+            </div>
           </div>
 
           <div className="sub-head-title mt-6 mb-6">
@@ -34,7 +36,9 @@ function ConfirmPage() {
             Your Bookings now.
           </div>
           <div className="mt-6">
-            <div className="booking-no">Booking ID: {booking[0]?.bookedRoomId} Details</div>
+            <div className="booking-no">
+              Booking ID: {booking[0]?.bookedRoomId} Details
+            </div>
             <div className="check-your mt-6">Check your information here !</div>
             <div className="hotel-roles mt-6 mb-6">Hotel Roles</div>
             <div className="flex">
@@ -48,22 +52,23 @@ function ConfirmPage() {
           <ConfirmTable booking={booking} />
         </div>
         <div className="flex mt-6 mb-6 confirm-page-container">
-          <div style={{ width: "50%" }} className="sub-title">
-            Adults:  {booking[0]?.totalPersons}
+          <div style={{ width: "25%" }} className="sub-title">
+            Adults: {booking[0]?.totalPersons}
           </div>
-          <div style={{ width: "50%" }} className="sub-title">
+          <div style={{ width: "25%" }} className="sub-title flex">
+            Total Amount: {booking[0]?.totalAmount} VND
+          </div>
+          <div style={{ width: "25%" }} className="sub-title">
             Additional Services Quantity: {booking[0]?.specialRequests}
           </div>
-          <div style={{ width: "50%" }} className="sub-title">
+          <div style={{ width: "25%" }} className="sub-title">
             Meal Plan Allergic:
           </div>
         </div>
         <div className="">
           <div className="cancellation-policy">Cancellation Policy</div>
           <div className="mb-6 mt-6 pay-attention">Pay Attention</div>
-          <div>
-           {booking[0]?.cancellationPolicy}
-          </div>
+          <div>{booking[0]?.cancellationPolicy}</div>
         </div>
       </div>
       <Footer />

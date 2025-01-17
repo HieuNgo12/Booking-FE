@@ -9,5 +9,9 @@ export default defineConfig({
       // Đảm bảo rằng các yêu cầu đến /tours sẽ được chuyển tiếp đến http://localhost:5000
       '/tours': 'http://localhost:5000',
     },
+    
   },
+  build:{
+    outDir: "build"
+  }
 })

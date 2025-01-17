@@ -158,14 +158,14 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                       <div style={{ width: "1000px" }} className="ml-3 mr-3">
                         <div className="head-title">Amenities</div>
                         <div className="flex">
-                          {hotel[0].roomId[0].amenities?.map((amenity) => {
+                          {hotel[0]?.roomId[0]?.amenities?.map((amenity) => {
                             return (
                               <div
                                 className="flex mt-3"
                                 style={{ width: "50%" }}
                               >
                                 <div>
-                                  <img src="/detailPage/wifi.png" />
+                                  {<img src={utils.returnAmenities(amenity)}/>}
                                 </div>
                                 <div className="amenity ml-6">{amenity}</div>
                               </div>
@@ -190,8 +190,8 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                         <div className="flex">
                           <div className="price">
                             {utils.numberWithCommas(
-                              hotel[0].roomId[0].pricePerNight * 1
-                            )}{" "}
+                              (hotel[0]?.roomId[0]?.pricePerNight || 0) * 23000
+                            ) || "Free"}{" "}
                             VND
                           </div>{" "}
                           <div className="per-night ml-1">per night</div>
@@ -212,7 +212,7 @@ War Remnants Museum is 5.2 km from HANZ Quynh Giang Hotel, while Reunification P
                               <button className="book-now-button">
                                 <a
                                   className="book-now-button"
-                                  href={`/payment-detail/${hotel[0].roomId[0]._id}`}
+                                  href={`/payment-detail/${hotel[0].roomId[0]?._id}`}
                                   disabled={!disable}
                                 >
                                   Book Now
