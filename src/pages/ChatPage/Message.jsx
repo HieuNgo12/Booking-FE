@@ -2,24 +2,27 @@ import React from "react";
 import Avatar from "@mui/material/Avatar";
 import { styled } from "@mui/material/styles";
 import { deepOrange } from "@mui/material/colors";
+import ImgLogo from "./img/IconLogo.png";
 
 // Styled Components
 const MessageRow = styled("div")({
   display: "flex",
+  alignItems: "center",
+  marginBottom: "10px",
 });
 
 const MessageRowRight = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
+  marginBottom: "10px",
 });
 
-const MessageBlue = styled("div")({
+const MessageBubbleBlue = styled("div")({
   position: "relative",
   marginLeft: "20px",
-  marginBottom: "10px",
   padding: "10px",
   backgroundColor: "#A8DDFD",
-  width: "60%",
+  // width: "60%",
   textAlign: "left",
   font: "400 .9em 'Open Sans', sans-serif",
   border: "1px solid #97C6E3",
@@ -48,13 +51,12 @@ const MessageBlue = styled("div")({
   },
 });
 
-const MessageOrange = styled("div")({
+const MessageBubbleOrange = styled("div")({
   position: "relative",
   marginRight: "20px",
-  marginBottom: "10px",
   padding: "10px",
   backgroundColor: "#f8e896",
-  width: "60%",
+  // width: "50%",
   textAlign: "left",
   font: "400 .9em 'Open Sans', sans-serif",
   border: "1px solid #dfd087",
@@ -83,70 +85,62 @@ const MessageOrange = styled("div")({
   },
 });
 
-const MessageContent = styled("p")({
+const MessageText = styled("p")({
   padding: 0,
   margin: 0,
 });
 
-const MessageTimeStampRight = styled("div")({
+const Timestamp = styled("div")({
   position: "absolute",
   fontSize: ".85em",
   fontWeight: "300",
-  marginTop: "10px",
   bottom: "-3px",
   right: "5px",
 });
 
 const DisplayName = styled("div")({
-  marginLeft: "20px",
+  marginLeft: "10px",
+  fontSize: "0.85em",
+  fontWeight: "bold",
+  color: "#555",
 });
 
 const OrangeAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.getContrastText(deepOrange[500]),
-  backgroundColor: deepOrange[500],
+  backgroundColor: "#07689F",
   width: theme.spacing(4),
   height: theme.spacing(4),
 }));
 
-const TransparentAvatar = styled(Avatar)({
-  color: "transparent",
-  backgroundColor: "transparent",
-  width: 32,
-  height: 32,
-});
-
 // MessageLeft Component
-export const MessageLeft = (props) => {
-  const message = props.message || "no message";
-  const timestamp = props.timestamp || "";
-  const photoURL = props.photoURL || "dummy.js";
-  const displayName = props.displayName || "名無しさん";
-
+export const MessageLeft = ({
+  message = "No message",
+  timestamp = "",
+  photoURL = "",
+  displayName = "Admin's EasySet 24",
+}) => {
   return (
     <MessageRow>
       <OrangeAvatar alt={displayName} src={photoURL} />
       <div>
         <DisplayName>{displayName}</DisplayName>
-        <MessageBlue>
-          <MessageContent>{message}</MessageContent>
-          <MessageTimeStampRight>{timestamp}</MessageTimeStampRight>
-        </MessageBlue>
+        <MessageBubbleBlue>
+          <MessageText>{message}</MessageText>
+        </MessageBubbleBlue>
+          <Timestamp>{timestamp}</Timestamp>
       </div>
     </MessageRow>
   );
 };
 
 // MessageRight Component
-export const MessageRight = (props) => {
-  const message = props.message || "no message";
-  const timestamp = props.timestamp || "";
-
+export const MessageRight = ({ message = "No message", timestamp = "" }) => {
   return (
     <MessageRowRight>
-      <MessageOrange>
-        <MessageContent>{message}</MessageContent>
-        <MessageTimeStampRight>{timestamp}</MessageTimeStampRight>
-      </MessageOrange>
+      <MessageBubbleOrange>
+        <MessageText>{message}</MessageText>
+        <Timestamp>{timestamp}</Timestamp>
+      </MessageBubbleOrange>
     </MessageRowRight>
   );
 };

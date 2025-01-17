@@ -13,6 +13,9 @@ import {
   ProfileOutlined,
   LogoutOutlined,
   CreditCardOutlined,
+  StarFilled,
+  StarOutlined,
+  // StarTwoTon,
 } from "@ant-design/icons";
 import Cookies from "js-cookie";
 
@@ -20,6 +23,7 @@ const list = [
   { name: "Profile", value: "profile", icon: UserOutlined },
   { name: "Authentication", value: "authentication", icon: KeyOutlined },
   { name: "Booking", value: "booking", icon: CalendarOutlined },
+  { name: "Review", value: "review", icon: StarOutlined },
   { name: "Preferences", value: "preferences", icon: ProfileOutlined },
   { name: "Payment", value: "payment", icon: CreditCardOutlined },
   { name: "Support", value: "support", icon: QuestionCircleOutlined },

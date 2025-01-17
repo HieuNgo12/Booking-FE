@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./FlightCard.css";
 import center from "../img/Center.png";
-import { Button, Tag } from "antd";
+import { Button, Tag, Drawer, Space } from "antd";
 import VNA from "../img/logo-vna.svg";
 import VJ from "../img/logo-vietjet.svg";
 import JS from "../img/logo-jetstar.svg";
@@ -12,14 +12,19 @@ import {
   SwapOutlined,
   SwapRightOutlined,
   HeartOutlined,
+  ApartmentOutlined,
 } from "@ant-design/icons";
 
-function FlightCard({ dataSource, dataReturn }) {
+function FlightCard({ dataSource, dataReturn, openDrawer, selected }) {
   const navigate = useNavigate();
   const [getInfo, setGetInfo] = useState();
   const [getInfoReturn, setGetInfoReturn] = useState();
   const [like, setLike] = useState(false);
-  // const [isLike, setIsLike] = useState();
+
+  const showDrawer = () => {
+    selected(dataSource);
+    openDrawer(true);
+  };
 
   const logoAirPlane = () => {
     if (dataSource.airlineName === "Bamboo Airways") {
@@ -256,8 +261,18 @@ function FlightCard({ dataSource, dataReturn }) {
               View Detail
             </Button>
             <Button
+              type="primary"
+              icon={<ApartmentOutlined style={{ color: "white" }} />}
+              onClick={showDrawer}
+              style={{
+                borderColor: "#07689F",
+                height: "40px",
+                width: "40px",
+                backgroundColor: "#07689F",
+              }}
+            ></Button>
+            <Button
               type={like ? "primary" : "default"}
-              // shape="circle"
               icon={
                 <HeartOutlined style={{ color: like ? "white" : "#07689F" }} />
               }

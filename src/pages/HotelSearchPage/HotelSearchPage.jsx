@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HotelSearchBody from "./components/HotelSearchBody";
+import ChatBox from "../ChatPage/ChatBox";
 
 function HotelSearchPage() {
   return (
@@ -13,6 +14,7 @@ function HotelSearchPage() {
         <HotelSearchBody />
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

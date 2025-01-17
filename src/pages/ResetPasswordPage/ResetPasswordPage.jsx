@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import imgLogIn from "./img/login.jpg";
 import imgLogo from "./img/Logo.png";
 import imgEN from "./img/EN.png";
+import ChatBox from "../ChatPage/ChatBox";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -232,6 +233,7 @@ const ResetPasswordPage = () => {
         </Row>
       </Content>
       <ToastContainer />
+      <ChatBox />
     </Layout>
   );
 };

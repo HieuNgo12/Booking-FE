@@ -6,6 +6,7 @@ import {
   CreditCardOutlined,
   LockOutlined,
   CalendarOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 import "./FlightPaymentBody.css";
 import {
@@ -173,7 +174,6 @@ function FlightPaymentBody() {
           navigate("/");
         }
       } else if (responseBooking && values.paymentMethod === "VNPay") {
-        console.log("VNPay");
         const responsePayment = await apiPost(
           `create-payment-vnpay/${responseBooking.data._id}`,
           { paymentMethod: values.paymentMethod }
@@ -185,6 +185,15 @@ function FlightPaymentBody() {
         }
       } else if (responseBooking && values.paymentMethod === "Momo") {
         console.log("Momo");
+        const responsePayment = await apiPost(
+          `create-payment-momo/${responseBooking.data._id}`,
+          { paymentMethod: values.paymentMethod }
+        );
+
+        if (responsePayment) {
+          window.open(responsePayment.data, "noopener,noreferrer");
+          navigate("/");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -236,9 +245,6 @@ function FlightPaymentBody() {
       });
     }
   };
-
-  console.log(type?.price);
-  console.log(dataLocal?.searchData?.passengers);
 
   const handlePriceAdults = () => {
     if (Object.keys(typeReturn).length === 0) {
@@ -677,7 +683,9 @@ function FlightPaymentBody() {
             rules={[
               {
                 required:
-                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  handleMethod === "ZaloPay" ||
+                  handleMethod === "VNPay" ||
+                  handleMethod === "Momo"
                     ? false
                     : true,
                 message: "Please enter your card number!",
@@ -690,7 +698,9 @@ function FlightPaymentBody() {
               className="h-10 rounded-none"
               prefix={<CreditCardOutlined />}
               disabled={
-                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                handleMethod === "ZaloPay" ||
+                handleMethod === "VNPay" ||
+                handleMethod === "Momo"
                   ? true
                   : false
               }
@@ -704,7 +714,9 @@ function FlightPaymentBody() {
             rules={[
               {
                 required:
-                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  handleMethod === "ZaloPay" ||
+                  handleMethod === "VNPay" ||
+                  handleMethod === "Momo"
                     ? false
                     : true,
                 message: "Please enter your CVC!",
@@ -717,7 +729,9 @@ function FlightPaymentBody() {
               className="h-10 rounded-none"
               prefix={<LockOutlined />}
               disabled={
-                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                handleMethod === "ZaloPay" ||
+                handleMethod === "VNPay" ||
+                handleMethod === "Momo"
                   ? true
                   : false
               }
@@ -731,7 +745,9 @@ function FlightPaymentBody() {
             rules={[
               {
                 required:
-                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  handleMethod === "ZaloPay" ||
+                  handleMethod === "VNPay" ||
+                  handleMethod === "Momo"
                     ? false
                     : true,
                 message:
@@ -741,11 +757,15 @@ function FlightPaymentBody() {
               },
               {
                 pattern:
-                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  handleMethod === "ZaloPay" ||
+                  handleMethod === "VNPay" ||
+                  handleMethod === "Momo"
                     ? false
                     : /^(0[1-9]|1[0-2])\/[0-9]{2}$/,
                 message:
-                  handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                  handleMethod === "ZaloPay" ||
+                  handleMethod === "VNPay" ||
+                  handleMethod === "Momo"
                     ? false
                     : "Please enter a valid expiry date in MM/YY format!",
               },
@@ -758,7 +778,9 @@ function FlightPaymentBody() {
               maxLength={5} // Giới hạn độ dài tối đa (MM/YY)
               placeholder="MM/YY"
               disabled={
-                handleMethod === "ZaloPay" || handleMethod === "VNPay"
+                handleMethod === "ZaloPay" ||
+                handleMethod === "VNPay" ||
+                handleMethod === "Momo"
                   ? true
                   : false
               }

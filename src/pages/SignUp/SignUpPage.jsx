@@ -1,5 +1,6 @@
 import React from "react";
 import "./SignUpPage.css";
+import ChatBox from "../ChatPage/ChatBox";
 function SignUpPage() {
   return (
     <div>

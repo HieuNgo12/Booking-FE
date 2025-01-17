@@ -4,7 +4,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import auth from "../FireBase/fireBase";
+import { auth } from "../FireBase/fireBase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const EditPhonePage = ({ dataUser }) => {

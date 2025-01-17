@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
 import FlightConfirmBodyPage from "./components/FlightConfirmBodyPage";
+import ChatBox from "../ChatPage/ChatBox";
 
 function FlightConfirmPgae() {
   return (
@@ -15,6 +16,7 @@ function FlightConfirmPgae() {
         <FlightConfirmBodyPage />
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

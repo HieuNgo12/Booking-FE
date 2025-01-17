@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import CarouselHeader from "./components/Carousel";
 import FlightPromotion from "./components/FlightPromotions";
 import HeaderPromotionPageBody from "./components/HeaderPromotionPageBody";
+import ChatBox from "../ChatPage/ChatBox";
 
 function DealsPage() {
   return (
@@ -17,6 +18,7 @@ function DealsPage() {
         <FlightPromotion />
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }
