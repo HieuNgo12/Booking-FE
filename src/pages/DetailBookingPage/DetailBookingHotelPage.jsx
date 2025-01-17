@@ -187,7 +187,7 @@ const DetailBookingHotelPage = () => {
               </p>
               <p>
                 <span className="font-semibold">Price Per Night:</span>{" "}
-                {dataBooking?.bookedRoomId?.pricePerNight || "N/A"}
+                {dataBooking?.bookedRoomId?.priceAveragePerNight || "N/A"}
               </p>
               <p>
                 <span className="font-semibold">Dimensions:</span>{" "}
