@@ -10,7 +10,6 @@ const { TextArea } = Input;
 const SupportEmailPage = ({ dataUser }) => {
   const navigate = useNavigate();
   const [fileList, setFileList] = useState([]);
-
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const onFinish = async (values) => {
@@ -64,6 +63,7 @@ const SupportEmailPage = ({ dataUser }) => {
               draggable: true,
               progress: undefined,
               theme: "light",
+              onClose: () => navigate(-1),
             });
           } else if (req1.status === 400) {
             toast.warn(res1.message, {
@@ -90,6 +90,7 @@ const SupportEmailPage = ({ dataUser }) => {
           draggable: true,
           progress: undefined,
           theme: "light",
+          onClose: () => navigate(-1),
         });
       } else if (req1.status === 400) {
         toast.warn(res1.message, {

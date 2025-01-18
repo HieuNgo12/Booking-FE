@@ -4,7 +4,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import auth from "../FireBase/fireBase";
+import { auth } from "../FireBase/fireBase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const EditPhonePage = ({ dataUser }) => {
@@ -183,9 +183,6 @@ const EditPhonePage = ({ dataUser }) => {
       setPhone(dataUser.phone);
     }
   }, [dataUser]);
-  
-  console.log(dataUser);
-  console.log(phone);
 
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { url } from "../../url";
 import { Login } from "@mui/icons-material";
+import moment from "moment";
 
 export const services = {
   getHotel: async (hotelId) => {
@@ -59,6 +60,12 @@ export const services = {
   createVNPay: async (body) => {
     console.log(body);
     const dataUrl = `${url}/api/v1/create-payment-vnpay`;
+    const data = await axios.post(dataUrl, body);
+    return data;
+  },
+  createReview: async (body) => {
+
+    const dataUrl = `${url}/api/v1/create-review-without-authen`;
     const data = await axios.post(dataUrl, body);
     return data;
   },

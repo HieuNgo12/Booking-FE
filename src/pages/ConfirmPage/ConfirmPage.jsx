@@ -5,6 +5,7 @@ import "./ConfirmPage.css";
 import ConfirmTable from "./components/ConfirmTable";
 import { services } from "../Services/services";
 import { useParams } from "react-router-dom";
+import ChatBox from "../ChatPage/ChatBox";
 function ConfirmPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState([]);
@@ -22,7 +23,7 @@ function ConfirmPage() {
       <div className="confirm-page-container ">
         <div className="top-header p-6">
           <div className="flex">
-            <div className="your-hotel-reservation ">
+            <div className="your-hotel-reservation mt-3 ">
               Your Hotel Reservation
             </div>
             <div className="confirmed ml-6">{booking[0]?.status.toUpperCase()}</div>
@@ -66,6 +67,7 @@ function ConfirmPage() {
         </div>
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

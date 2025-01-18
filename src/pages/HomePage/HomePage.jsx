@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import HomePageBody from "./components/HomePageBody";
+import ChatBox from "../ChatPage/ChatBox";
 
 function HomePage() {
   return (
@@ -13,6 +14,7 @@ function HomePage() {
         <HomePageBody />
       </div>
       <Footer />
+      <ChatBox />
     </div>
   );
 }

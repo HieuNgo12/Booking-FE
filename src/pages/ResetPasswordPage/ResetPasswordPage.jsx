@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import imgLogIn from "./img/login.jpg";
 import imgLogo from "./img/Logo.png";
 import imgEN from "./img/EN.png";
+import ChatBox from "../ChatPage/ChatBox";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -91,7 +92,12 @@ const ResetPasswordPage = () => {
           justifyContent: "space-between",
         }}
       >
-        <img src={imgLogo} alt="" />
+        <img
+          src={imgLogo}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <div className="flex items-center gap-3">
           <img
             src={imgEN}
@@ -124,10 +130,10 @@ const ResetPasswordPage = () => {
           style={{
             border: "1px solid #e6e6e6",
             borderRadius: "10px",
-            overflow: "hidden",
-            maxWidth: "900px",
+            // overflow: "hidden",
+            maxWidth: "750px",
             width: "100%",
-            height: "720px",
+            maxHeight: "600px",
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
@@ -142,7 +148,7 @@ const ResetPasswordPage = () => {
             xs={24}
             md={12}
             style={{
-              padding: "40px",
+              padding: "20px",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -221,60 +227,13 @@ const ResetPasswordPage = () => {
                     Reset Password
                   </Button>
                 </Form.Item>
-
-                <div
-                  style={{
-                    textAlign: "center",
-                    marginBottom: "10px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Back to{" "}
-                  <Text
-                    className="text-[#07689f] cursor-pointer font-bold hover:text-blue-400"
-                    onClick={() => navigate("/login")}
-                  >
-                    Login
-                  </Text>
-                </div>
-
-                <div
-                  style={{
-                    textAlign: "center",
-                    marginBottom: "10px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Or
-                </div>
-                <Row gutter={10} className="flex justify-center cursor-pointer">
-                  <Col>
-                    <img src="/login/facebook.png" />
-                  </Col>
-                  <Col>
-                    <img src="/login/apple.png" />
-                  </Col>
-                  <Col>
-                    <img src="/login/google.png" />
-                  </Col>
-                </Row>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  <Text>
-                    Don’t have an account yet?{" "}
-                    <Text
-                      className="text-[#07689f] cursor-pointer font-bold hover:text-blue-400"
-                      onClick={() => navigate("/signup")}
-                    >
-                      Signup
-                    </Text>
-                  </Text>
-                </div>
               </Form>
             </div>
           </Col>
         </Row>
       </Content>
       <ToastContainer />
+      <ChatBox />
     </Layout>
   );
 };

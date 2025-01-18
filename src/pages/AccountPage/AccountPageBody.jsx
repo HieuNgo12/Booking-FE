@@ -16,16 +16,20 @@ import PreferencesPage from "./PreferencesPage";
 import EditEmailPage from "./EditEmailPage";
 import EditPhonePage from "./EditPhonePage";
 import EditIDCardPage from "./EditIDCardPage";
+import SupportListPage from "./SupportListPage";
 import SupportChatPage from "./SupportChatPage";
 import SupportEmailPage from "./SupportEmailPage";
 import RankPage from "./RankPage";
 import { useDispatch, useSelector } from "react-redux";
 import { apiGetAll } from "../../API/APIService";
 import { fetchUserInfo } from "../../Redux/Slide/infoUserSlice";
+import SupportDetailPage from "./SupportDetailPage";
+import ReviewPage from "./ReviewPage";
 
 const listRoutes = [
   { namePage: ProfilePage, namePath: "/profile" },
   { namePage: BookingPage, namePath: "/booking" },
+  { namePage: ReviewPage, namePath: "/review" },
   { namePage: AuthenticationPage, namePath: "/authentication" },
   { namePage: PreferencesPage, namePath: "/preferences" },
   { namePage: PaymentInfoPage, namePath: "/payment" },
@@ -36,7 +40,9 @@ const listRoutes = [
   { namePage: EditPhonePage, namePath: "/authentication/edit-phone" },
   { namePage: EditIDCardPage, namePath: "/authentication/edit-id-card" },
   { namePage: PasswordPage, namePath: "/setting/password" },
-  { namePage: SupportEmailPage, namePath: "/support/sent-email-to-easyset" },
+  { namePage: SupportListPage, namePath: "/support/list-support" },
+  { namePage: SupportEmailPage, namePath: "/support/list-support/sent-email-to-easyset" },
+  { namePage: SupportDetailPage, namePath: "/support/list-support/support-detail" },
   { namePage: SupportChatPage, namePath: "/support/chat-easyset" },
   { namePage: RankPage, namePath: "/profile/view-rank" },
 ];

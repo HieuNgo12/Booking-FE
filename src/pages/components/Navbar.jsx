@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Input, Dropdown, Space, Button, Avatar } from "antd";
@@ -9,10 +9,11 @@ import {
   GlobalOutlined,
   DownOutlined,
   UserOutlined,
-  RightOutlined,
+  BellOutlined,
   CreditCardOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ContactsOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +24,7 @@ function Navbar() {
   let dispatch = useDispatch();
   const location = useLocation();
   const pathname = location.pathname;
-
+  const [handleSearch, setHandleSearch] = useState();
   const { infor, status, error } = useSelector((state) => state.inforUser);
 
   useEffect(() => {
@@ -87,18 +88,11 @@ function Navbar() {
           }}
         />
 
-        {/* <div>
-          <a href="/hotel-search">
-            {" "}
-            <img className="classic-image" src={"/homepage/hotel.png"} />
-          </a>
-        </div> */}
-
         <div className="flex items-center">
           <Input
-            placeholder="input search text"
+            placeholder="Find something..."
             allowClear
-            // onSearch={onSearch}
+            onChange={(e) => setHandleSearch(e.target.value)}
             style={{ width: 500, height: 40, marginRight: 20 }}
             suffix={
               <SearchOutlined style={{ color: "#07689F", cursor: "pointer" }} />
@@ -107,6 +101,17 @@ function Navbar() {
         </div>
 
         <div className="flex justify-around gap-5 mr-5">
+          <ContactsOutlined
+            style={{
+              fontSize: "24px",
+              color: "#07689F",
+              cursor: "pointer",
+              transition: "color 0.3s",
+            }}
+            className="hover:text-[#05486C]"
+            onClick={() => navigate("/booking-search")}
+          />
+
           <GlobalOutlined
             style={{
               fontSize: "24px",
@@ -125,6 +130,7 @@ function Navbar() {
               transition: "color 0.3s",
             }}
             className="hover:text-[#05486C]"
+            onClick={() => navigate("/customers-service-page")}
           />
 
           <HeartOutlined
@@ -135,7 +141,7 @@ function Navbar() {
               transition: "color 0.3s",
             }}
             className="hover:text-[#05486C]"
-            onClick={() => navigate("/hotel-favorite-page")}
+            onClick={() => navigate("/favorite-page")}
           />
         </div>
 
@@ -178,12 +184,23 @@ function Navbar() {
                 </Space>
               </a>
             </Dropdown>
+            <BellOutlined
+              style={{
+                fontSize: "24px",
+                color: "#07689F",
+                cursor: "pointer",
+                transition: "color 0.3s",
+              }}
+              className="hover:text-[#05486C]"
+              onClick={() => navigate("/favorite-page")}
+            />
           </div>
         )}
       </nav>
 
       <div className="flex justify-center mb-5 mt-2 product-tags">
         <div
+
           onClick={() => navigate("/tour-list")}
           className={`middle ${pathname === "/trip" ? "active" : ""
             }  cursor-pointer`}
@@ -194,8 +211,21 @@ function Navbar() {
 
           className={`middle ${pathname === "/deals" ? "active" : ""
             }  cursor-pointer`}
+
+          onClick={() => navigate("/deals-page")}
+          className={`middle ${
+            pathname === "/deals-page" ? "active" : ""
+          }  cursor-pointer`}
         >
           <a>Deals</a>
+        </div>
+        <div
+          className={`middle ${
+            pathname === "/trip" ? "active" : ""
+          }  cursor-pointer`}
+
+        >
+          <a>Trip</a>
         </div>
         <div
           onClick={() => navigate("/")}
@@ -212,17 +242,25 @@ function Navbar() {
           <a>Flight</a>
         </div>
 
-        <div
-          className={`middle ${pathname === "/apartment" ? "active" : ""
-            }  cursor-pointer`}
+
+        {/* <div
+          className={`middle ${
+            pathname === "/cab" ? "active" : ""
+          }  cursor-pointer`}
+
         >
-          <a>Apartment</a>
-        </div>
+          <a>Cab</a>
+        </div> */}
         <div
-          className={`middle ${pathname === "/camper" ? "active" : ""
-            }  cursor-pointer`}
+
+
+          className={`middle ${
+            pathname === "/car" ? "active" : ""
+          }  cursor-pointer`}
+          onClick={() => navigate("/about-us-page")}
+
         >
-          <a>Camper</a>
+          <a>About Us</a>
         </div>
       </div>
     </div>

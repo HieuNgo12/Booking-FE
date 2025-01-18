@@ -10,26 +10,20 @@ import {
 
 const SupportPage = () => {
   const list = [
-    { name: "Chat", value: "chat-easyset", icon: MessageOutlined },
+    {
+      name: "Support",
+      value: "list-support",
+      icon: MailOutlined,
+    },
     {
       name: "Visit the help center",
       value: "help-center",
       icon: QuestionCircleOutlined,
     },
-    {
-      name: "Call Easyset",
-      value: "call-easyset",
-      icon: PhoneOutlined,
-    },
-    {
-      name: "Sent email",
-      value: "sent-email-to-easyset",
-      icon: MailOutlined,
-    },
-    { name: "Share your feedback", value: "feedback", icon: FormOutlined },
   ];
   const location = useLocation();
   const currentPath = location.pathname;
+
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4">

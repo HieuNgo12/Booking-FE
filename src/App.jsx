@@ -11,12 +11,9 @@ import PaymentDetailPage from "./pages/PaymentDetail/PaymentDetailPage";
 import LoginPage from "./pages/Login/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import HotelDetailPage from "./pages/HotelDetailPage/HotelDetailPage";
-
 import TourList from "./pages/Tour/TourList";
-
 import TourDetailPage from "./pages/Tour/TourDetailPage";
 import SearchPage from "./pages/Tour/SearchPage.jsx";
-
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import AccountPage from "./pages/AccountPage/AccountPage";
 import ProfilePage from "./pages/AccountPage/ProfilePage";
@@ -50,10 +47,22 @@ import HotelIsBookedPage from "./pages/HotelIsBookedPage/HotelIsBookedPage";
 import FlightHomePage from "./pages/FlightHomePage/FlightHomePage";
 import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
-import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
+
 import TourBooking from "./pages/Tour/TourBooking.jsx";
 import TourBookingPage from "./pages/Tour/TourBookingPage.jsx";
+
+import FlightConfirmPage from "./pages/FlightConfirmPage/FlightConfirmPage";
+import FlightFavoritePage from "./pages/FlightFavoritePage/FlightFavoritePage";
+import ChatAppPage from "./pages/ChatPage/ChatPage.jsx";
+import DealsPage from "./pages/DealsPage/DealsPage.jsx";
+import CustomerPage from "./pages/CustomerPage/CustomerPage.jsx";
+import AboutUsPage from "./pages/AboutUsPage/AboutUsPage.jsx";
+import SupportListPage from "./pages/AccountPage/SupportListPage.jsx";
+import SupportDetailPage from "./pages/AccountPage/SupportDetailPage.jsx";
+import ReviewPage from "./pages/AccountPage/ReviewPage.jsx";
+import BookingSearchPage from "./pages/BookingSearchPage/BookingSearchPage.jsx";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -71,12 +80,6 @@ function App() {
   const customerRouter = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />,
-      errorElement: <ErrorPage />,
-      children: [],
-    },
-    {
-      path: "/hotel-search",
       element: <HotelSearchPage />,
       errorElement: <ErrorPage />,
       children: [],
@@ -86,6 +89,11 @@ function App() {
       element: <PaymentDetailPage />,
       errorElement: <ErrorPage />,
       children: [],
+    },
+    {
+      path: "/booking-search",
+      element: <BookingSearchPage />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/login",
@@ -145,6 +153,11 @@ function App() {
           errorElement: <ErrorPage />,
         },
         {
+          path: "review",
+          element: <ReviewPage />,
+          errorElement: <ErrorPage />,
+        },
+        {
           path: "authentication",
           element: <AuthenticationPage />,
           errorElement: <ErrorPage />,
@@ -187,9 +200,21 @@ function App() {
               errorElement: <ErrorPage />,
             },
             {
-              path: "sent-email-to-easyset",
-              element: <SupportEmailPage />,
+              path: "list-support",
+              element: <SupportListPage />,
               errorElement: <ErrorPage />,
+              children: [
+                {
+                  path: "sent-email-to-easyset",
+                  element: <SupportEmailPage />,
+                  errorElement: <ErrorPage />,
+                },
+                {
+                  path: "support-detail",
+                  element: <SupportDetailPage />,
+                  errorElement: <ErrorPage />,
+                },
+              ],
             },
           ],
         },
@@ -224,10 +249,12 @@ function App() {
       element: <SearchPage />,
     },
     {
+
       path: "/tour/:tourId/booking-tour",
       element: <TourBookingPage />,
     },
     {
+
 
       path: "/booking-detail/:bookingId",
       element: <DetailBookingPage />,
@@ -245,11 +272,11 @@ function App() {
       element: <DetailBookingTourPage />,
     },
     {
-      path: "/hotel-favorite-page",
+      path: "/favorite-page",
       element: <HotelFavoriteListPage />,
     },
     {
-      path: "/confirm-page/:bookingId",
+      path: "//hotel-confirm-page/:bookingId",
       element: <ConfirmPage />,
     },
     {
@@ -271,6 +298,30 @@ function App() {
     {
       path: "/flight-payment-page",
       element: <FlightPaymentPage />,
+    },
+    {
+      path: "/flight-favorite-page",
+      element: <FlightFavoritePage />,
+    },
+    {
+      path: "/flight-confirm-page/:bookingId",
+      element: <FlightConfirmPage />,
+    },
+    {
+      path: "/chat-page",
+      element: <ChatAppPage />,
+    },
+    {
+      path: "/deals-page",
+      element: <DealsPage />,
+    },
+    {
+      path: "/customers-service-page",
+      element: <CustomerPage />,
+    },
+    {
+      path: "/about-us-page",
+      element: <AboutUsPage />,
     },
   ]);
 

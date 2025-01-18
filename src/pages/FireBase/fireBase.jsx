@@ -1,9 +1,11 @@
 import { initializeApp } from "firebase/app";
+import { getDatabase, ref, push, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD0K2bRvzIfkZPvLxfARm7gJXS_aF47YP0",
   authDomain: "testproject-edac9.firebaseapp.com",
+  databaseURL: "https://testproject-edac9-default-rtdb.firebaseio.com/", 
   projectId: "testproject-edac9",
   storageBucket: "testproject-edac9.appspot.com",
   messagingSenderId: "1031104764261",
@@ -12,6 +14,5 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-export default auth;
+export const database = getDatabase(app);
+export const auth = getAuth(app);

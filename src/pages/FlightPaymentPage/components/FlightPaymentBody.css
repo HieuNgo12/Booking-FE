@@ -2,7 +2,8 @@
     width: 1224px;
     height: 737px;
     background-color: white;
-    border: 1px solid grey
+    border: 1px solid grey;
+    border-radius: 4px;
 }
 
 .passengers-are-divided{
@@ -29,6 +30,7 @@
 
 .card-section{
     width: 50%;
+    padding-right: 10px;
 }
 
 .sub-small-title{
@@ -39,4 +41,65 @@
 
 .payment-method{
     margin-left: auto;
+}
+
+.blue-button{
+    background-color: #07689F;
+    color: #FFFFFF;
+    width: 241.5px;
+    height: 48px;
+    font-weight:700;
+}
+
+.save-button{
+    border: 1px solid #07689F;
+    border-radius: 4px;
+    width: 241.5px;
+    height: 48px;
+    padding: 16px;
+    margin-left: 3px;
+}
+
+.label-input{
+    font-weight:500;
+    font-size: 14px;
+
+}
+
+.green-title{
+    color: #4C9839;
+    font-weight: 400;
+    font-size:18;
+}
+
+.price-width{
+    width: 100%;
+}
+
+.payment-method{
+    margin-left: auto;
+}
+
+.top-head {
+    padding: 8px;
+    padding-top: 30px;
+    background-color: #07689F ;
+    border-radius: 4px;
+    height: 80px;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom:110px;
+}
+
+.card-info-body{
+    background-color: black;
+    color: white;
+    padding: 6px;
+    font-weight: 40;
+    border-radius: 4px;
+}
+
+.white{
+    font-weight: 700;
 }

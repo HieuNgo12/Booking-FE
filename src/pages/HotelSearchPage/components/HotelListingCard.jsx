@@ -1,53 +1,60 @@
 import React from "react";
 import "./HotelListingCard.css";
 import ReactPaginate from "react-paginate";
+import { utils } from "../../Services/utils";
 
 function HotelListingCard({ hotel, ...props }) {
   return (
-    <div style={{ width: "820px" }} className="card flex mb-2 pt-2">
+    <div
+      style={{ width: "820px" }}
+      className="hotel-listing-card  flex mb-2 pt-2"
+    >
       <div style={{ width: "30%", padding: "4px" }}>
-        <img src={hotel.imgHotel.avatar} />
+        <img
+          src={hotel.imgHotel.avatar}
+          style={{ width: "100%", height: "225px" }}
+        />
       </div>
-      <div style={{ width: "40%",marginLeft: "10px" }}>
+      <div style={{ width: "40%" }}>
         <div className="head-card-title ml-2">{hotel.hotelName}</div>
         <div className="flex mt-2">
           <div>
             <img src="/detailPage/loc.png" className="mr-2 ml-2" />
           </div>
           <div>
-            {
-            hotel.address.street +
-            " " +
-            hotel.address.ward +
-            hotel.address.city +
+            {hotel.address.street +
+              " " +
+              hotel.address.ward +
+              hotel.address.city +
               " " +
               hotel.address.country +
               " " +
               hotel.address.district +
-              " " 
-              }
+              " "}
           </div>
         </div>
         <div className="flex">
-        {hotel.amenities.map((amenity) => {
-          return (
-            <div className="breakfast  mt-2 flex">
-              <div>
-                <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+          {hotel.amenities.map((amenity) => {
+            return (
+              <div className="breakfast  mt-2 flex">
+                <div>
+                  <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+                </div>
+                <div>{amenity}</div>
               </div>
-              <div>{amenity}</div>
-            </div>
-          );
-        })}
+            );
+          })}
         </div>
-   
+
         <div>
           <div className="flex  mt-2 mr-2 ml-2">
             <div className="flex">
               <div>
                 <img src="/listpage/people-right.png" />
               </div>
-              <div className="ml-2">{hotel.maxOccupancy} Adult, 2 Children,</div>
+              <div className="ml-2">
+                {hotel.maxOccupancy} Adult, 2 Children,
+              </div>
             </div>
             <div className="flex ">
               <div>
@@ -62,7 +69,7 @@ function HotelListingCard({ hotel, ...props }) {
           <div className="mr-2 ml-2">Standard hotels</div>
           <div className="flex mr-2 ml-2">
             <div className="head-card-title">Very Good</div>
-            <div className="review ml-4">
+            <div className="review ml-4 mt-2">
               {hotel.reviewId.length} reviews
             </div>
           </div>
@@ -71,9 +78,12 @@ function HotelListingCard({ hotel, ...props }) {
 
       <div>
         <div>
-          <div className="flex">
+          <div className="flex" style={{ marginTop: "20%", marginLeft: "0px" }}>
             <div className="discount">10% off</div>
-            <div className="ml-6 money black-price">${hotel.roomId[0].pricePerNight}</div>
+            <div className="ml-6 money black-price">
+              {utils.numberWithCommas(hotel.roomId[0].pricePerNight * 1)}{" "}
+              VND
+            </div>
           </div>
           <div className="mt-2">Included taxes and charges</div>
           <div className="sustainable-level flex mt-2">
@@ -92,10 +102,7 @@ function HotelListingCard({ hotel, ...props }) {
             <div className="ml-2">We have 2 left at 8% off</div>
           </div>
           <div className="mt-2">
-            <a
-              className="see-availability"
-              href={`/hotel-detail/${hotel._id}`}
-            >
+            <a className="see-availability" href={`/hotel-detail/${hotel._id}`}>
               See availability {">"}
             </a>
           </div>
