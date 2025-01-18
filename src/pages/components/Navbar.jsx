@@ -184,46 +184,43 @@ function Navbar() {
 
       <div className="flex justify-center mb-5 mt-2 product-tags">
         <div
-          className={`middle ${
-            pathname === "/trip" ? "active" : ""
-          }  cursor-pointer`}
+          onClick={() => navigate("/tour-list")}
+          className={`middle ${pathname === "/trip" ? "active" : ""
+            }  cursor-pointer`}
         >
-          <a>Trip</a>
+          <a>Tour</a>
         </div>
         <div
-          className={`middle ${
-            pathname === "/deals" ? "active" : ""
-          }  cursor-pointer`}
+
+          className={`middle ${pathname === "/deals" ? "active" : ""
+            }  cursor-pointer`}
         >
           <a>Deals</a>
         </div>
         <div
           onClick={() => navigate("/")}
-          className={`middle ${
-            pathname === "/" || pathname === "/" ? "active" : ""
-          }  cursor-pointer`}
+          className={`middle ${pathname === "/" || pathname === "/" ? "active" : ""
+            }  cursor-pointer`}
         >
           <a>Hotel</a>
         </div>
         <div
           onClick={() => navigate("/flight-home-page")}
-          className={`middle ${
-            pathname === "/flight-home-page" ? "active" : ""
-          }  cursor-pointer`}
+          className={`middle ${pathname === "/flight-home-page" ? "active" : ""
+            }  cursor-pointer`}
         >
           <a>Flight</a>
         </div>
+
         <div
-          className={`middle ${
-            pathname === "/apartment" ? "active" : ""
-          }  cursor-pointer`}
+          className={`middle ${pathname === "/apartment" ? "active" : ""
+            }  cursor-pointer`}
         >
           <a>Apartment</a>
         </div>
         <div
-          className={`middle ${
-            pathname === "/camper" ? "active" : ""
-          }  cursor-pointer`}
+          className={`middle ${pathname === "/camper" ? "active" : ""
+            }  cursor-pointer`}
         >
           <a>Camper</a>
         </div>

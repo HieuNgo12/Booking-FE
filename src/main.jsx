@@ -10,6 +10,7 @@ const queryClient = new QueryClient();
 import "./index.css";
 import { Provider } from "react-redux"; // Import Provider từ react-redux
 import store from "./Redux/Store.jsx"; // Import store đã tạo
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

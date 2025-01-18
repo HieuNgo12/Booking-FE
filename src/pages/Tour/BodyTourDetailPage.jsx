@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 function BodyTourDetailPage() {
@@ -193,7 +194,10 @@ function BodyTourDetailPage() {
                         <h2 className="text-xl font-bold mb-4">Thông Tin Tour</h2>
                         <p className="text-gray-600 mb-2 text-base">Giá: <span className="font-bold text-blue-600">{tour.price}</span></p>
                         <p className="text-gray-600 mb-2 text-base">Ngày khởi hành: <span className="font-bold">{tour.startDate}</span></p>
-                        <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 text-base">Đặt Ngay</button>
+                        <Link to={`/tour/${tour._id}/booking-tour`} className="inline-block px-6 py-2 bg-custom-blue text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1">
+                            Đặt Ngay
+                        </Link>
+                        
                     </div>
                 </aside>
             </section>

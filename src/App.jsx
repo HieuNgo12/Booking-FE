@@ -52,6 +52,8 @@ import FlightSearchPage from "./pages/FlightSearchPage/FlightSearchPage";
 import FlightDetailPage from "./pages/FlightDetailPage/FlightDetailPage";
 import FlightPaymentBody from "./pages/FlightPaymentPage/components/FlightPaymentBody";
 import FlightPaymentPage from "./pages/FlightPaymentPage/FlightPaymentPage";
+import TourBooking from "./pages/Tour/TourBooking.jsx";
+import TourBookingPage from "./pages/Tour/TourBookingPage.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -220,6 +222,10 @@ function App() {
     {
       path: "/search-tour",
       element: <SearchPage />,
+    },
+    {
+      path: "/tour/:tourId/booking-tour",
+      element: <TourBookingPage />,
     },
     {
 
