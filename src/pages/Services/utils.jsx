@@ -21,14 +21,22 @@ export const utils = {
   },
   returnAmenities: (amenity) => {
     switch (amenity) {
-      case "Wi fi":
+      case "WiFi":
         return "/detailPage/wifi.png";
       case "Air Conditioning":
-        return "/detailPage/wifi.png";
+        return "/detailPage/air-conditioning.png";
       case "Mini Bar":
-        return "/detailPage/wifi.png";
+        return "/detailPage/tea-coffe.png";
       case "TV":
-        return "/detailPage/wifi.png";
+        return "/detailPage/room-service.png";
+      case "Restaurant":
+        return "/detailPage/restaurant.png";
+      case "Bathroom":
+        return "/detailPage/bathroom.png";
+      case "Parking Available":
+        return "/detailPage/parking-available.png";
+      case "Fitness Center":
+        return "/detailPage/fitness-center.png";
     }
   },
 };

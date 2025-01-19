@@ -27,7 +27,7 @@ const Search = () => {
 
             const queryParams = new URLSearchParams(searchParams).toString();
 
-            const response = await axios.get(`http://localhost:8080/api/v1/search?${queryParams}`, {
+            const response = await axios.get(`https://booking-be-z8l2.onrender.com/api/v1/search?${queryParams}`, {
                 headers: {
                     "Content-Type": "application/json",
                 },

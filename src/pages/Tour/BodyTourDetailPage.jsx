@@ -11,7 +11,7 @@ function BodyTourDetailPage() {
 
     useEffect(() => {
         console.log("tourId từ URL:", tourId);
-        axios.get(`http://localhost:8080/api/v1/get-tour-by-id/${tourId}`)
+        axios.get(`https://booking-be-z8l2.onrender.com/api/v1/get-tour-by-id/${tourId}`)
             .then(response => {
                 const tourData = response.data;
                 setTour(tourData);

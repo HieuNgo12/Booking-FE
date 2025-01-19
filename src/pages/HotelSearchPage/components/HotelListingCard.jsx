@@ -73,7 +73,7 @@ function HotelListingCard({ hotel, ...props }) {
             return (
               <div className="breakfast  mt-2 flex">
                 <div>
-                  <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+                  <img src={utils.returnAmenities(amen)}className="mr-2 ml-2" />
                 </div>
                 <div>{amen || "No Amenities yet"}</div>
               </div>

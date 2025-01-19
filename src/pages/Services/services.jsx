@@ -21,6 +21,7 @@ export const services = {
   },
   getHotelListSearch: async (body) => {
     const dataUrl = `${url}/api/v1/getHotelList`;
+    console.log(body);
     const data = await axios.post(dataUrl, body || {});
     return data;
   },
