@@ -158,7 +158,7 @@ function HotelSearchBody() {
         itemsPerPage,
         formik.values.place ? 0 : currentPage
       );
-      console.log(dataByPage, data);
+ 
       const list = data?.data?.data;
       setOrgList(list);
 

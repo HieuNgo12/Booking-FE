@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../FireBase/fireBase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { apiPatch } from "../../API/APIService";
 
 const EditPhonePage = ({ dataUser }) => {
   const navigate = useNavigate();
@@ -48,12 +49,10 @@ const EditPhonePage = ({ dataUser }) => {
         formatPhone,
         recaptchaVerifier
       );
-      console.log(confirmation);
       setConfirmationResult(confirmation);
-      console.log("OTP sent to phone:", phone);
       toast.success(`OTP sent to phone: ${phone}`, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -72,94 +71,22 @@ const EditPhonePage = ({ dataUser }) => {
         throw new Error("No OTP request found");
       }
       const result = await confirmationResult.confirm(otp);
+
       console.log(result);
-      console.log("Phone authentication successful:", result.user);
+
       try {
-        let req1 = await fetch(`${import.meta.env.VITE_URL_API}/change-phone`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            phone: phone,
-          }),
+        const response = await apiPatch("change-phone", { phone: phone });
+        toast.success(response.message, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => navigate(-1),
         });
-        if (req1.status === 401) {
-          const req2 = await fetch(
-            `${import.meta.env.VITE_URL_API}/refresh-token`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-            }
-          );
-          if (req2.ok) {
-            let req1 = await fetch(
-              `${import.meta.env.VITE_URL_API}/change-phone`,
-              {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                  phone: phone,
-                }),
-              }
-            );
-            let res1 = await req1.json();
-            if (req1.ok) {
-              toast.success(res1.message, {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
-            } else if (req1.status === 400) {
-              toast.warn(res1.message, {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              });
-            }
-          }
-        }
-        let res1 = await req1.json();
-        if (req1.ok) {
-          toast.success(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        } else if (req1.status === 400) {
-          toast.warn(res1.message, {
-            position: "top-center",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
       } catch (error) {
         console.log(error);
         toast.error("Error internal", {
@@ -303,7 +230,7 @@ const EditPhonePage = ({ dataUser }) => {
         <p>Loading...</p>
       )}
 
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

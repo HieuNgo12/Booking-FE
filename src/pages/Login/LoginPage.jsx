@@ -67,6 +67,8 @@ const LoginPage = () => {
           });
         }
       } else if (req1.status === 200) {
+        localStorage.setItem("accessToken", res1.accessToken);
+        localStorage.setItem("refreshToken", res1.refreshToken);
         toast.success(res1.message, {
           position: "top-center",
           autoClose: 1000,

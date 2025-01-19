@@ -4,6 +4,7 @@ import { Form, Input, Button, message, Image, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
+import { apiPostFormData } from "../../API/APIService";
 
 const { TextArea } = Input;
 
@@ -24,86 +25,18 @@ const SupportEmailPage = ({ dataUser }) => {
     });
 
     try {
-      let req1 = await fetch(
-        `${import.meta.env.VITE_URL_API}/sent-email-support`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
-      if (req1.status === 401) {
-        const req2 = await fetch(
-          `${import.meta.env.VITE_URL_API}/refresh-token`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (req2.ok) {
-          let req1 = await fetch(
-            `${import.meta.env.VITE_URL_API}/sent-email-support`,
-            {
-              method: "POST",
-              credentials: "include",
-              body: formData,
-            }
-          );
-          let res1 = await req1.json();
-          if (req1.ok) {
-            toast.success(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              onClose: () => navigate(-1),
-            });
-          } else if (req1.status === 400) {
-            toast.warn(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        }
-      }
-      let res1 = await req1.json();
-      if (req1.ok) {
-        toast.success(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          onClose: () => navigate(-1),
-        });
-      } else if (req1.status === 400) {
-        toast.warn(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      const response = await apiPostFormData("sent-email-support", formData);
+      toast.success(response.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => navigate(-1),
+      });
     } catch (error) {
       console.log(error);
       toast.error("Error internal", {
@@ -118,6 +51,113 @@ const SupportEmailPage = ({ dataUser }) => {
       });
     }
   };
+  
+  // const onFinish = async (values) => {
+  //   console.log(fileList);
+  //   const formData = new FormData();
+  //   formData.append("message", values.message);
+  //   formData.append("subject", values.subject);
+  //   formData.append("email", values.email);
+  //   formData.append("name", values.name);
+  //   fileList.forEach((file) => {
+  //     formData.append("files", file.originFileObj);
+  //   });
+
+  //   try {
+  //     let req1 = await fetch(
+  //       `${import.meta.env.VITE_URL_API}/sent-email-support`,
+  //       {
+  //         method: "POST",
+  //         credentials: "include",
+  //         body: formData,
+  //       }
+  //     );
+  //     if (req1.status === 401) {
+  //       const req2 = await fetch(
+  //         `${import.meta.env.VITE_URL_API}/refresh-token`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  //       if (req2.ok) {
+  //         let req1 = await fetch(
+  //           `${import.meta.env.VITE_URL_API}/sent-email-support`,
+  //           {
+  //             method: "POST",
+  //             credentials: "include",
+  //             body: formData,
+  //           }
+  //         );
+  //         let res1 = await req1.json();
+  //         if (req1.ok) {
+  //           toast.success(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //             onClose: () => navigate(-1),
+  //           });
+  //         } else if (req1.status === 400) {
+  //           toast.warn(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //         }
+  //       }
+  //     }
+  //     let res1 = await req1.json();
+  //     if (req1.ok) {
+  //       toast.success(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         onClose: () => navigate(-1),
+  //       });
+  //     } else if (req1.status === 400) {
+  //       toast.warn(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error internal", {
+  //       position: "top-center",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
 
   const handlePreview = async (file) => {
     setPreviewImage(file.url || file.preview);

@@ -9,6 +9,7 @@ import PhoneInput from "react-phone-input-2";
 import { CreditCardOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
+import { apiPatch } from "../../API/APIService";
 
 const { Title } = Typography;
 
@@ -27,7 +28,7 @@ const PaymentInfoPage = ({ dataUser }) => {
       setPhone(dataUser?.paymentMethods?.onlineWallet?.phone);
     }
   }, [dataUser]);
-  
+
   const listBank = [
     {
       name: "Vietcombank",
@@ -57,94 +58,19 @@ const PaymentInfoPage = ({ dataUser }) => {
 
   const onFinish = async () => {
     const values = await form.validateFields();
-    console.log(values);
     try {
-      let req1 = await fetch(
-        `${import.meta.env.VITE_URL_API}/update-payment-method`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(values),
-        }
-      );
-      if (req1.status === 401) {
-        const req2 = await fetch(
-          `${import.meta.env.VITE_URL_API}/refresh-token`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (req2.ok) {
-          let req1 = await fetch(
-            `${import.meta.env.VITE_URL_API}/update-payment-method`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-              body: JSON.stringify(values),
-            }
-          );
-          let res1 = await req1.json();
-          if (req1.ok) {
-            toast.success(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              onClose: () => setChangeBtnBank(true),
-            });
-          } else if (req1.status === 400) {
-            toast.warn(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        }
-      }
-      let res1 = await req1.json();
-      if (req1.ok) {
-        toast.success(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          onClose: () => setChangeBtnBank(true),
-        });
-      } else if (req1.status === 400) {
-        toast.warn(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      const resonse = await apiPatch("update-payment-method", values);
+      toast.success(resonse.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChangeBtnBank(true),
+      });
     } catch (error) {
       console.log(error);
       toast.error("Error internal", {
@@ -160,94 +86,125 @@ const PaymentInfoPage = ({ dataUser }) => {
     }
   };
 
+  // const onFinish = async () => {
+  //   const values = await form.validateFields();
+  //   console.log(values);
+  //   try {
+  //     let req1 = await fetch(
+  //       `${import.meta.env.VITE_URL_API}/update-payment-method`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         credentials: "include",
+  //         body: JSON.stringify(values),
+  //       }
+  //     );
+  //     if (req1.status === 401) {
+  //       const req2 = await fetch(
+  //         `${import.meta.env.VITE_URL_API}/refresh-token`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  //       if (req2.ok) {
+  //         let req1 = await fetch(
+  //           `${import.meta.env.VITE_URL_API}/update-payment-method`,
+  //           {
+  //             method: "PATCH",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             credentials: "include",
+  //             body: JSON.stringify(values),
+  //           }
+  //         );
+  //         let res1 = await req1.json();
+  //         if (req1.ok) {
+  //           toast.success(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //             onClose: () => setChangeBtnBank(true),
+  //           });
+  //         } else if (req1.status === 400) {
+  //           toast.warn(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //         }
+  //       }
+  //     }
+  //     let res1 = await req1.json();
+  //     if (req1.ok) {
+  //       toast.success(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         onClose: () => setChangeBtnBank(true),
+  //       });
+  //     } else if (req1.status === 400) {
+  //       toast.warn(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error internal", {
+  //       position: "top-center",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
+
   const handleOnlineWallet = async () => {
     try {
-      let req1 = await fetch(
-        `${import.meta.env.VITE_URL_API}/update-online-wallet`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ phone: phone }),
-        }
-      );
-      if (req1.status === 401) {
-        const req2 = await fetch(
-          `${import.meta.env.VITE_URL_API}/refresh-token`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (req2.ok) {
-          let req1 = await fetch(
-            `${import.meta.env.VITE_URL_API}/update-online-wallet`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-              body: JSON.stringify({ phone: phone }),
-            }
-          );
-          let res1 = await req1.json();
-          if (req1.ok) {
-            toast.success(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              onClose: () => setChangeBtn(true),
-            });
-          } else if (req1.status === 400) {
-            toast.warn(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        }
-      }
-      let res1 = await req1.json();
-      if (req1.ok) {
-        toast.success(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          onClose: () => setChangeBtn(true),
-        });
-      } else if (req1.status === 400) {
-        toast.warn(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      const resonse = await apiPatch("update-online-wallet", { phone: phone });
+      toast.success(resonse.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => setChangeBtn(true),
+      });
     } catch (error) {
       console.log(error);
       toast.error("Error internal", {
@@ -262,6 +219,109 @@ const PaymentInfoPage = ({ dataUser }) => {
       });
     }
   };
+
+  // const handleOnlineWallet = async () => {
+  //   try {
+  //     let req1 = await fetch(
+  //       `${import.meta.env.VITE_URL_API}/update-online-wallet`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         credentials: "include",
+  //         body: JSON.stringify({ phone: phone }),
+  //       }
+  //     );
+  //     if (req1.status === 401) {
+  //       const req2 = await fetch(
+  //         `${import.meta.env.VITE_URL_API}/refresh-token`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  //       if (req2.ok) {
+  //         let req1 = await fetch(
+  //           `${import.meta.env.VITE_URL_API}/update-online-wallet`,
+  //           {
+  //             method: "PATCH",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             credentials: "include",
+  //             body: JSON.stringify({ phone: phone }),
+  //           }
+  //         );
+  //         let res1 = await req1.json();
+  //         if (req1.ok) {
+  //           toast.success(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //             onClose: () => setChangeBtn(true),
+  //           });
+  //         } else if (req1.status === 400) {
+  //           toast.warn(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //         }
+  //       }
+  //     }
+  //     let res1 = await req1.json();
+  //     if (req1.ok) {
+  //       toast.success(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         onClose: () => setChangeBtn(true),
+  //       });
+  //     } else if (req1.status === 400) {
+  //       toast.warn(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error internal", {
+  //       position: "top-center",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
 
   const handleNameUpperCase = (e) => {
     const value = e.target.value.toUpperCase();

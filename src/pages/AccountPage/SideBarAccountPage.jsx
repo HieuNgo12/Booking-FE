@@ -18,6 +18,8 @@ import {
   // StarTwoTon,
 } from "@ant-design/icons";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { logout } from "../../Redux/Slide/infoUserSlice";
 
 const list = [
   { name: "Profile", value: "profile", icon: UserOutlined },
@@ -34,10 +36,12 @@ const SideBarAccountPage = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const Logout = () => {
     Cookies.remove("accessToken");
     Cookies.remove("refreshToken");
+    dispatch(logout());
     navigate("/login");
   };
   return (

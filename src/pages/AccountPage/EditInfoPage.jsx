@@ -16,6 +16,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchUserInfo } from "../../Redux/Slide/infoUserSlice";
+import { apiPatchFormData } from "../../API/APIService";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -27,7 +28,6 @@ const listNationality = [
 ];
 
 const EditInfoPage = ({ dataUser, callApi }) => {
-  console.log(callApi);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -153,93 +153,20 @@ const EditInfoPage = ({ dataUser, callApi }) => {
       formData.append("street", values.street);
       formData.append("checkPassword", values.checkPassword);
 
-      let req1 = await fetch(`${import.meta.env.VITE_URL_API}/update-profile`, {
-        method: "PATCH",
-        credentials: "include",
-        body: formData,
+      // update-profile
+      const response = await apiPatchFormData("update-profile", formData);
+      form.resetFields(["checkPassword"]);
+      toast.success(response.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => callApi() && dispatch(fetchUserInfo()),
       });
-      if (req1.status === 401) {
-        let req2 = await fetch(
-          `${import.meta.env.VITE_URL_API}/refresh-token`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (req2.ok) {
-          let req1 = await fetch(
-            `${import.meta.env.VITE_URL_API}/update-profile`,
-            {
-              method: "PATCH",
-              credentials: "include",
-              body: formData,
-            }
-          );
-          if (req1.ok) {
-            let res1 = await req1.json();
-            toast.success(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              onClose: () => callApi(),
-            });
-            form.resetFields(["checkPassword"]);
-            // callApi();
-            dispatch(fetchUserInfo());
-          } else if (req1.status === 400) {
-            let res1 = await req1.json();
-            toast.warn(res1.message, {
-              position: "top-center",
-              autoClose: 1500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-            form.resetFields(["checkPassword"]);
-          }
-        }
-      }
-      if (req1.ok) {
-        let res1 = await req1.json();
-        toast.success(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          onClose: () => callApi(),
-        });
-        form.resetFields(["checkPassword"]);
-        // callApi();
-        dispatch(fetchUserInfo());
-      } else if (req1.status === 400) {
-        let res1 = await req1.json();
-        toast.warn(res1.message, {
-          position: "top-center",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        form.resetFields(["checkPassword"]);
-      }
     } catch (error) {
       console.log(error);
       toast.error("Error internal", {
@@ -254,6 +181,126 @@ const EditInfoPage = ({ dataUser, callApi }) => {
       });
     }
   };
+
+  // const onFinish = async (values) => {
+  //   try {
+  //     const formData = new FormData();
+  //     if (newImage) {
+  //       formData.append("file", newImage);
+  //     }
+  //     formData.append("firstName", values.firstName);
+  //     formData.append("lastName", values.lastName);
+  //     formData.append("gender", values.gender);
+  //     formData.append("DOB", values.DOB);
+  //     formData.append("nationality", values.nationality);
+  //     formData.append("country", values.country);
+  //     formData.append("city", selectedCity);
+  //     formData.append("district", selectedDistrict);
+  //     formData.append("ward", selectedWard);
+  //     formData.append("street", values.street);
+  //     formData.append("checkPassword", values.checkPassword);
+
+  //     let req1 = await fetch(`${import.meta.env.VITE_URL_API}/update-profile`, {
+  //       method: "PATCH",
+  //       credentials: "include",
+  //       body: formData,
+  //     });
+  //     if (req1.status === 401) {
+  //       let req2 = await fetch(
+  //         `${import.meta.env.VITE_URL_API}/refresh-token`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  //       if (req2.ok) {
+  //         let req1 = await fetch(
+  //           `${import.meta.env.VITE_URL_API}/update-profile`,
+  //           {
+  //             method: "PATCH",
+  //             credentials: "include",
+  //             body: formData,
+  //           }
+  //         );
+  //         if (req1.ok) {
+  //           let res1 = await req1.json();
+  //           toast.success(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //             onClose: () => callApi(),
+  //           });
+  //           form.resetFields(["checkPassword"]);
+  //           // callApi();
+  //           dispatch(fetchUserInfo());
+  //         } else if (req1.status === 400) {
+  //           let res1 = await req1.json();
+  //           toast.warn(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1500,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //           form.resetFields(["checkPassword"]);
+  //         }
+  //       }
+  //     }
+  //     if (req1.ok) {
+  //       let res1 = await req1.json();
+  //       toast.success(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         onClose: () => callApi(),
+  //       });
+  //       form.resetFields(["checkPassword"]);
+  //       // callApi();
+  //       dispatch(fetchUserInfo());
+  //     } else if (req1.status === 400) {
+  //       let res1 = await req1.json();
+  //       toast.warn(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1500,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //       form.resetFields(["checkPassword"]);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error internal", {
+  //       position: "top-center",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="p-6 w-2/3 mx-auto bg-white rounded-lg shadow-md">

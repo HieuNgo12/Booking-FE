@@ -4,8 +4,6 @@ const initialState = {
   compareFlights: [],
 };
 
-console.log(initialState);
-
 const compareFlightSlice = createSlice({
   name: "compareFlight",
   initialState,

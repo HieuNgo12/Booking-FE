@@ -20,8 +20,6 @@ const SupportListPage = () => {
     }
   };
 
-  console.log(dataSupport);
-
   useEffect(() => {
     callApi();
   }, []);
