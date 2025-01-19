@@ -1,4 +1,5 @@
-const BASE_URL = "https://booking-be-z8l2.onrender.com/api/v1"; // URL gốc của API
+// const BASE_URL = "http://localhost:8080/api/v1"; 
+const BASE_URL = "https://booking-be-z8l2.onrender.com/api/v1"; 
 
 // Hàm xử lý lỗi chung
 const handleResponse = async (response) => {

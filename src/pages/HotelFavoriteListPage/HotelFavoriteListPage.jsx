@@ -25,7 +25,7 @@ function HotelFavoriteListPage() {
         <Navbar />
       </div>
       <div className="max-w-[1224px]">
-        <h1 className="text-3xl font-bold text-[#07689F] mb-4">
+        <h1 className="text-3xl font-bold text-[#07689F] mb-4 min-w-[1224px]">
           Which Exciting Place Is Your Next Adventure Taking You?
         </h1>
         <div className="text-[#07689F] text-lg mb-6">
