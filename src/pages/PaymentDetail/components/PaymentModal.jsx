@@ -33,7 +33,7 @@ const style = {
   p: 4,
 };
 
- function PaymentModal({
+function PaymentModal({
   open,
   setOpen,
   handleClose,
@@ -111,7 +111,7 @@ const style = {
         totalPersons:
           JSON.parse(localStorage.getItem("hotelPassengers")).passengers +
           (Number(searchData?.children) || 0),
-        totalAmount: handleTotalAmount(),
+        // totalAmount: handleTotalAmount(),
         bookingStartDate: JSON.parse(localStorage.getItem("checkoutTime"))
           .checkin,
         bookingEndDate: JSON.parse(localStorage.getItem("checkoutTime"))
@@ -122,8 +122,7 @@ const style = {
           utils.convertDate(
             JSON.parse(localStorage.getItem("checkoutTime")).checkin,
             JSON.parse(localStorage.getItem("checkoutTime")).checkout
-          ) *
-          23000,
+          ) ,
       };
 
       const responseBooking = await apiPost("create-booking", handleData);
@@ -284,7 +283,8 @@ const style = {
               label="Card Number *"
               rules={[
                 {
-                  required: handleMethod === "ZaloPay" || "VNPay"  ? false : true,
+                  required:
+                    handleMethod === "ZaloPay" || "VNPay" ? false : true,
                   message: "Please enter your card number!",
                 },
               ]}
@@ -294,7 +294,7 @@ const style = {
                 placeholder="Card Number"
                 className="h-10 rounded-none"
                 prefix={<CreditCardOutlined />}
-                disabled={handleMethod === "ZaloPay" || "VNPay"  ? true : false}
+                disabled={handleMethod === "ZaloPay" || "VNPay" ? true : false}
               />
             </Form.Item>
 
@@ -304,7 +304,8 @@ const style = {
               label="CVC"
               rules={[
                 {
-                  required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                  required:
+                    handleMethod === "ZaloPay" || "VNPay" ? false : true,
                   message: "Please enter your CVC!",
                 },
               ]}
@@ -324,7 +325,8 @@ const style = {
               label="EXP Date"
               rules={[
                 {
-                  required: handleMethod === "ZaloPay" || "VNPay" ? false : true,
+                  required:
+                    handleMethod === "ZaloPay" || "VNPay" ? false : true,
                   message: "Please enter the expiration date!",
                 },
               ]}

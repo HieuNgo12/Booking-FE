@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ConfirmTable.css";
 import moment from "moment";
 import { services } from "../../Services/services";
+import { utils } from "../../Services/utils";
 function ConfirmTable({ booking, ...props }) {
   const [diff, setDiff] = useState("");
   useEffect(() => {
@@ -58,7 +59,7 @@ function ConfirmTable({ booking, ...props }) {
             <tbody>
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td scope="row" class="">
-                  {u.convertDate(booking[0]?.bookingStartDate,booking[0]?.bookingEndDate) + " "}
+                  {utils.convertDate(booking[0]?.bookingStartDate,booking[0]?.bookingEndDate) + " "}
                   Nights
                 </td>
                 {booking.length ? (

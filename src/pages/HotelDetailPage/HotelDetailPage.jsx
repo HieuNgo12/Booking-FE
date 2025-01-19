@@ -24,6 +24,7 @@ function HotelDetailPage({ hotels, ...props }) {
   const { hotelId } = useParams();
   const [hotel, setHotel] = useState([]);
   const [disable, setDisable] = useState(false);
+  const [postingComment, setPostingComment] = useState(false);
 
   const SignupSchema = Yup.object().shape({
     passengers: Yup.string().required("Passengers is Required"),
@@ -40,7 +41,12 @@ function HotelDetailPage({ hotels, ...props }) {
     children: Yup.string().required("Children is Required"),
   });
   const navigate = useNavigate();
+  const getHotel = async () => {
+    const dataUrl = `${url}/api/v1/hotel/${hotelId}`;
+    const data = await axios.get(dataUrl);
 
+    setHotel([data.data.data]);
+  };
   const formik = useFormik({
     initialValues: {
       passengers: "",
@@ -84,14 +90,13 @@ function HotelDetailPage({ hotels, ...props }) {
     // setSuccess(true);
   });
   useEffect(() => {
-    const getHotel = async () => {
-      const dataUrl = `${url}/api/v1/hotel/${hotelId}`;
-      const data = await axios.get(dataUrl);
-
-      setHotel([data.data.data]);
-    };
+ 
     getHotel();
   }, []);
+  useEffect(() => {
+ 
+    getHotel();
+  }, [postingComment]);
   const handleSubmit = (values, customParam) => {
     console.log({ values, customParam });
   };
@@ -185,7 +190,7 @@ function HotelDetailPage({ hotels, ...props }) {
         </div>
         <div className=" mt-6 ">
           <ArrowSlider hotel={hotel[0]} />
-          <FiveStar hotel={hotel[0]} />
+          <FiveStar hotel={hotel[0]} postingComment={postingComment} setPostingComment={setPostingComment}/>
           <div>
             <div className="review-rates mb-6 mt-6 ml-6">Review Rates</div>
             <div className="flex ml-6 mb-6">

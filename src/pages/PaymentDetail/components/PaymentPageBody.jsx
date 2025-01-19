@@ -54,7 +54,10 @@ function PaymentPageBody({ room, ...props }) {
     // setSuccess(true);
   });
   useEffect(() => {
-    localStorage.setItem("currentPrice", JSON.stringify(room[0].pricePerNight));
+    localStorage.setItem(
+      "currentPrice",
+      JSON.stringify(Number(room[0]?.pricePerNight * 23000 || 0))
+    );
   }, []);
   const handlePageClick = ({ selected }) => {
     console.log(selected);
@@ -164,9 +167,11 @@ function PaymentPageBody({ room, ...props }) {
                 <div>
                   You will stay{" "}
                   {utils.convertDate(
-                    JSON.parse(localStorage.getItem("checkoutTime")).checkIn,
-                    JSON.parse(localStorage.getItem("checkoutTime")).checkout
-                  )}{" "}
+                        JSON.parse(localStorage.getItem("checkoutTime"))
+                          .checkin,
+                        JSON.parse(localStorage.getItem("checkoutTime"))
+                          .checkout
+                      )}{" "}
                   nights
                 </div>
                 <div className="flex">
@@ -269,8 +274,8 @@ function PaymentPageBody({ room, ...props }) {
               </div>
             </div>
             <div
-              style={{ paddingBottom: "20px" }}
-              className="bg-white pl-6 mb-2"
+          
+              className="bg-white pl-6 mb-2 payment-information"
             >
               <div className="head-title ">Payment Information</div>
               <div className=" pr-6">
@@ -291,7 +296,7 @@ function PaymentPageBody({ room, ...props }) {
                             JSON.parse(localStorage.getItem("checkoutTime"))
                               .checkout
                           ) *
-                          23000
+                          1
                       )}
                     </div>
                     <div className="nights-stay">
@@ -324,7 +329,7 @@ function PaymentPageBody({ room, ...props }) {
                       JSON.parse(localStorage?.getItem("currentPrice")) *
                         JSON.parse(localStorage.getItem("hotelPassengers"))
                           .passengers *
-                        23000 *
+                        1 *
                         utils.convertDate(
                           JSON.parse(localStorage.getItem("checkoutTime"))
                             .checkin,
@@ -378,7 +383,7 @@ function PaymentPageBody({ room, ...props }) {
               </div>
             </div> */}
           </div>
-          <div style={{ width: "50%" }}>
+          <div style={{ width: "50%", height: "100%" }} >
             <div className="profile-card bg-white p-6  ml-6">
               <div className="flex">
                 <div>
@@ -542,14 +547,19 @@ function PaymentPageBody({ room, ...props }) {
                     <div>
                       <img
                         src="/paymentPage/images.jpg"
-                        style={{ height: "255px",marginBottom: "9px", marginTop: "9px" }}
+                        style={{
+                          height: "255px",
+                          marginBottom: "9px",
+                          marginTop: "9px",
+                        }}
                       />
                     </div>
                     <div className="flex ">
                       <div>
                         <button
                           className="save-in-shortcut "
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             setOpen(true);
                           }}
                         >

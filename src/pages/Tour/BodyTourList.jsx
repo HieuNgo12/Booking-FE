@@ -7,7 +7,7 @@ const BodyTourList = () => {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/v1/get-all-tour')
+    axios.get('https://booking-be-z8l2.onrender.com/api/v1/get-all-tour')
       .then(response => {
         //console.log("Dữ liệu từ API:", response.data);
         setTours(response.data);

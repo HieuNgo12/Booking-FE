@@ -23,18 +23,18 @@ function HotelInfo({ hotel, ...props }) {
             return (
               <tr>
                 <td>
-                  <img src={room.imgRoom}          onError={(ev) =>  addDefaultSrc(ev) }
+                  <img src={room?.imgRoom}          onError={(ev) =>  addDefaultSrc(ev) }
 />
                 </td>
-                <td>{room.roomName}</td>
+                <td>{room?.roomName}</td>
 
-                <td className="">{room.maxOccupancy}</td>
+                <td className="">{room?.maxOccupancy}</td>
 
-                <td>{room.roomType}</td>
+                <td>{room?.roomType}</td>
              
-                <td>{room.detailRoom}</td>
+                <td>{room?.detailRoom}</td>
                 <td>
-                  <button>{utils.numberWithCommas (room.pricePerNight * 1) }</button>
+                  <button>{utils.numberWithCommas (Number(room?.pricePerNight) * 1) }</button>
                 </td>
               </tr>
             );

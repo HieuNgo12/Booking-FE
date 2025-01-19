@@ -4,6 +4,41 @@ import ReactPaginate from "react-paginate";
 import { utils } from "../../Services/utils";
 
 function HotelListingCard({ hotel, ...props }) {
+  const amenitiesSeprate = (amenities) => {
+    console.log(amenities);
+    let amenitySeperator = [];
+    let amenityList = [];
+    for (let i = 0; i < amenities.length; i++) {
+      let amenity = amenities[i];
+      if (i % 3 === 0 && i !== 0) {
+        amenityList.push(amenitySeperator);
+        amenitySeperator = [];
+      } else {
+        amenitySeperator.push(amenity);
+      }
+    }
+    amenities.forEach((amenity, index) => {});
+    const list = amenityList.map((amenity) => {
+      console.log(amenity);
+
+      for (let i = 0; i < amenity.length; i++) {
+        amenity;
+      }
+      amenity.map((amen) => {
+        return (
+          <div className="breakfast  mt-2 flex">
+            <div>
+              <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+            </div>
+            <div>{amen}</div>
+          </div>
+        );
+      });
+      return amenity;
+    });
+    console.log(list);
+    return list;
+  };
   return (
     <div
       style={{ width: "820px" }}
@@ -34,13 +69,13 @@ function HotelListingCard({ hotel, ...props }) {
           </div>
         </div>
         <div className="flex">
-          {hotel.amenities.map((amenity) => {
+          {hotel.amenities.map((amen) => {
             return (
               <div className="breakfast  mt-2 flex">
                 <div>
-                  <img src="/listpage/cup-four.png" className="mr-2 ml-2" />
+                  <img src={utils.returnAmenities(amen)}className="mr-2 ml-2" />
                 </div>
-                <div>{amenity}</div>
+                <div>{amen || "No Amenities yet"}</div>
               </div>
             );
           })}
@@ -81,7 +116,9 @@ function HotelListingCard({ hotel, ...props }) {
           <div className="flex" style={{ marginTop: "20%", marginLeft: "0px" }}>
             <div className="discount">10% off</div>
             <div className="ml-6 money black-price">
-              {utils.numberWithCommas(hotel.roomId[0].pricePerNight * 1)}{" "}
+              {utils.numberWithCommas(
+                (Number(hotel?.roomId[0]?.pricePerNight  * 23000) || Number(hotel?.priceAveragePerNight))
+              ) || "Free"}{" "}
               VND
             </div>
           </div>
