@@ -71,7 +71,7 @@ function Navbar() {
       label: "Log Out",
       key: "4",
       icon: <LogoutOutlined />,
-      onClick: () => dispatch(logout()) && navigate("/"),
+      onClick: () => dispatch(logout()) && navigate("/login"),
       danger: true,
       children: null,
     },

@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-phone-input-2/lib/style.css";
 import moment from "moment";
+import { apiPatch } from "../../API/APIService";
+import { useDispatch } from "react-redux";
 
 const EditIDCardPage = ({ dataUser }) => {
   const [form] = Form.useForm();
@@ -24,6 +26,7 @@ const EditIDCardPage = ({ dataUser }) => {
   const [backFileList, setBackFileList] = useState([]);
   const [changeBtn, setChangeBtn] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -62,99 +65,27 @@ const EditIDCardPage = ({ dataUser }) => {
   const onFinish = async (values) => {
     console.log("Form Values: ", values);
     try {
-      let req1 = await fetch(`${import.meta.env.VITE_URL_API}/update-id-card`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          number: values.number,
-          fullName: values.fullName,
-          DOI: values.DOI,
-          POI: values.POI,
-        }),
+      const response = await apiPatch("update-id-card", {
+        number: values.number,
+        fullName: values.fullName,
+        DOI: values.DOI,
+        POI: values.POI,
       });
-      if (req1.status === 401) {
-        const req2 = await fetch(
-          `${import.meta.env.VITE_URL_API}/refresh-token`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (req2.ok) {
-          let req1 = await fetch(
-            `${import.meta.env.VITE_URL_API}/update-id-card`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-              body: JSON.stringify({
-                number: values.number,
-                fullName: values.fullName,
-                DOI: values.DOI,
-                POI: values.POI,
-              }),
-            }
-          );
-          let res1 = await req1.json();
-          if (req1.ok) {
-            toast.success(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              onClose: () => setChangeBtn(true),
-            });
-          } else if (req1.status === 400) {
-            toast.warn(res1.message, {
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        }
-      }
-      let res1 = await req1.json();
-      if (req1.ok) {
-        toast.success(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          onClose: () => setChangeBtn(true),
-        });
-      } else if (req1.status === 400) {
-        toast.warn(res1.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+
+      setChangeBtn(true);
+      toast.success(response.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => {
+          callApi(), dispatch(fetchUserInfo());
+        },
+      });
     } catch (error) {
       console.log(error);
       toast.error("Error internal", {
@@ -169,6 +100,117 @@ const EditIDCardPage = ({ dataUser }) => {
       });
     }
   };
+
+  // const onFinish = async (values) => {
+  //   console.log("Form Values: ", values);
+  //   try {
+  //     let req1 = await fetch(`${import.meta.env.VITE_URL_API}/update-id-card`, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include",
+  //       body: JSON.stringify({
+  //         number: values.number,
+  //         fullName: values.fullName,
+  //         DOI: values.DOI,
+  //         POI: values.POI,
+  //       }),
+  //     });
+  //     if (req1.status === 401) {
+  //       const req2 = await fetch(
+  //         `${import.meta.env.VITE_URL_API}/refresh-token`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           credentials: "include",
+  //         }
+  //       );
+  //       if (req2.ok) {
+  //         let req1 = await fetch(
+  //           `${import.meta.env.VITE_URL_API}/update-id-card`,
+  //           {
+  //             method: "PATCH",
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //             credentials: "include",
+  //             body: JSON.stringify({
+  //               number: values.number,
+  //               fullName: values.fullName,
+  //               DOI: values.DOI,
+  //               POI: values.POI,
+  //             }),
+  //           }
+  //         );
+  //         let res1 = await req1.json();
+  //         if (req1.ok) {
+  //           toast.success(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //             onClose: () => setChangeBtn(true),
+  //           });
+  //         } else if (req1.status === 400) {
+  //           toast.warn(res1.message, {
+  //             position: "top-center",
+  //             autoClose: 1000,
+  //             hideProgressBar: false,
+  //             closeOnClick: true,
+  //             pauseOnHover: true,
+  //             draggable: true,
+  //             progress: undefined,
+  //             theme: "light",
+  //           });
+  //         }
+  //       }
+  //     }
+  //     let res1 = await req1.json();
+  //     if (req1.ok) {
+  //       toast.success(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         onClose: () => setChangeBtn(true),
+  //       });
+  //     } else if (req1.status === 400) {
+  //       toast.warn(res1.message, {
+  //         position: "top-center",
+  //         autoClose: 1000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Error internal", {
+  //       position: "top-center",
+  //       autoClose: 1000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="p-6 w-3/4 mx-auto bg-white rounded-lg shadow-md">

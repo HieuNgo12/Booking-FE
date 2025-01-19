@@ -41,8 +41,14 @@ const listRoutes = [
   { namePage: EditIDCardPage, namePath: "/authentication/edit-id-card" },
   { namePage: PasswordPage, namePath: "/setting/password" },
   { namePage: SupportListPage, namePath: "/support/list-support" },
-  { namePage: SupportEmailPage, namePath: "/support/list-support/sent-email-to-easyset" },
-  { namePage: SupportDetailPage, namePath: "/support/list-support/support-detail" },
+  {
+    namePage: SupportEmailPage,
+    namePath: "/support/list-support/sent-email-to-easyset",
+  },
+  {
+    namePage: SupportDetailPage,
+    namePath: "/support/list-support/support-detail",
+  },
   { namePage: SupportChatPage, namePath: "/support/chat-easyset" },
   { namePage: RankPage, namePath: "/profile/view-rank" },
 ];

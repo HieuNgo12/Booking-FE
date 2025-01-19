@@ -7,7 +7,8 @@ export const refreshAccessToken = createAsyncThunk(
   "user/refreshToken",
   async (_, { rejectWithValue }) => {
     try {
-      const refreshToken = Cookies.get("refreshToken");
+      // const refreshToken = Cookies.get("refreshToken");
+      const refreshToken = localStorage.getItem("refreshToken");
 
       if (!refreshToken) {
         throw new Error("No refresh token available");
@@ -15,11 +16,17 @@ export const refreshAccessToken = createAsyncThunk(
 
       const response = await fetch(
         `${import.meta.env.VITE_URL_API}/refresh-token`,
-        { method: "GET", credentials: "include" }
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        }
       );
 
       const data = await response.json();
-
+      console.log(data);
       if (!response.ok) {
         throw new Error(data.message || "Failed to refresh access token");
       }
@@ -39,7 +46,8 @@ export const fetchUserInfo = createAsyncThunk(
   "user/getInfo",
   async (_, { rejectWithValue, dispatch }) => {
     try {
-      let token = Cookies.get("accessToken");
+      // let token = Cookies.get("accessToken");
+      let token = localStorage.getItem("accessToken");
 
       if (!token) {
         console.warn("No access token, attempting to refresh...");
@@ -58,7 +66,7 @@ export const fetchUserInfo = createAsyncThunk(
 
 const initialState = {
   infor: null,
-  isAuthenticated: !!Cookies.get("accessToken"),
+  isAuthenticated: !!localStorage.getItem("accessToken"),
   status: "idle",
   error: null,
 };
@@ -69,8 +77,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       state.infor = null;
       state.isAuthenticated = false;
       state.status = "idle";

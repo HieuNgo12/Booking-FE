@@ -3,9 +3,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FavoriteCard from "./components/FavoriteCard";
 import "./HotelFavoriteListPage.css";
-import HeaderFlightPageBody from "../FlightHomePage/components/HeaderFlightPageBody";
 import FavoriteFlightCard from "./components/FavoriteFlightCard";
 import ChatBox from "../ChatPage/ChatBox";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
 function HotelFavoriteListPage() {
   const [list, setList] = useState([]);
   const [listFlight, setListFlight] = useState([]);
@@ -34,11 +36,13 @@ function HotelFavoriteListPage() {
         <div className="hotel-favorites ">Hotel Favorites</div>
         <div className="flex">
           <div class="grid grid-cols-3 gap-3">
-            {savedList.length
-              ? savedList.map((hotel) => {
-                  return <FavoriteCard hotel={hotel} />;
-                })
-              : null}
+            {savedList.length ? (
+              savedList.map((hotel) => {
+                return <FavoriteCard hotel={hotel} />;
+              })
+            ) : (
+              <p>No favorite flights available</p>
+            )}
           </div>
         </div>
 
