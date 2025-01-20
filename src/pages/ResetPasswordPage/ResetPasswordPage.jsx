@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import {
   Form,
@@ -23,19 +23,26 @@ const { Title, Text } = Typography;
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
+  const [handleOtp, setHandleOtp] = useState();
+
+
   const onFinish = async (values) => {
     try {
-      const req1 = await fetch(`${import.meta.env.VITE_URL_API}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      });
+      const req1 = await fetch(
+        `${import.meta.env.VITE_URL_API}/reset-password`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            otp: handleOtp,
+          }),
+        }
+      );
       const res1 = await req1.json();
       if (req1.status === 400) {
         toast.warn(res1.message, {
@@ -59,7 +66,7 @@ const ResetPasswordPage = () => {
           progress: undefined,
           theme: "light",
           onClose: () => {
-            navigate("/profile");
+            navigate("/login");
           },
         });
       }
@@ -196,7 +203,10 @@ const ResetPasswordPage = () => {
                 >
                   <div className="flex justify-center items-center">
                     {" "}
-                    <Input.OTP placeholder="OTP" />
+                    <Input
+                      placeholder="OTP"
+                      onChange={(e) => setHandleOtp(e.target.value)}
+                    />
                   </div>
                 </Form.Item>
 
