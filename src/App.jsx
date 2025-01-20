@@ -106,7 +106,7 @@ function App() {
       errorElement: <ErrorPage />,
     },
     {
-      path: "/reset-passowrd",
+      path: "/reset-password",
       element: <ResetPasswordPage />,
       errorElement: <ErrorPage />,
     },

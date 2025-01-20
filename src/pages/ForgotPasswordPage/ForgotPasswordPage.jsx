@@ -25,17 +25,20 @@ const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-      const req1 = await fetch(`${import.meta.env.VITE_URL_API}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-      });
+      const req1 = await fetch(
+        `${import.meta.env.VITE_URL_API}/forgot-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
+        }
+      );
       const res1 = await req1.json();
       if (req1.status === 400) {
         toast.warn(res1.message, {
@@ -59,7 +62,7 @@ const ForgotPasswordPage = () => {
           progress: undefined,
           theme: "light",
           onClose: () => {
-            navigate("/profile");
+            navigate("/reset-password");
           },
         });
       }
