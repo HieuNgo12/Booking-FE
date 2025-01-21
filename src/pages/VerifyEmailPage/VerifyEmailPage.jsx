@@ -8,16 +8,18 @@ import imgLogIn from "./img/login.jpg";
 import imgLogo from "./img/Logo.png";
 import imgEN from "./img/EN.png";
 import ChatBox from "../ChatPage/ChatBox";
+import { useDispatch } from "react-redux";
+import { fetchUserInfo } from "../../Redux/Slide/infoUserSlice";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
 const VerifyEmailPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [otp, setOtp] = useState(null);
   const onFinish = async () => {
     try {
-      console.log(otp);
       const req1 = await fetch(`${import.meta.env.VITE_URL_API}/verify-email`, {
         method: "PATCH",
         headers: {
@@ -41,6 +43,8 @@ const VerifyEmailPage = () => {
           theme: "light",
         });
       } else if (req1.status === 200) {
+        localStorage.setItem("accessToken", res1.accessToken);
+        localStorage.setItem("refreshToken", res1.refreshToken);
         toast.success(res1.message, {
           position: "top-center",
           autoClose: 1000,
